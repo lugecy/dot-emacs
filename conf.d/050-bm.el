@@ -1,0 +1,5 @@
+(require 'bm)
+(global-set-key (kbd "C-M-SPC") 'bm-toggle)
+(global-set-key (kbd "C-c C-SPC") 'bm-toggle)
+(global-set-key (kbd "M-]") 'bm-next)
+(global-set-key (kbd "M-[") 'bm-previous)

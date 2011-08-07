@@ -1,0 +1,1183 @@
+
+action-lock.el,3704
+(defgroup action-lock nilaction-lock35,1238
+(defvar action-lock-face 'action-lock-faceaction-lock-face39,1341
+(defface action-lock-faceaction-lock-face42,1420
+(defvar action-lock-magic-return-key "\C-m")action-lock-magic-return-key53,1827
+(defvar action-lock-lighter " AL")action-lock-lighter55,1932
+(defvar action-lock-silent taction-lock-silent56,1967
+(defvar action-lock-switch-default '("{ }" "{*}" "{-}"))  ;; any numberaction-lock-switch-default61,2126
+(defvar action-lock-date-default '("{_}" "[%Y-%m-%d %H:%M]"))  ;; before afteraction-lock-date-default62,2198
+(defvar action-lock-rules nil)action-lock-rules81,2862
+(defvar action-lock-original-font-lock-keywords nil)action-lock-original-font-lock-keywords82,2893
+(defvar action-lock-original-return nil)action-lock-original-return83,2946
+(defun action-lock-switch (label-list)action-lock-switch95,3393
+(defun action-lock-date (regexp time-format)action-lock-date109,3979
+(defun action-lock-open (regexp arg-pos &optional hilit-pos)action-lock-open115,4193
+(defun action-lock-find-file (f u)action-lock-find-file118,4353
+(defvar action-lock-no-browser nil)action-lock-no-browser126,4580
+(defun action-lock-browse-url (url)action-lock-browse-url127,4616
+(defun action-lock-browse (regexp arg-pos &optional hilit-pos)action-lock-browse133,4824
+(defun action-lock-general (func regexp arg-pos &optional hilit-pos arg-p)action-lock-general136,4963
+(defvar action-lock-url-path-regexpaction-lock-url-path-regexp157,5864
+(defun action-lock-url-regexp (head &optional tail)action-lock-url-regexp163,6261
+(defvar action-lock-open-regexpaction-lock-open-regexp168,6392
+(defvar action-lock-open-regexp-pos 2)action-lock-open-regexp-pos170,6495
+(defvar action-lock-browse-regexpaction-lock-browse-regexp173,6579
+(defvar action-lock-browse-regexp-pos 0)action-lock-browse-regexp-pos175,6699
+(defvar action-lock-default-rulesaction-lock-default-rules177,6741
+(defvar action-lock-bury-minor-mode-p t)action-lock-bury-minor-mode-p193,7466
+(defun action-lock-initialize-buffer ()action-lock-initialize-buffer194,7507
+(defun action-lock-restore-buffer ()action-lock-restore-buffer202,7749
+(defun action-lock-magic-return (&optional arg)action-lock-magic-return205,7822
+(defun action-lock-invoke (&optional arg)action-lock-invoke215,8183
+(defun action-lock-initialize-magic-return ()action-lock-initialize-magic-return226,8450
+(defun action-lock-rules ()action-lock-rules232,8673
+(defun action-lock-set-rules (rules)action-lock-set-rules234,8722
+(defun action-lock-add-rules (rules &optional prepend-p)action-lock-add-rules240,8907
+(defun action-lock-bury-minor-mode (mode)action-lock-bury-minor-mode245,9133
+(defvar action-lock-case-fold-search nil)action-lock-case-fold-search257,9533
+(defvar action-lock-use-case-fold-search t)action-lock-use-case-fold-search258,9575
+(defun action-lock-matcher (regexp)action-lock-matcher260,9620
+(defun action-lock-font-lock ()action-lock-font-lock267,9845
+(defun action-lock-restore-font-lock ()action-lock-restore-font-lock286,10765
+(defun action-lock-get-action ()action-lock-get-action291,10909
+(defun action-lock-get-range ()action-lock-get-range294,10983
+(defun action-lock-get-action/range ()action-lock-get-action/range297,11056
+(defun action-lock-regexp-range (regexp &optional pos)action-lock-regexp-range313,11559
+(defun action-lock-regexp ()action-lock-regexp333,12253
+(defun action-lock-skip-one-link (reverse)action-lock-skip-one-link336,12327
+(defun action-lock-goto-next-link (&optional reverse)action-lock-goto-next-link342,12492
+(defun action-lock-goto-previous-link ()action-lock-goto-previous-link352,12810
+
+bcomp.el,0
+
+cheat-font-lock.el,679
+(defun cheat-font-lock-20040624-format-p ()cheat-font-lock-20040624-format-p55,2482
+(defun cheat-font-lock-compiled-p (keywords)cheat-font-lock-compiled-p60,2785
+(defun cheat-font-lock-keywords (keywords)cheat-font-lock-keywords67,3046
+(defun cheat-font-lock-merge-keywords (&rest keywords-list)cheat-font-lock-merge-keywords71,3195
+(defun cheat-font-lock-append-keywords (entries)cheat-font-lock-append-keywords75,3399
+(defun cheat-font-lock-prepend-keywords (entries)cheat-font-lock-prepend-keywords77,3511
+(defun cheat-font-lock-mode (&optional silent)cheat-font-lock-mode82,3697
+(defun cheat-font-lock-fontify (&optional dummy)cheat-font-lock-fontify106,4808
+
+gfunc.el,399
+(defvar *gfunc-dispatchers-var* nil*gfunc-dispatchers-var*45,1713
+(defun gfunc-call (base-name dispatchers args)gfunc-call50,1843
+(defmacro gfunc-define-function (base-name args-declaration dispatchers-vargfunc-define-function72,2680
+(defmacro gfunc-def (base-name args-declaration &optional description)gfunc-def99,3847
+(defmacro gfunc-with (dispatchers-var &rest body)gfunc-with107,4230
+
+honest-report.el,689
+(defun honest-report (&optional header footer)honest-report39,1409
+(defun honest-report-insert (title content)honest-report-insert57,2019
+(defun honest-report-setup ()honest-report-setup63,2144
+(defun honest-report-recent-keys ()honest-report-recent-keys68,2375
+(defun honest-report-screenshot ()honest-report-screenshot78,2689
+(defun honest-report-window-list ()honest-report-window-list89,3131
+(defun honest-report-message ()honest-report-message97,3367
+(defun honest-report-version ()honest-report-version105,3648
+(defun honest-report-version-assoc ()honest-report-version-assoc110,3808
+(defun honest-report-emacs-build-time ()honest-report-emacs-build-time128,4560
+
+howm-backend.el,12911
+(defun howm-folder ()howm-folder31,1206
+(defun howm-folder-type (folder &rest r)howm-folder-type46,1543
+(defun howm-folder-match-under-p (dir regexp filename)howm-folder-match-under-p81,3048
+(defun howm-make-folder-from-items (items)howm-make-folder-from-items85,3210
+(defun howm-make-folder:dir (dir)howm-make-folder:dir94,3520
+(defun howm-folder-items:dir (dir &optional recursive-p)howm-folder-items:dir97,3562
+(defun howm-folder-grep-internal:dir (folder pattern &optional fixed-p)howm-folder-grep-internal:dir103,3808
+(defun howm-files-in-directory (path &optional dummy-exclusion-checker)howm-files-in-directory106,3942
+(defun howm-files-in-directory-sub (full-path &optional under)howm-files-in-directory-sub113,4315
+(defun howm-folder-get-page-create:dir (folder page-name)howm-folder-get-page-create:dir152,5965
+(defun howm-folder-territory-p:dir (folder name)howm-folder-territory-p:dir159,6240
+(defun howm-make-folder:pages (pages)howm-make-folder:pages166,6370
+(defun howm-folder-pages:pages (folder)howm-folder-pages:pages169,6433
+(defun howm-folder-items:pages (folder &optional recursive-p)howm-folder-items:pages172,6490
+(defun howm-folder-files:pages (folder &optional exclusion-checker)howm-folder-files:pages178,6717
+(defun howm-folder-grep-internal:pages (folder pattern &optional fixed-p)howm-folder-grep-internal:pages181,6861
+(defun howm-folder-grep-internal:pages-files (pages pattern fixed-p)howm-folder-grep-internal:pages-files194,7593
+(defun howm-folder-grep-internal:pages-buffers (pages pattern fixed-p)howm-folder-grep-internal:pages-buffers198,7835
+(defvar howm-list-buffers-exclude '("*Messages*" ".howm-keys" ".howm-history"))howm-list-buffers-exclude217,8610
+(defun howm-list-buffers (&optional all)howm-list-buffers218,8690
+(defvar howm-occur-force-fake-grep nilhowm-occur-force-fake-grep236,9490
+(defun howm-occur (regexp)howm-occur239,9627
+(defun howm-list-mark-ring ()howm-list-mark-ring247,10006
+(defun howm-mark-same-line-p (m1 m2)howm-mark-same-line-p262,10817
+(defun howm-make-folder:files (files)howm-make-folder:files285,11544
+(defun howm-folder-items:files (folder &optional recursive-p)howm-folder-items:files288,11607
+(defun howm-folder-grep-internal:files (folder pattern &optional fixed-p)howm-folder-grep-internal:files294,11828
+(defun howm-folder-files:files (folder &optional exclusion-checker)howm-folder-files:files298,12015
+(defun howm-make-folder:nest (list-of-folders)howm-make-folder:nest310,12398
+(defun howm-folder-subfolders (self)howm-folder-subfolders313,12479
+(defun howm-folder-items:nest (folder &optional recursive-p)howm-folder-items:nest316,12531
+(defun howm-folder-grep-internal:nest (folder pattern &optional fixed-p)howm-folder-grep-internal:nest320,12710
+(defcustom howm-rast-search-commandhowm-rast-search-command331,13080
+(defcustom howm-rast-register-commandhowm-rast-register-command337,13257
+(defcustom howm-rast-regexp-assochowm-rast-regexp-assoc343,13438
+(defun howm-make-folder:rast (index-dir &optional doc-dir)howm-make-folder:rast366,14586
+(defun howm-folder-items:rast (folder &optional recursive-p)howm-folder-items:rast370,14761
+(defun howm-folder-files:rast (folder &optional exclusion-checker)howm-folder-files:rast374,14935
+(defun howm-folder-grep-internal:rast (folder pattern-list &optional fixed-p)howm-folder-grep-internal:rast377,15072
+(defun howm-folder-get-page-create:rast (folder page-name)howm-folder-get-page-create:rast396,16001
+(defun howm-folder-territory-p:rast (folder name)howm-folder-territory-p:rast402,16242
+(defun howm-rast-search (db pattern-list)howm-rast-search408,16465
+(defun howm-rast-register (db file)howm-rast-register417,16827
+(defun howm-rast-register-current-buffer (db)howm-rast-register-current-buffer422,16977
+(defun howm-search-namazu (dir pattern)howm-search-namazu433,17240
+(defun howm-make-folder:namazu (index-dir)howm-make-folder:namazu440,17502
+(defun howm-folder-items:namazu (folder &optional recursive-p)howm-folder-items:namazu443,17594
+(defun howm-folder-files:namazu (folder &optional exclusion-checker)howm-folder-files:namazu448,17814
+(defun howm-folder-grep-internal:namazu (folder pattern-list &optional fixed-p)howm-folder-grep-internal:namazu456,18173
+(defun howm-make-folder:rot13dir (dir)howm-make-folder:rot13dir475,19081
+(defun howm-folder-items:rot13dir (folder &optional recursive-p)howm-folder-items:rot13dir478,19146
+(defun howm-folder-grep-internal:rot13dir (folder pattern-list &optional fixed-p)howm-folder-grep-internal:rot13dir486,19460
+(defalias 'howm-view-directory-items  #'howm-folder-items)howm-view-directory-items500,20066
+(defun howm-folder-grep (folder pattern &optional fixed-p)howm-folder-grep510,20328
+(defvar *howm-view-force-case-fold-search* nil) ;; dirty!*howm-view-force-case-fold-search*515,20503
+(defvar howm-view-grep-log-format "> %s | %s")howm-view-grep-log-format517,20609
+(defun howm-grep-items (str file-list &optional fixed-p exclusion-checker)howm-grep-items519,20657
+(defun howm-grep (str file-list &optional fixed-p)howm-grep534,21303
+(defun howm-real-grep (str file-list &optional fixed-p force-case-fold)howm-real-grep546,21918
+(defun howm-grep-multi-p ()howm-grep-multi-p554,22244
+(defun howm-real-grep-single (str file-listhowm-real-grep-single558,22321
+(defun howm-real-grep-multi (str file-list &optional fixed-p force-case-fold)howm-real-grep-multi586,23629
+(defun howm-fake-grep (str file-list &optional fixed-p force-case-fold)howm-fake-grep610,24965
+(defun howm-fake-grep-regexp (str &optional fixed-p)howm-fake-grep-regexp627,25799
+(defun howm-fake-grep-file (reg file force-case-fold)howm-fake-grep-file633,26024
+(defun howm-fake-grep-current-buffer (reg file force-case-fold)howm-fake-grep-current-buffer642,26391
+(defun howm-grep-parse-line (line)howm-grep-parse-line659,27023
+(defalias 'howm-view-grep #'howm-grep)howm-view-grep669,27406
+(defalias 'howm-view-call-process #'howm-call-process)howm-view-call-process670,27445
+(defun howm-page-type (page &rest r)howm-page-type688,27839
+(defun howm-page= (x y)howm-page=705,28349
+(defun howm-page-abbreviate-name (page)howm-page-abbreviate-name708,28389
+(defalias 'howm-save-buffer #'save-buffer)howm-save-buffer711,28497
+(defun howm-insert-buffer-contents (buffer)howm-insert-buffer-contents713,28541
+(defun howm-insert-file-contents (file)howm-insert-file-contents722,28905
+(defun howm-make-page:file (filename)howm-make-page:file746,29563
+(defun howm-page-name:file (page)howm-page-name:file749,29614
+(defun howm-page-mtime:file (page)howm-page-mtime:file752,29657
+(defun howm-page-open:file (page)howm-page-open:file755,29744
+(defun howm-page-insert:file (page)howm-page-insert:file761,29923
+(defun howm-page-viewer:file (page)howm-page-viewer:file769,30177
+(defun howm-page-set-configuration:file (page)howm-page-set-configuration:file794,31355
+(defun howm-make-page:buf (buf)howm-make-page:buf801,31490
+(defun howm-page-name:buf (page)howm-page-name:buf804,31530
+(defconst howm-dummy-mtime (encode-time 0 0 9 1 1 1970)howm-dummy-mtime807,31586
+(defun howm-page-mtime:buf (page)howm-page-mtime:buf810,31682
+(defun howm-page-open:buf (page)howm-page-open:buf813,31737
+(defun howm-page-insert:buf (page)howm-page-insert:buf816,31798
+(defun howm-page-viewer:buf (page)howm-page-viewer:buf820,31917
+(defun howm-page-set-configuration:buf (page)howm-page-set-configuration:buf824,32009
+(defun howm-make-page:nil ()howm-make-page:nil832,32191
+(defun howm-page-name:nil (page)howm-page-name:nil835,32228
+(defun howm-page-mtime:nil (page)howm-page-mtime:nil838,32268
+(defun howm-page-open:nil (page)howm-page-open:nil841,32323
+(defun howm-page-insert:nil (page)howm-page-insert:nil845,32380
+(defun howm-page-viewer:nil (page)howm-page-viewer:nil849,32439
+(defun howm-page-set-configuration:nil (page)howm-page-set-configuration:nil852,32482
+(defun howm-make-page:rot13file (filename)howm-make-page:rot13file860,32627
+(defun howm-page-name:rot13file (page)howm-page-name:rot13file863,32702
+(defun howm-page-mtime:rot13file (page)howm-page-mtime:rot13file866,32773
+(defun howm-page-open:rot13file (page)howm-page-open:rot13file869,32851
+(defun howm-page-insert:rot13file (page)howm-page-insert:rot13file873,32939
+(defun howm-page-viewer:rot13file (page)howm-page-viewer:rot13file876,33037
+(defun howm-page-set-configuration:rot13file (page)howm-page-set-configuration:rot13file879,33086
+(defun howm-create-file (&optional keep-cursor-p)howm-create-file887,33323
+(defun howm-viewer-type (viewer &rest r)howm-viewer-type922,34435
+(defun howm-make-viewer:func (f &optional previewer)howm-make-viewer:func934,34797
+(defun howm-viewer-call:str (viewer page)howm-viewer-call:str942,35031
+(defun howm-viewer-call:func0 (viewer page)howm-viewer-call:func0947,35250
+(defun howm-viewer-call:func (viewer page)howm-viewer-call:func950,35338
+(defvar howm-viewer-indicator-format "%%%%%% %s %%%%%%")howm-viewer-indicator-format953,35413
+(defun howm-viewer-indicator-gen (fmt &rest args)howm-viewer-indicator-gen954,35470
+(defun howm-viewer-indicator:str (viewer page)howm-viewer-indicator:str957,35604
+(defun howm-viewer-indicator:func0 (viewer page)howm-viewer-indicator:func0959,35711
+(defun howm-viewer-indicator:func (viewer page)howm-viewer-indicator:func961,35811
+(defadvice action-lock-find-file (around external-viewer (f u) activate)action-lock-find-file968,36030
+(defalias 'howm-view-external-viewer      #'howm-page-viewer)howm-view-external-viewer975,36287
+(defalias 'howm-view-call-external-viewer #'howm-viewer-call)howm-view-call-external-viewer976,36349
+(defun howm-make-item (page &optional summary place offset home privilege)howm-make-item988,36673
+(defun howm-item-page      (item) (nth 0 item)) ;; page can be nil.howm-item-page990,36799
+(defun howm-item-summary   (item) (howm-item-nth 1 item ""))howm-item-summary991,36867
+(defun howm-item-place     (item) (howm-item-nth 2 item nil))howm-item-place992,36928
+(defun howm-item-offset    (item) (howm-item-nth 3 item nil))howm-item-offset993,36990
+(defun howm-item-home      (item) (howm-item-nth 4 item nil))howm-item-home994,37052
+(defun howm-item-privilege (item) (howm-item-nth 5 item nil))howm-item-privilege995,37114
+(defun howm-item-nth (n item default)howm-item-nth996,37176
+(defun howm-item-set-page (item val)howm-item-set-page998,37243
+(defun howm-item-set-summary (item val)howm-item-set-summary1000,37307
+(defun howm-item-set-offset (item val)howm-item-set-offset1002,37374
+(defun howm-item-set-home (item val)howm-item-set-home1004,37440
+(defun howm-item-set-privilege (item val)howm-item-set-privilege1006,37504
+(defun howm-item-name (item)howm-item-name1009,37574
+(defun howm-item-dup (item) (mapcar #'identity item))howm-item-dup1012,37660
+(defun howm-view-make-item (filename &rest r)howm-view-make-item1016,37821
+(defalias 'howm-view-item-filename      #'howm-item-name)howm-view-item-filename1018,37935
+(defalias 'howm-view-item-summary       #'howm-item-summary)howm-view-item-summary1019,37993
+(defalias 'howm-view-item-place         #'howm-item-place)howm-view-item-place1020,38054
+(defalias 'howm-view-item-offset        #'howm-item-offset)howm-view-item-offset1021,38113
+(defalias 'howm-view-item-home          #'howm-item-home)howm-view-item-home1022,38173
+(defalias 'howm-view-item-privilege     #'howm-item-privilege)howm-view-item-privilege1023,38231
+(defalias 'howm-view-item-set-summary   #'howm-item-set-summary)howm-view-item-set-summary1024,38294
+(defalias 'howm-view-item-set-offset    #'howm-item-set-offset)howm-view-item-set-offset1025,38359
+(defalias 'howm-view-item-set-home      #'howm-item-set-home)howm-view-item-set-home1026,38423
+(defalias 'howm-view-item-set-privilege #'howm-item-set-privilege)howm-view-item-set-privilege1027,38485
+(defvar howm-search-other-dir nil)howm-search-other-dir1035,38713
+(defvar *howm-independent-directories* nil) ;; for internal use*howm-independent-directories*1036,38748
+(defun howm-independent-search-path ()howm-independent-search-path1038,38813
+(defun howm-search-path (&optional ignore-independent-search-path)howm-search-path1044,39040
+(defun howm-search-path-single ()howm-search-path-single1049,39319
+(defun howm-search-path-multi ()howm-search-path-multi1051,39378
+(defun howm-search-path-folder (&optional ignore-independent-search-path)howm-search-path-folder1054,39454
+(defun howm-toggle-search-other-dir (&optional arg)howm-toggle-search-other-dir1057,39606
+(defun howm-open-directory-independently (dir)howm-open-directory-independently1067,39981
+(defvar howm-keyword-buffer-name-format " *howm-keys:%s*")howm-keyword-buffer-name-format1083,40584
+(defun howm-keyword-buffer ()howm-keyword-buffer1084,40643
+
+howm-cl.el,1059
+(defalias 'howm-cl-assoc-if          'assoc-if)howm-cl-assoc-if35,1474
+(defalias 'howm-cl-find-if           'find-if)howm-cl-find-if36,1522
+(defalias 'howm-cl-find-if-not       'find-if-not)howm-cl-find-if-not37,1569
+(defalias 'howm-cl-gensym            'gensym)howm-cl-gensym38,1620
+(defalias 'howm-cl-mapcan            'mapcan)howm-cl-mapcan39,1666
+(defalias 'howm-cl-member*           'member*)howm-cl-member*40,1712
+(defalias 'howm-cl-member-if         'member-if)howm-cl-member-if41,1759
+(defalias 'howm-cl-position          'position)howm-cl-position42,1808
+(defalias 'howm-cl-position-if       'position-if)howm-cl-position-if43,1856
+(defalias 'howm-cl-remove-duplicates 'remove-duplicates)howm-cl-remove-duplicates44,1907
+(defalias 'howm-cl-remove-if         'remove-if)howm-cl-remove-if45,1964
+(defalias 'howm-cl-remove-if-not     'remove-if-not)howm-cl-remove-if-not46,2013
+(defalias 'howm-cl-subseq            'subseq)howm-cl-subseq47,2066
+(defun howm-cl-remove-duplicates* (&rest args)howm-cl-remove-duplicates*49,2113
+
+howm-common.el,4213
+(defun howm-sort (evaluator comparer obj-list)howm-sort25,1066
+(defun howm-subdirectory-p (dir target &optional strict)howm-subdirectory-p32,1360
+(defvar howm-abbreviate-file-name t)howm-abbreviate-file-name44,1842
+(defun howm-abbreviate-file-name (f)howm-abbreviate-file-name45,1879
+(defun howm-abbreviate-file-name-p ()howm-abbreviate-file-name-p52,2137
+(defun howm-fontify (&optional i-dont-understand-this)howm-fontify58,2424
+(defmacro howm-message-time (name &rest body)howm-message-time88,3947
+(defun howm-time-difference-second (ti1 ti0)howm-time-difference-second104,4557
+(defun howm-xor (a b)howm-xor113,4781
+(defun howm-buffer-empty-p (&optional buf)howm-buffer-empty-p115,4823
+(defun howm-point-beginning-of-line ()howm-point-beginning-of-line119,4985
+(defun howm-point-end-of-line ()howm-point-end-of-line123,5080
+(defun howm-inhibit-warning-in-compilation (&rest dummy)howm-inhibit-warning-in-compilation128,5164
+(defun howm-get-value (z)howm-get-value133,5340
+(defun howm-map-with-index (f seq)howm-map-with-index139,5484
+(defun howm-capital-p (str)howm-capital-p148,5848
+(defun howm-single-element-p (a)howm-single-element-p153,5989
+(defun howm-read-string (prompt &optional immediate-chars continued-charshowm-read-string156,6049
+(defun howm-read-string-sub (event charhowm-read-string-sub186,7476
+(defun howm-read-string-fail (event pass-through pass-ret-through)howm-read-string-fail200,8100
+(defun howm-unread-event (event)howm-unread-event210,8388
+(defun howm-first-n (seq n)howm-first-n214,8497
+(defun howm-replace-region (beg end val)howm-replace-region237,9213
+(defmacro howm-edit-read-only-buffer (&rest body)howm-edit-read-only-buffer245,9468
+(defmacro howm-rewrite-read-only-buffer (&rest body)howm-rewrite-read-only-buffer254,9724
+(defun howm-get-buffer-for-file (file &optional buffer-name)howm-get-buffer-for-file268,10119
+(defvar howm-log-buffer-name-format " *howm-log:%s*")howm-log-buffer-name-format276,10391
+(defun howm-write-log (message fmt file &optional limit remove-fmt)howm-write-log277,10445
+(defun howm-get-symbol (soft &rest args)howm-get-symbol303,11668
+(defun howm-buffer-killed-p (buffer)howm-buffer-killed-p317,12289
+(defun howm-classify (classifier lis &optional reverse)howm-classify321,12391
+(defun howm-message-nolog (str &rest args)howm-message-nolog342,13250
+(defun howm-decode-time (&optional specified-time)howm-decode-time346,13364
+(defmacro howm-with-need (&rest body)howm-with-need354,13747
+(defvar *howm-view-in-background* nil*howm-view-in-background*363,13996
+(defmacro howm-view-in-background (&rest body)howm-view-in-background369,14214
+(defun howm-view-in-background-p ()howm-view-in-background-p374,14356
+(defun howm-exclude-p (filename)howm-exclude-p387,14811
+(defvar howm-history-format "> %s | %s")howm-history-format396,15114
+(defvar howm-history-remove-format "| %s$")howm-history-remove-format397,15155
+(defun howm-write-history (message)howm-write-history399,15200
+(defun howm-history ()howm-history406,15519
+(defvar howm-call-process-last-command nilhowm-call-process-last-command427,16126
+(defmacro howm-with-coding-system (coding-system &rest body)howm-with-coding-system434,16424
+(defun howm-call-process (command argshowm-call-process447,17006
+(defun howm-call-process-here (command args &optional stdin-string)howm-call-process-here461,17664
+(defun howm-buffer-lines (&optional buf)howm-buffer-lines470,17980
+(defvar howm-reminder-schedule-interval nilhowm-reminder-schedule-interval478,18200
+(defun howm-reminder-schedule-interval-from ()howm-reminder-schedule-interval-from481,18337
+(defun howm-reminder-schedule-interval-to ()howm-reminder-schedule-interval-to483,18425
+(defmacro howm-with-schedule-interval (interval &rest body)howm-with-schedule-interval485,18511
+(defmacro howm-with-reminder-setting  (&rest body)howm-with-reminder-setting495,19008
+(defmacro howm-defun-xemacs (func args emacs-f xemacs-f)howm-defun-xemacs511,19566
+(defvar howm-ret-key-event (howm-ret-key-event))howm-ret-key-event541,20613
+(defun howm-ret-key-event-p (event)howm-ret-key-event-p543,20663
+(defvar howm-infinityhowm-infinity554,20950
+
+howm-date.el,2194
+(defvar howm-insert-date-pass-through nil)howm-insert-date-pass-through28,1143
+(defun howm-insert-date ()howm-insert-date30,1187
+(defun howm-insert-dtime ()howm-insert-dtime36,1397
+(defun howm-action-lock-date (date &optional new future-p)howm-action-lock-date41,1565
+(defun howm-action-lock-date-prompt (date new pass-through)howm-action-lock-date-prompt65,2607
+(defun howm-action-lock-date-search (date)howm-action-lock-date-search79,3226
+(defun howm-search-today ()howm-search-today85,3397
+(defun howm-search-past (&optional days-before)howm-search-past89,3466
+(defun howm-action-lock-date-shift (n date)howm-action-lock-date-shift96,3722
+(defun howm-action-lock-date-set (val date &optional future-p)howm-action-lock-date-set99,3825
+(defvar howm-action-lock-date-repeat-max 200)howm-action-lock-date-repeat-max102,3955
+(defun howm-action-lock-date-repeat (until date)howm-action-lock-date-repeat103,4001
+(defun howm-make-datestr (y m d)howm-make-datestr125,4999
+(defun howm-datestr-parse (date)howm-datestr-parse129,5120
+(defun howm-datestr-to-time (date)howm-datestr-to-time137,5416
+(defun howm-datestr-day-of-week (date)howm-datestr-day-of-week144,5600
+(defun howm-datestr-expand (date base &optional future-p)howm-datestr-expand147,5697
+(defun howm-datestr-expand-future (date base)howm-datestr-expand-future152,5871
+(defun howm-datestr-expand-general (date base &optional future-p)howm-datestr-expand-general159,6117
+(defun howm-datestr-shift (date y m d)howm-datestr-shift188,7408
+(defun howm-datestr<= (date1 date2)howm-datestr<=195,7620
+(defun howm-datestr-replace (date)howm-datestr-replace199,7715
+(defun howm-duplicate-line ()howm-duplicate-line206,7891
+(defvar howm-date-current nil)howm-date-current216,8185
+(defadvice howm-action-lock-date-search (around remember-date (date) activate)howm-action-lock-date-search219,8265
+(defvar howm-date-forward-ymd-msg "Searching %s...")howm-date-forward-ymd-msg223,8389
+(defvar howm-date-forward-ymd-limit 35)howm-date-forward-ymd-limit224,8442
+(defun howm-date-forward-ymd (y m d)howm-date-forward-ymd225,8482
+(defmacro howm-date-defun-f/b (func y m d)howm-date-defun-f/b247,9369
+
+howm-lang-en.el,172
+(defvar howm-day-of-week-en '("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat"))howm-day-of-week-en24,1033
+(defvar howm-menu-command-table-enhowm-menu-command-table-en26,1108
+
+howm-lang-ja.el,207
+(defvar howm-day-of-week-ja '("日" "月" "火" "水" "木" "金" "土"))howm-day-of-week-ja23,1042
+(defvar howm-menu-command-table-jahowm-menu-command-table-ja25,1152
+
+howm-menu-en.el,0
+
+howm-menu-ja.el,0
+
+howm-menu.el,6843
+(defvar howm-randomize t)howm-randomize49,1818
+(defvar howm-menu-reminder-format "> %s | %s"howm-menu-reminder-format53,1880
+(defvar howm-menu-list-formathowm-menu-list-format55,1986
+(defvar howm-menu-list-regexp "^\\(>\\([^|\r\n]*|\\)\\) +\\(.*\\)$"howm-menu-list-regexp61,2294
+(defvar howm-menu-list-regexp-key-pos 3howm-menu-list-regexp-key-pos65,2575
+(defvar howm-menu-list-regexp-action-pos 1howm-menu-list-regexp-action-pos68,2734
+(defvar howm-menu-list-regexp-face-pos 2howm-menu-list-regexp-face-pos71,2871
+(defvar howm-menu-key-regexphowm-menu-key-regexp78,3050
+(defvar howm-menu-key-regexp-word-pos 1)howm-menu-key-regexp-word-pos80,3151
+(defvar howm-menu-key-regexp-key-pos 2)howm-menu-key-regexp-key-pos81,3192
+(defvar howm-menu-key-regexp-moveonly-pos 4)howm-menu-key-regexp-moveonly-pos82,3232
+(defvar *howm-menu-force-refresh* nil) ;; dirty. clean me. [2003/09/29 21:39]*howm-menu-force-refresh*147,5066
+(defvar *howm-menu-shortcut-keys* nil)*howm-menu-shortcut-keys*149,5145
+(defvar *howm-menu-shortcut-multidef-keys* nil)*howm-menu-shortcut-multidef-keys*150,5184
+(defvar *howm-menu-shortcut-markers* nil)*howm-menu-shortcut-markers*151,5232
+(defvar howm-menu-previous-buffer nil)howm-menu-previous-buffer154,5334
+(defvar howm-menu-next-expiry-time (current-time))howm-menu-next-expiry-time155,5373
+(defvar howm-menu-last-time (current-time))howm-menu-last-time156,5424
+(defvar howm-menu-buffer-file nil)howm-menu-buffer-file157,5468
+(defvar howm-menu-buffer-file-place nil)howm-menu-buffer-file-place158,5503
+(defun howm-menu-mode ()howm-menu-mode170,5993
+(defun howm-menu (&optional force-refresh last-chance)howm-menu190,6494
+(defun howm-menu-open (file &optional place name)howm-menu-open205,7179
+(defun howm-menu-open-sub (f place name)howm-menu-open-sub216,7521
+(defun howm-menu-refresh (&optional file place name)howm-menu-refresh249,8657
+(defun howm-menu-insert-paragraph (file place)howm-menu-insert-paragraph275,9600
+(defun howm-menu-dynamic-setup ()howm-menu-dynamic-setup295,10276
+(defun howm-menu-set-face ()howm-menu-set-face303,10533
+(defun howm-menu-footer ()howm-menu-footer310,10745
+(defun howm-menu-refresh-background ()howm-menu-refresh-background324,11382
+(defun howm-menu-invoke (arg)howm-menu-invoke332,11615
+(defun howm-menu-action-lock-rules ()howm-menu-action-lock-rules342,11872
+(defun howm-menu-action (function-table args)howm-menu-action363,12788
+(defun howm-menu-shortcut-get-marker ()howm-menu-shortcut-get-marker385,13728
+(defun howm-menu-shortcut-clear-markers ()howm-menu-shortcut-clear-markers391,13881
+(defun howm-menu-shortcut-initialize ()howm-menu-shortcut-initialize396,14046
+(defun howm-menu-shortcut-sort (keys)howm-menu-shortcut-sort401,14212
+(defun howm-menu-shortcut-warn ()howm-menu-shortcut-warn406,14344
+(defun howm-menu-shortcut ()howm-menu-shortcut414,14715
+(defun howm-menu-shortcut-func (key p move-only)howm-menu-shortcut-func437,15787
+(defun howm-menu-shortcut-func1 (p move-only)howm-menu-shortcut-func1443,15980
+(defun howm-menu-shortcut-func2 (key p move-only)howm-menu-shortcut-func2459,16524
+(defun howm-menu-edit ()howm-menu-edit481,17303
+(defun howm-menu-eval (s)howm-menu-eval490,17552
+(defun howm-menu-call (s)howm-menu-call494,17622
+(defun howm-open-today ()howm-open-today498,17706
+(defun howm-open-past (&optional days-before)howm-open-past504,17830
+(defun howm-open-past-sub (days-before)howm-open-past-sub511,18024
+(defun howm-find-past (&optional days-before)howm-find-past520,18373
+(defun howm-find-today (&optional days-before)howm-find-today525,18550
+(defun howm-find-yesterday (&optional days-before)howm-find-yesterday529,18657
+(defun howm-one-file-one-day-p ()howm-one-file-one-day-p533,18764
+(defun howm-menu-make-invisible ()howm-menu-make-invisible546,19171
+(defun howm-menu-font-lock-rules ()howm-menu-font-lock-rules564,19868
+(defun howm-menu-add-font-lock ()howm-menu-add-font-lock580,20667
+(defun howm-menu-replace (rules)howm-menu-replace586,20850
+(defun howm-menu-here ()howm-menu-here612,21754
+(defun howm-menu-here-var (expr beg end)howm-menu-here-var622,22220
+(defun howm-menu-here-func (func args beg end)howm-menu-here-func627,22380
+(defun howm-menu-schedule ()howm-menu-schedule639,22862
+(defvar howm-menu-todo-show-day-of-week t)howm-menu-todo-show-day-of-week644,23074
+(defun howm-menu-todo ()howm-menu-todo645,23117
+(defun howm-menu-reminder ()howm-menu-reminder650,23363
+(defun howm-menu-recent (&optional random)howm-menu-recent656,23630
+(defun howm-menu-random () (howm-menu-recent t))howm-menu-random661,23820
+(defun howm-menu-general (label formatter item-list)howm-menu-general663,23870
+(defun howm-menu-format-todo (item)howm-menu-format-todo685,24753
+(defun howm-menu-format-reminder (item &optional day-of-week-str show-priority)howm-menu-format-reminder693,25059
+(defun howm-day-of-week-string (&optional day-of-week)howm-day-of-week-string708,25749
+(defun howm-recent-menu (num &optional random)howm-recent-menu718,26078
+(defun howm-menu-recent-regexp ()howm-menu-recent-regexp741,27265
+(defun howm-menu-list-put-item (text item)howm-menu-list-put-item746,27374
+(defun howm-menu-list-get-item (&optional text)howm-menu-list-get-item749,27558
+(defun howm-menu-list-getput-item (from-text to-text)howm-menu-list-getput-item751,27675
+(defun howm-menu-list-action (&optional keyword)howm-menu-list-action755,27830
+(defun howm-menu-format-item (item &optional list-format)howm-menu-format-item761,28127
+(defun howm-menu-list-format (info line item &optional list-format)howm-menu-list-format766,28364
+(defun howm-menu-list-rules ()howm-menu-list-rules771,28549
+(defun howm-menu-search (key)howm-menu-search780,28895
+(defun howm-menu-classified-reminder (classifier &optional comparerhowm-menu-classified-reminder791,29240
+(defun howm-menu-categorized-reminder (categories &optional title-formathowm-menu-categorized-reminder822,30778
+(defun howm-menu-initialize-skel (&optional dummy)howm-menu-initialize-skel860,32645
+(defun howm-menu-copy-skel (contents)howm-menu-copy-skel867,32895
+(defun howm-require-lang (&optional lang)howm-require-lang888,33626
+(defun howm-lang-ref (var)howm-lang-ref891,33742
+(defun howm-menu-command-table-raw ()howm-menu-command-table-raw898,33985
+(defun howm-menu-command-table ()howm-menu-command-table901,34069
+(defun howm-day-of-week ()howm-day-of-week906,34274
+(defun howm-menu-p ()howm-menu-p912,34412
+(defun howm-menu-name (file)howm-menu-name915,34476
+(defun howm-buffer-alive-p (buf)howm-buffer-alive-p918,34545
+(defun howm-menu-keyword-p (keyword)howm-menu-keyword-p921,34610
+(defun howm-time< (t1 t2)howm-time<926,34785
+(defun howm-menu-invisible-region (beg end)howm-menu-invisible-region931,34915
+
+howm-misc.el,6440
+(defun howm-version ()howm-version28,1129
+(defun howm-keyword-file ()howm-keyword-file32,1205
+(defun howm-set-mode ()howm-set-mode46,1602
+(defun howm-set-mode-p (&optional buf)howm-set-mode-p51,1728
+(defun howm-normalize-file-name (filename)howm-normalize-file-name57,1955
+(defvar howm-configuration-for-major-mode nil)howm-configuration-for-major-mode66,2224
+(defun howm-set-configuration-for-file-name (f)howm-set-configuration-for-file-name130,4989
+(defun howm-set-configuration-for-major-mode (mode)howm-set-configuration-for-major-mode134,5124
+(defvar howm-auto-mode-interpreter-regexphowm-auto-mode-interpreter-regexp146,5656
+(defun howm-auto-mode (&optional file-name)howm-auto-mode150,5866
+(defun howm-kill-all (&optional force-p)howm-kill-all335,14105
+(defun howm-toggle-buffer ()howm-toggle-buffer354,14874
+(defun howm-switch-to-howm-buffer ()howm-switch-to-howm-buffer359,15014
+(defun howm-switch-to-nonhowm-buffer ()howm-switch-to-nonhowm-buffer365,15175
+(defun howm-find-buffer (pred)howm-find-buffer371,15415
+(defun howm-internal-buffer-p (buf)howm-internal-buffer-p380,15659
+(defun howm-buffer-p (&optional buf)howm-buffer-p383,15747
+(defun howm-mode-add-font-lock ()howm-mode-add-font-lock397,16313
+(defun howm-mode-add-font-lock-internal ()howm-mode-add-font-lock-internal400,16420
+(defun howm-show-buffer-as-howm ()howm-show-buffer-as-howm415,16933
+(defun howm-narrow-to-memo ()howm-narrow-to-memo432,17376
+(defun howm-toggle-narrow ()howm-toggle-narrow436,17484
+(defun howm-narrow-p ()howm-narrow-p445,17672
+(defun howm-auto-narrow ()howm-auto-narrow453,17863
+(defun howm-create-interactively (&optional use-current-directory)howm-create-interactively463,18213
+(defmacro howm-save-narrowing (&rest body)howm-save-narrowing475,18604
+(defun howm-next-memo (n)howm-next-memo485,18831
+(defun howm-previous-memo (n)howm-previous-memo492,19030
+(defun howm-first-memo ()howm-first-memo499,19240
+(defun howm-last-memo ()howm-last-memo504,19336
+(defvar howm-random-walk-buf nil "for internal use")howm-random-walk-buf512,19494
+(defvar howm-random-walk-ro t "for internal use")howm-random-walk-ro513,19547
+(defun howm-random-walk ()howm-random-walk515,19598
+(defun howm-random-walk-summary ()howm-random-walk-summary537,20384
+(defun howm-random-walk-text ()howm-random-walk-text545,20613
+(defun howm-open-named-file ()howm-open-named-file558,20999
+(defvar howm-remember-wconf nilhowm-remember-wconf582,21985
+(defvar howm-remember-buffer-name "*howm-remember*")howm-remember-buffer-name584,22039
+(defvar howm-remember-mode-hook nil)howm-remember-mode-hook585,22092
+(defvar howm-remember-first-line-to-title nil)howm-remember-first-line-to-title590,22310
+(defun howm-remember ()howm-remember592,22358
+(defun howm-remember-mode ()howm-remember-mode605,22876
+(defun howm-remember-submit ()howm-remember-submit617,23183
+(defun howm-remember-get-title ()howm-remember-get-title629,23589
+(defun howm-remember-discard ()howm-remember-discard640,23923
+(defvar howm-buffer-name-limit 20)howm-buffer-name-limit658,24552
+(defvar howm-buffer-name-total-limit howm-buffer-name-limit)howm-buffer-name-total-limit659,24587
+(defvar howm-buffer-name-format "%s"howm-buffer-name-format660,24648
+(defun howm-truncate-string (string limit &optional dots-str)howm-truncate-string665,24837
+(defun howm-set-buffer-name-from-title (checker title-regexp title-regexp-pos)howm-set-buffer-name-from-title678,25339
+(defun howm-mode-set-buffer-name ()howm-mode-set-buffer-name701,26376
+(defun howm-memoize-put (fname value)howm-memoize-put709,26693
+(defun howm-memoize-get (fname)howm-memoize-get711,26766
+(defun howm-memoize-call (fname func args)howm-memoize-call714,26828
+(defun howm-memoize-reset (fname)howm-memoize-reset725,27194
+(defmacro howm-defun-memoize (fname args &rest body)howm-defun-memoize729,27307
+(defun howm-bset-nodup (f &rest args)howm-bset-nodup756,28211
+(defun howm-bset-mapcar (func lis)howm-bset-mapcar758,28309
+(defun howm-bset-mapcan (func lis)howm-bset-mapcan760,28383
+(defun howm-bset-message (&rest args)howm-bset-message764,28513
+(defun howm-bset-matched-files (query)howm-bset-matched-files768,28638
+(defun howm-bset-keywords-in-file (file)howm-bset-keywords-in-file780,29140
+(defun howm-bset-candidate-keywords (query-list)howm-bset-candidate-keywords783,29224
+(defun howm-bset-reset ()howm-bset-reset816,30726
+(defun howm-bset (query-list)howm-bset821,30922
+(defun howm-bayesian-set (query-str)howm-bayesian-set834,31398
+(defvar action-lock-mode-before-canna nil)action-lock-mode-before-canna860,32262
+(defadvice canna:enter-canna-mode (around action-lock-fix activate)canna:enter-canna-mode862,32365
+(defadvice canna:quit-canna-mode (around action-lock-fix activate)canna:quit-canna-mode866,32531
+(defvar howm-ime-fix nil)howm-ime-fix875,32812
+(defadvice mcomplete-p (around symbol-check activate)mcomplete-p937,34977
+(defvar howm-auto-save-buffers-disposed nil)howm-auto-save-buffers-disposed945,35289
+(defun howm-auto-save-buffers-p ()howm-auto-save-buffers-p948,35453
+(defun howm-auto-save-buffers-dispose ()howm-auto-save-buffers-dispose956,35777
+(defadvice auto-save-buffers (around howm-dispose activate)auto-save-buffers961,36025
+(defun howm-basic-save-buffer ()howm-basic-save-buffer966,36225
+(defun howm-setup-change-log ()howm-setup-change-log984,37113
+(defvar howm-change-log-file-name "ChangeLog")howm-change-log-file-name1018,38604
+(defun howm-to-change-log ()howm-to-change-log1019,38651
+(defun howm-from-change-log ()howm-from-change-log1027,38975
+(defun howm-test ()howm-test1040,39376
+(defun howm-set-lang ()howm-set-lang1045,39475
+(defun howm-compiled-p ()howm-compiled-p1053,39708
+(defun howm-make-file-p ()howm-make-file-p1055,39795
+(defun howm-test-p ()howm-test-p1058,39870
+(defun howm-bug-report (&optional show-sym)howm-bug-report1061,39917
+(defun howm-version-long ()howm-version-long1094,41254
+(defun howm-symbols-desc (&optional max-desc-len)howm-symbols-desc1101,41438
+(defvar howm-required-features '(howm-required-features1121,42364
+(defun howm-prefix-names ()howm-prefix-names1131,42770
+(defun howm-symbols ()howm-symbols1134,42861
+(defun howm-elp ()howm-elp1142,43100
+(defvar howm-sample-directory (expand-file-name "sample/")howm-sample-directory1147,43203
+(defun howm-bug-shot ()howm-bug-shot1149,43284
+
+howm-mkmenu.el,170
+(defvar howm-mkmenu-ruleshowm-mkmenu-rules24,1056
+(defmacro howm-mkmenu-insert (&rest clauses)howm-mkmenu-insert32,1319
+(defun howm-mkmenu (rule)howm-mkmenu41,1706
+
+howm-mode.el,8993
+(defvar howm-keyword-header "<<<"howm-keyword-header53,2042
+(defvar howm-ref-header ">>>"howm-ref-header55,2139
+(defvar howm-lighter " howm"howm-lighter57,2207
+(defvar howm-inhibit-title-file-match thowm-inhibit-title-file-match60,2266
+(defvar howm-list-all-title nil) ;; obsolete [2003-11-30]howm-list-all-title62,2384
+(defvar howm-list-recent-title nil) ;; obsolete [2003-11-30]howm-list-recent-title63,2442
+(defvar howm-date-separator "-") ;; "-" ==> 2003-10-21howm-date-separator64,2503
+(defvar howm-default-key-tablehowm-default-key-table66,2559
+(defvar howm-date-regexp-grephowm-date-regexp-grep146,5431
+(defvar howm-date-regexphowm-date-regexp150,5582
+(defvar howm-date-regexp-year-pos 1)howm-date-regexp-year-pos154,5746
+(defvar howm-date-regexp-month-pos 2)howm-date-regexp-month-pos155,5783
+(defvar howm-date-regexp-day-pos 3)howm-date-regexp-day-pos156,5821
+(defvar howm-date-formathowm-date-format157,5857
+(defvar howm-dtime-body-formathowm-dtime-body-format159,5949
+(defvar howm-dtime-formathowm-dtime-format161,6018
+(defvar howm-insert-date-format "[%s]")howm-insert-date-format163,6087
+(defvar howm-insert-date-future nil)howm-insert-date-future164,6127
+(defvar howm-template-date-format howm-dtime-formathowm-template-date-format171,6394
+(defvar howm-template-file-format (concat howm-ref-header " %s")howm-template-file-format174,6547
+(defun howm-action-lock-general (command regexp poshowm-action-lock-general182,6780
+(defun howm-action-lock-search (regexphowm-action-lock-search194,7222
+(defun howm-action-lock-related (regexp pos hilit-pos)howm-action-lock-related199,7496
+(defun howm-action-lock-date-rule ()howm-action-lock-date-rule202,7622
+(defun howm-action-lock-quote-keyword (keyword)howm-action-lock-quote-keyword205,7729
+(defun howm-action-lock-setup ()howm-action-lock-setup214,8058
+(defun howm-file-name (&optional time)howm-file-name256,10047
+(defun howm-set-keymap ()howm-set-keymap307,11950
+(defun howm-refresh ()howm-refresh330,12764
+(defun howm-initialize-buffer ()howm-initialize-buffer336,12881
+(defun howm-after-save ()howm-after-save355,13541
+(defun howm-restore-buffer ()howm-restore-buffer365,13857
+(defun howm-list-all ()howm-list-all368,13912
+(defun howm-all-items ()howm-all-items376,14196
+(defun howm-list-recent (&optional days)howm-list-recent380,14328
+(defvar howm-list-title-previous nilhowm-list-title-previous395,14963
+(defun howm-list-title-put-previous (&optional item-list)howm-list-title-put-previous398,15077
+(defun howm-list-title-clear-previous ()howm-list-title-clear-previous401,15239
+(defun howm-list-title-get-previous ()howm-list-title-get-previous403,15319
+(defun howm-list-title-regexp ()howm-list-title-regexp409,15553
+(defalias 'howm-list-title 'howm-list-toggle-title) ;; backward compatibilityhowm-list-title411,15647
+(defun howm-list-toggle-title (&optional undo)howm-list-toggle-title412,15725
+(defun howm-list-title-internal ()howm-list-title-internal417,15903
+(defun howm-list-title-p ()howm-list-title-p429,16308
+(defun howm-days-after (ti days &optional hours)howm-days-after435,16504
+(defun howm-days-before (ti days)howm-days-before445,16817
+(defun howm-list-grep (&optional completion-p)howm-list-grep448,16885
+(defun howm-list-grep-fixed ()howm-list-grep-fixed453,17031
+(defun howm-list-grep-general (&optional completion-p)howm-list-grep-general458,17152
+(defun howm-search (regexp fixed-p &optional emacs-regexp filter)howm-search466,17509
+(defvar *howm-view-window-configuration* nil*howm-view-window-configuration*479,18032
+(defun howm-view-window-configuration ()howm-view-window-configuration481,18099
+(defun howm-set-view-window-configuration (conf)howm-set-view-window-configuration483,18176
+(defun howm-record-view-window-configuration ()howm-record-view-window-configuration485,18273
+(defun howm-restore-view-window-configuration ()howm-restore-view-window-configuration487,18392
+(defun howm-return-to-list ()howm-return-to-list489,18504
+(defun howm-call-view-search-internal (regexp fixed-p &optional emacs-regexp)howm-call-view-search-internal493,18595
+(defun howm-list-migemo (&optional completion-p)howm-list-migemo500,18925
+(defun howm-migemo-get-pattern (roma type)howm-migemo-get-pattern514,19456
+(defun howm-normalize-oldp ()howm-normalize-oldp542,20612
+(defun howm-normalizer-pair ()howm-normalizer-pair556,21139
+(defmacro howm-with-normalizer (&rest body)howm-with-normalizer576,22139
+(defun howm-normalize-show (name item-listhowm-normalize-show587,22507
+(defun howm-call-view-summary (name item-list-pair fl-keywords)howm-call-view-summary601,23111
+(defun howm-normalize (item-listhowm-normalize610,23435
+(defun howm-normalize-check (item-list tag reg tag-when-multi-hits)howm-normalize-check649,25422
+(defun howm-list-normalize-old (&optional keyword comefrom-regexp no-list-title)howm-list-normalize-old661,25930
+(defun howm-list-normalize-subr (keyword comefrom-regexp no-list-title)howm-list-normalize-subr673,26416
+(defun howm-make-keyword-string (keyword)howm-make-keyword-string713,28427
+(defun howm-make-wiki-string (keyword)howm-make-wiki-string715,28509
+(defvar howm-keyword-regexp-format "%s$"howm-keyword-regexp-format719,28598
+(defun howm-make-keyword-regexp1 (keyword)howm-make-keyword-regexp1727,29009
+(defun howm-make-keyword-regexp2 (keyword)howm-make-keyword-regexp2729,29130
+(defun howm-make-keyword-regexp1-sub (keyword)howm-make-keyword-regexp1-sub731,29251
+(defun howm-make-keyword-regexp2-sub (keyword)howm-make-keyword-regexp2-sub734,29397
+(defun howm-make-keyword-regexp-general (keyword regexp-generator)howm-make-keyword-regexp-general737,29543
+(defun howm-list-related (str)howm-list-related749,29976
+(defun howm-subkeyword (str)howm-subkeyword761,30513
+(defun howm-list-around ()howm-list-around766,30610
+(defvar *howm-command* nil*howm-command*781,31143
+(defun howm-set-command (com)howm-set-command783,31192
+(defun howm-command ()howm-command785,31251
+(defun howm-create (&optional which-template here)howm-create791,31363
+(defun howm-create-default-title-content ()howm-create-default-title-content800,31711
+(defun howm-create-here (&optional which-template)howm-create-here830,33087
+(defun howm-create-file-with-title (title &optionalhowm-create-file-with-title834,33193
+(defun howm-create-finish ()howm-create-finish857,34097
+(defun howm-create-newline ()howm-create-newline861,34178
+(defun howm-create-newline-prepend ()howm-create-newline-prepend866,34308
+(defun howm-create-newline-append ()howm-create-newline-append868,34373
+(defun howm-insert-template (title &optionalhowm-insert-template875,34566
+(defvar howm-template-receive-buffer thowm-template-receive-buffer892,35369
+(defun howm-template-string (which-template previous-buffer)howm-template-string898,35594
+(defun howm-replace (rules arg &optional beg end)howm-replace909,36234
+(defun howm-template-title (arg)howm-template-title920,36627
+(defun howm-template-date (arg)howm-template-date922,36697
+(defun howm-template-previous-file (arg)howm-template-previous-file924,36765
+(defun howm-template-cursor (arg)) ;; do nothinghowm-template-cursor926,36842
+(defun howm-dup ()howm-dup928,36892
+(defun howm-completing-read-keyword ()howm-completing-read-keyword939,37172
+(defun howm-insert-keyword ()howm-insert-keyword946,37415
+(defun howm-keyword-to-kill-ring (&optional filename-p)howm-keyword-to-kill-ring950,37505
+(defun howm-title-at-current-point (&optional filename-phowm-title-at-current-point957,37726
+(defun howm-string-to-kill-ring (str)howm-string-to-kill-ring970,38269
+(defun howm-keyword-for-comefrom ()howm-keyword-for-comefrom977,38405
+(defun howm-keyword-list ()howm-keyword-list987,38745
+(defun howm-keyword-add (keyword-list)howm-keyword-add993,38987
+(defun howm-keyword-new-p (str)howm-keyword-new-p1009,39459
+(defun howm-support-aliases-p ()howm-support-aliases-p1016,39692
+(defun howm-aliases ()howm-aliases1018,39756
+(defun howm-read-aliases ()howm-read-aliases1022,39846
+(defun howm-expand-aliases-recursively (keyword aliases)howm-expand-aliases-recursively1038,40508
+(defun howm-keyword-aliases (keyword)howm-keyword-aliases1062,41649
+(defun howm-keyword-search (keyword &optional create-p open-unique-p)howm-keyword-search1082,42500
+(defun howm-keyword-search-subr (keyword create-p open-unique-p)howm-keyword-search-subr1088,42742
+(defun howm-keyword-search-open-menu (keyword item-list multi-hits-p)howm-keyword-search-open-menu1154,45716
+(defun howm-keyword-search-create (title)howm-keyword-search-create1165,46151
+(defun howm-keyword-search-open-unique (items)howm-keyword-search-open-unique1170,46291
+(defun howm-keyword-for-goto (&optional keyword-list)howm-keyword-for-goto1175,46457
+(defun howm-keyword-add-current-buffer ()howm-keyword-add-current-buffer1190,47180
+(defun howm-keyword-read ()howm-keyword-read1205,47824
+
+howm-reminder.el,7285
+(defvar howm-list-schedule-name "{schedule}")howm-list-schedule-name25,1071
+(defvar howm-list-todo-name "{todo}")howm-list-todo-name26,1117
+(defvar howm-todo-priority-normal-laziness 1)howm-todo-priority-normal-laziness38,1587
+(defvar howm-todo-priority-todo-laziness 7)howm-todo-priority-todo-laziness39,1633
+(defvar howm-todo-priority-todo-init -7)howm-todo-priority-todo-init40,1677
+(defvar howm-todo-priority-defer-laziness 30)howm-todo-priority-defer-laziness41,1718
+(defvar howm-todo-priority-defer-init -14)howm-todo-priority-defer-init42,1764
+(defvar howm-todo-priority-defer-peak 0)howm-todo-priority-defer-peak43,1807
+(defvar howm-todo-priority-deadline-laziness 7)howm-todo-priority-deadline-laziness44,1848
+(defvar howm-todo-priority-deadline-init -2)howm-todo-priority-deadline-init45,1896
+(defvar howm-todo-priority-schedule-laziness 1)howm-todo-priority-schedule-laziness46,1941
+(defvar howm-todo-priority-normal-bottom   (- howm-huge))howm-todo-priority-normal-bottom47,1989
+(defvar howm-todo-priority-todo-bottom     (- howm-huge))howm-todo-priority-todo-bottom48,2047
+(defvar howm-todo-priority-defer-bottom    (- howm-huge))howm-todo-priority-defer-bottom49,2105
+(defvar howm-todo-priority-deadline-bottom (- howm-huge))howm-todo-priority-deadline-bottom50,2163
+(defvar howm-todo-priority-schedule-bottom (- howm-huge++)howm-todo-priority-schedule-bottom51,2221
+(defvar howm-todo-priority-deadline-top    howm-huge)howm-todo-priority-deadline-top55,2443
+(defvar howm-todo-priority-schedule-top    howm-huge)howm-todo-priority-schedule-top56,2497
+(defvar howm-todo-priority-unknown-top     howm-huge+)howm-todo-priority-unknown-top57,2551
+(defvar howm-action-lock-reminder-done-default nil)howm-action-lock-reminder-done-default59,2607
+(defvar howm-congrats-count 0)howm-congrats-count61,2660
+(define-key howm-view-summary-mode-map "." 'howm-reminder-goto-today)howm-view-summary-mode-map223,10661
+(defmacro howm-with-schedule-summary-format (&rest body)howm-with-schedule-summary-format228,10874
+(defun howm-list-schedule ()howm-list-schedule234,11129
+(defun howm-list-reminder-internal (types)howm-list-reminder-internal243,11485
+(defun howm-list-reminder-final-setup (&optional name item-list)howm-list-reminder-final-setup250,11800
+(defcustom howm-highlight-date-regexp-formathowm-highlight-date-regexp-format258,12153
+(defun howm-reminder-today-font-lock-keywords ()howm-reminder-today-font-lock-keywords268,12590
+(defun howm-reminder-add-font-lock ()howm-reminder-add-font-lock274,12908
+(defun howm-reminder-add-font-lock-internal ()howm-reminder-add-font-lock-internal277,13023
+(defun howm-reminder-omit-before (regexp str)howm-reminder-omit-before281,13169
+(defun howm-reminder-summarizer (regexp &optional show-day-of-week)howm-reminder-summarizer285,13283
+(defun howm-reminder-today (&optional days-after fmt)howm-reminder-today297,13807
+(defun howm-reminder-goto-today ()howm-reminder-goto-today302,14022
+(defun howm-schedule-menu (days &optional days-before)howm-schedule-menu319,14645
+(defun howm-schedule-sort-items (items &optional reverse-p)howm-schedule-sort-items332,15279
+(defun howm-schedule-sort-by-date ()howm-schedule-sort-by-date338,15524
+(defun howm-schedule-sort-converter (item)howm-schedule-sort-converter341,15629
+(defun howm-schedule-sort-comparer (a b)howm-schedule-sort-comparer347,15836
+(defun howm-schedule-date (item)howm-schedule-date352,15962
+(defun howm-reminder-search (types)howm-reminder-search355,16032
+(defun howm-list-todo ()howm-list-todo362,16323
+(defun howm-todo-sleeping-p (item)howm-todo-sleeping-p367,16418
+(defun howm-list-active-todo ()howm-list-active-todo370,16570
+(defun howm-list-sleeping-todo ()howm-list-sleeping-todo374,16716
+(defun howm-list-todo-sub (&optional pred)howm-list-todo-sub378,16814
+(defun howm-todo-menu (n limit-priority separators)howm-todo-menu392,17386
+(defun howm-reminder-menu (n limit-priority separators)howm-reminder-menu407,18225
+(defun howm-todo-insert-separators (item-list separatorshowm-todo-insert-separators411,18363
+(defun howm-todo-sort-items (items &optional reverse-p)howm-todo-sort-items425,19088
+(defun howm-todo-sort-by-priority ()howm-todo-sort-by-priority431,19280
+(defun howm-reminder-parse (item)howm-reminder-parse435,19379
+(defun howm-todo-parse (item)howm-todo-parse437,19471
+(defun howm-todo-parse-string (str)howm-todo-parse-string439,19537
+(defun howm-todo-priority (item)howm-todo-priority474,21428
+(defun howm-todo-priority-ext (item)howm-todo-priority-ext483,21715
+(defun howm-todo-priority-ext-gt (e1 e2)howm-todo-priority-ext-gt485,21818
+(defun howm-todo-relative-late (late laziness default-laziness)howm-todo-relative-late492,22082
+(defun howm-todo-priority-normal (late lz item)howm-todo-priority-normal495,22198
+(defun howm-todo-priority-todo (late lz item)howm-todo-priority-todo501,22447
+(defun howm-todo-priority-defer (late lz item)howm-todo-priority-defer508,22743
+(defun howm-todo-priority-deadline (late lz item)howm-todo-priority-deadline534,23890
+(defun howm-todo-priority-deadline-1 (late lz item)howm-todo-priority-deadline-1539,24081
+(defun howm-todo-priority-deadline-2 (late lz item)howm-todo-priority-deadline-2552,24664
+(defun howm-todo-priority-schedule (late lz item)howm-todo-priority-schedule562,25130
+(defun howm-todo-priority-schedule-1 (late lz item)howm-todo-priority-schedule-1567,25321
+(defun howm-todo-priority-schedule-2 (late lz item)howm-todo-priority-schedule-2577,25764
+(defun howm-todo-priority-done (late lz item)howm-todo-priority-done585,26116
+(defun howm-todo-priority-unknown (late lz item)howm-todo-priority-unknown588,26206
+(defun howm-encode-day (&optional d m y)howm-encode-day591,26299
+(defun howm-congrats ()howm-congrats610,27232
+(defun howm-congrats-run (com-arg-list)howm-congrats-run618,27560
+(defun howm-action-lock-reminder-done-rule ()howm-action-lock-reminder-done-rule627,27859
+(defun howm-reminder-search-path ()howm-reminder-search-path636,28218
+(defun howm-reminder-search-path-folder ()howm-reminder-search-path-folder639,28279
+(defun howm-action-lock-reminder-forward-rules (&optional summary-mode-p)howm-action-lock-reminder-forward-rules647,28541
+(defvar howm-action-lock-forward-wconf nilhowm-action-lock-forward-wconf668,29641
+(defun howm-action-lock-forward-escape ()howm-action-lock-forward-escape670,29706
+(defmacro howm-action-lock-forward-block (&rest body)howm-action-lock-forward-block674,29886
+(defun howm-action-lock-forward (form-pos)howm-action-lock-forward682,30141
+(defun howm-line-tail-regexp (pos)howm-line-tail-regexp705,31301
+(defun howm-action-lock-forward-invoke (form-reg cursor-reg)howm-action-lock-forward-invoke710,31491
+(defun howm-action-lock-forward-modify-current-line (form-reg cursor-reg)howm-action-lock-forward-modify-current-line732,32480
+(defun howm-action-lock-forward-open ()howm-action-lock-forward-open775,34399
+(defun howm-action-lock-forward-update ()howm-action-lock-forward-update786,34782
+(defun howm-define-reminder (letter priority-func face schedule todohowm-define-reminder797,35116
+(defun howm-modify-reminder-types (var letter flag)howm-modify-reminder-types820,36302
+
+howm-vars.el,9748
+(defmacro howm-define-risky-command (risky orig)howm-define-risky-command27,1097
+(defmacro howm-dont-warn-free-variable (var)howm-dont-warn-free-variable56,2171
+(defmacro howm-funcall-if-defined (call &rest not-defined)howm-funcall-if-defined64,2522
+(defun howm-get-locale ()howm-get-locale86,3453
+(defgroup howm nilhowm96,3733
+(defgroup howm-files nilhowm-files103,3884
+(defcustom howm-file-name-format "%Y/%m/%Y-%m-%d-%H%M%S.howm"howm-file-name-format112,4112
+(defvar howm-image-file-name-regexpshowm-image-file-name-regexps132,4978
+(defvar howm-excluded-file-regexp-common-listhowm-excluded-file-regexp-common-list153,6049
+(defvar howm-excluded-file-regexp-dir-sephowm-excluded-file-regexp-dir-sep157,6209
+(defgroup howm-menu nilhowm-menu193,7756
+(defcustom howm-menu-langhowm-menu-lang197,7807
+(defcustom howm-menu-expiry-hours 0howm-menu-expiry-hours216,8411
+(defcustom howm-menu-refresh-after-save thowm-menu-refresh-after-save222,8562
+(defcustom howm-menu-name-format "*howmM:%s*"howm-menu-name-format228,8734
+(defcustom howm-menu-footer nilhowm-menu-footer234,8937
+(defgroup howm-reminder nilhowm-reminder243,9186
+(defvar howm-reminder-old-format nil)howm-reminder-old-format247,9259
+(defvar howm-reminder-markshowm-reminder-marks249,9298
+(defvar howm-reminder-typeshowm-reminder-types253,9480
+(defun howm-custom-reminder-get-types (symbol)howm-custom-reminder-get-types256,9548
+(defun howm-custom-reminder-set-types (symbol types)howm-custom-reminder-set-types269,10169
+(defun howm-custom-reminder-list-types ()howm-custom-reminder-list-types273,10328
+(defcustom howm-schedule-types "[!@.]"howm-schedule-types278,10511
+(defcustom howm-todo-typeshowm-todo-types286,10796
+(defcustom howm-congrats-format '("Finished %s tasks!")howm-congrats-format295,11118
+(defcustom howm-reminder-cancel-string "cancel"howm-reminder-cancel-string301,11348
+(defcustom howm-action-lock-forward-save-buffer nilhowm-action-lock-forward-save-buffer306,11510
+(defcustom howm-action-lock-forward-kill-buffer nilhowm-action-lock-forward-kill-buffer311,11682
+(defgroup howm-menu-reminder nilhowm-menu-reminder321,11960
+(defcustom howm-schedule-menu-types "[!@]"howm-schedule-menu-types326,12068
+(defcustom howm-todo-menu-typeshowm-todo-menu-types334,12369
+(defcustom howm-menu-schedule-days 7howm-menu-schedule-days343,12708
+(defcustom howm-menu-schedule-days-before 0howm-menu-schedule-days-before348,12855
+(defcustom howm-menu-todo-num 50howm-menu-todo-num353,13003
+(defvar howm-huge- 66666)howm-huge-358,13132
+(defvar howm-huge 77777)howm-huge359,13158
+(defvar howm-huge+ 88888)howm-huge+360,13183
+(defvar howm-huge++ 99999)howm-huge++361,13209
+(defcustom howm-menu-todo-priority (- howm-huge+)howm-menu-todo-priority363,13237
+(defcustom howm-todo-priority-done-bottom (- howm-huge+)howm-todo-priority-done-bottom370,13541
+(defcustom howm-menu-recent-num 20howm-menu-recent-num379,13944
+(defcustom howm-menu-recent-regexp nilhowm-menu-recent-regexp384,14077
+(defcustom howm-menu-todo-priority-format nilhowm-menu-todo-priority-format392,14352
+(defgroup howm-list nilhowm-list403,14699
+(defcustom howm-view-contents-limit nilhowm-view-contents-limit407,14764
+(defcustom howm-view-summary-keep-cursor thowm-view-summary-keep-cursor413,14955
+(defcustom howm-view-summary-omit-same-name thowm-view-summary-omit-same-name418,15115
+(defcustom howm-list-recent-days 7howm-list-recent-days423,15270
+(defgroup howm-sort nilhowm-sort432,15418
+(defcustom howm-list-prefer-word nilhowm-list-prefer-word457,16429
+(defcustom howm-list-prefer-wiki thowm-list-prefer-wiki462,16568
+(defgroup howm-title nilhowm-title471,16720
+(defvar howm-custom-command-listhowm-custom-command-list476,16861
+(defcustom howm-list-title-regexp nilhowm-list-title-regexp517,18324
+(defcustom howm-list-title-undo thowm-list-title-undo524,18564
+(defgroup howm-list-bufwin nilhowm-list-bufwin535,18767
+(defcustom howm-view-summary-name "*howmS*"howm-view-summary-name539,18871
+(defcustom howm-view-contents-name "*howmC*"howm-view-contents-name547,19204
+(defgroup howm-search nilhowm-search570,20102
+(defcustom howm-keyword-case-fold-search nilhowm-keyword-case-fold-search574,20165
+(defcustom howm-check-word-break nilhowm-check-word-break579,20318
+(defcustom howm-view-update-search-ring nilhowm-view-update-search-ring589,20700
+(defcustom howm-message-time nilhowm-message-time594,20847
+(defcustom howm-history-limit 50howm-history-limit606,21156
+(defcustom howm-history-unique thowm-history-unique613,21377
+(defcustom howm-keyword-list-alias-sep "\t"howm-keyword-list-alias-sep618,21520
+(defcustom howm-keyword-aliases-recursive thowm-keyword-aliases-recursive626,21839
+(defgroup howm-grep nilhowm-grep635,22020
+(defgroup howm-misc nilhowm-misc687,23821
+(defvar howm-prefix "\C-c,"howm-prefix691,23895
+(defcustom howm-random-walk-wait 2howm-random-walk-wait694,23983
+(defgroup howm-create nilhowm-create702,24176
+(defcustom howm-prepend nilhowm-prepend706,24245
+(defcustom howm-content-from-region nilhowm-content-from-region713,24480
+(defcustom howm-title-from-search nilhowm-title-from-search722,24938
+(defcustom howm-create-here-just nilhowm-create-here-just728,25127
+(defgroup howm-viewer nilhowm-viewer738,25472
+(defun howm-try-require (feature)howm-try-require742,25574
+(defcustom howm-view-use-mailcaphowm-view-use-mailcap769,26442
+(defcustom howm-view-open-by-myself '("text/.*" "application/emacs-lisp")howm-view-open-by-myself779,26795
+(defgroup howm-narrow nilhowm-narrow787,27074
+(defcustom howm-auto-narrow thowm-auto-narrow791,27151
+(defgroup howm-efficiency nilhowm-efficiency805,27635
+(defcustom howm-refresh-after-save thowm-refresh-after-save809,27751
+(defgroup howm-faces nilhowm-faces817,27951
+(defcustom howm-use-color thowm-use-color822,28031
+(defface howm-view-hilit-facehowm-view-hilit-face827,28155
+(defface howm-view-name-facehowm-view-name-face833,28290
+(defface howm-view-empty-facehowm-view-empty-face839,28460
+(defface howm-mode-title-face ;; =howm-mode-title-face845,28622
+(defface howm-mode-ref-face ;; >>>howm-mode-ref-face850,28760
+(defface howm-mode-keyword-face ;; <<<howm-mode-keyword-face856,28977
+(defface howm-mode-wiki-face ;; [[]]howm-mode-wiki-face861,29143
+(defface howm-reminder-normal-facehowm-reminder-normal-face868,29363
+(defface howm-reminder-todo-facehowm-reminder-todo-face873,29506
+(defface howm-reminder-defer-facehowm-reminder-defer-face879,29720
+(defface howm-reminder-deadline-facehowm-reminder-deadline-face884,29855
+(defface howm-reminder-schedule-facehowm-reminder-schedule-face889,29992
+(defface howm-reminder-done-facehowm-reminder-done-face895,30217
+(defface howm-reminder-today-facehowm-reminder-today-face901,30418
+(defface howm-reminder-tomorrow-facehowm-reminder-tomorrow-face906,30572
+(defface howm-menu-list-face ;; item header in menu-mode list (schedule, todo)howm-menu-list-face912,30731
+(defface howm-menu-key-face ;; shortcut key in menu-modehowm-menu-key-face916,30872
+(defvar howm-view-hilit-face 'howm-view-hilit-facehowm-view-hilit-face923,31128
+(defvar howm-view-name-face  'howm-view-name-facehowm-view-name-face925,31208
+(defvar howm-view-empty-face 'howm-view-empty-facehowm-view-empty-face927,31302
+(defvar howm-mode-title-face   'howm-mode-title-facehowm-mode-title-face929,31399
+(defvar howm-mode-ref-face     'howm-mode-ref-facehowm-mode-ref-face931,31474
+(defvar howm-mode-keyword-face 'howm-mode-keyword-facehowm-mode-keyword-face933,31551
+(defvar howm-mode-wiki-face    'howm-mode-wiki-facehowm-mode-wiki-face935,31637
+(defvar howm-reminder-normal-face   'howm-reminder-normal-facehowm-reminder-normal-face937,31715
+(defvar howm-reminder-todo-face     'howm-reminder-todo-facehowm-reminder-todo-face939,31810
+(defvar howm-reminder-defer-face    'howm-reminder-defer-facehowm-reminder-defer-face941,31892
+(defvar howm-reminder-deadline-face 'howm-reminder-deadline-facehowm-reminder-deadline-face943,31976
+(defvar howm-reminder-schedule-face 'howm-reminder-schedule-facehowm-reminder-schedule-face945,32066
+(defvar howm-reminder-done-face     'howm-reminder-done-facehowm-reminder-done-face947,32156
+(defvar howm-reminder-today-face    'howm-reminder-today-facehowm-reminder-today-face949,32247
+(defvar howm-reminder-tomorrow-face 'howm-reminder-tomorrow-facehowm-reminder-tomorrow-face951,32331
+(defvar howm-menu-list-face 'howm-menu-list-facehowm-menu-list-face953,32421
+(defvar howm-menu-key-face  'howm-menu-key-facehowm-menu-key-face955,32499
+(defgroup howm-hooks nilhowm-hooks961,32658
+(defcustom howm-mode-hook nilhowm-mode-hook965,32711
+(defcustom howm-mode-on-hook nilhowm-mode-on-hook970,32826
+(defcustom howm-mode-off-hook nilhowm-mode-off-hook975,32940
+(defcustom howm-view-open-hook nilhowm-view-open-hook980,33056
+(defcustom howm-view-before-open-hook nilhowm-view-before-open-hook986,33210
+(defcustom howm-create-file-hook nilhowm-create-file-hook991,33357
+(defcustom howm-create-hook nilhowm-create-hook996,33481
+(defcustom howm-menu-hook nilhowm-menu-hook1002,33623
+(defcustom howm-congrats-hook nilhowm-congrats-hook1007,33738
+(defcustom howm-after-save-hook nilhowm-after-save-hook1012,33853
+(defgroup howm-devel nilhowm-devel1020,34047
+(defgroup howm-experimental nilhowm-experimental1027,34198
+(defcustom howm-reminder-menu-typeshowm-reminder-menu-types1031,34282
+(defcustom howm-schedule-sort-by-time nilhowm-schedule-sort-by-time1039,34590
+(defcustom howm-process-coding-system nilhowm-process-coding-system1080,36424
+(defcustom howm-action-lock-forward-fuzziness 0howm-action-lock-forward-fuzziness1096,36968
+
+howm-version.el,51
+(defconst howm-version "1.3.7")howm-version6,131
+
+howm-view.el,15781
+(defvar howm-view-summary-sep "|")howm-view-summary-sep29,1155
+(defvar howm-view-summary-formathowm-view-summary-format30,1190
+(defvar howm-view-header-formathowm-view-header-format35,1460
+(defvar howm-view-header-regexp "^==========================>>> .*$")howm-view-header-regexp39,1631
+(defvar howm-view-open-recenter howm-view-search-recenter)howm-view-open-recenter40,1701
+(defvar howm-view-title-header "=")howm-view-title-header41,1760
+(defvar howm-view-title-regexp (format "^%s\\( +\\(.*\\)\\|\\)$"howm-view-title-regexp43,1860
+(defvar howm-view-title-regexp-pos 2)howm-view-title-regexp-pos45,2002
+(defvar howm-view-title-regexp-grep (format "^%s +"howm-view-title-regexp-grep46,2040
+(defun howm-view-title-regexp-grep ()howm-view-title-regexp-grep48,2169
+(defvar howm-view-watch-modified-buffer t)howm-view-watch-modified-buffer82,3511
+(defun howm-view-item-basename (item &optional nonempty)howm-view-item-basename87,3632
+(defalias 'riffle-home:howm              'howm-view-item-home)riffle-home:howm97,3904
+(defalias 'riffle-summary-item:howm      'howm-view-summary-item)riffle-summary-item:howm98,3967
+(defalias 'riffle-contents-item:howm     'howm-view-contents-item)riffle-contents-item:howm99,4033
+(defalias 'riffle-summary-set-mode:howm  'howm-view-summary-mode)riffle-summary-set-mode:howm100,4100
+(defalias 'riffle-contents-set-mode:howm 'howm-view-contents-mode)riffle-contents-set-mode:howm101,4166
+(defun riffle-summary-name-format:howm ()riffle-summary-name-format:howm103,4234
+(defun riffle-contents-name-format:howm ()riffle-contents-name-format:howm105,4302
+(defun riffle-post-update:howm (item)riffle-post-update:howm107,4372
+(defalias 'howm-view-name          #'riffle-name)          howm-view-name114,4599
+(defalias 'howm-view-item-list     #'riffle-item-list)     howm-view-item-list115,4659
+(defalias 'howm-view-line-number   #'riffle-line-number)   howm-view-line-number116,4719
+(defalias 'howm-view-summary-check #'riffle-summary-check) howm-view-summary-check117,4779
+(defalias 'howm-view-persistent-p  #'riffle-persistent-p)  howm-view-persistent-p118,4839
+(defalias 'howm-view-kill-buffer   #'riffle-kill-buffer)   howm-view-kill-buffer119,4899
+(defalias 'howm-view-set-place     #'riffle-set-place)     howm-view-set-place120,4959
+(defalias 'howm-view-summary-current-item  #'riffle-summary-current-item)howm-view-summary-current-item121,5019
+(defalias 'howm-view-contents-current-item #'riffle-contents-current-item)howm-view-contents-current-item122,5093
+(defalias 'howm-view-summary-to-contents   #'riffle-summary-to-contents)howm-view-summary-to-contents123,5168
+(defalias 'howm-view-restore-window-configuration #'riffle-restore-window-configuration)howm-view-restore-window-configuration124,5241
+(defun howm-view-get-buffer (name-format &optional name new)howm-view-get-buffer128,5411
+(defun howm-view-summary-buffer (&optional new)howm-view-summary-buffer131,5558
+(defalias 'howm-view-summary-show 'riffle-summary-show)howm-view-summary-show134,5679
+(defalias 'howm-view-set-item-list 'riffle-set-item-list)howm-view-set-item-list135,5735
+(defalias 'howm-view-sort-items 'howm-sort)howm-view-sort-items140,5902
+(defvar howm-view-font-lock-silent thowm-view-font-lock-silent144,5962
+(defvar howm-view-font-lock-first-time thowm-view-font-lock-first-time156,6489
+(defun howm-view-font-lock-keywords ()howm-view-font-lock-keywords256,10697
+(defun howm-view-define-common-key (keymap)howm-view-define-common-key265,10920
+(defun howm-view-summary (&optional name item-list fl-keywords)howm-view-summary297,12211
+(defun howm-view-summary-open (&optional reverse-delete-p)howm-view-summary-open312,12852
+(defun howm-view-summary-open-sub (&optional kill)howm-view-summary-open-sub324,13338
+(defvar howm-view-summary-item-previous-name nilhowm-view-summary-item-previous-name337,13921
+(defun howm-view-summary-item (item)howm-view-summary-item339,13992
+(defun howm-view-summary-next-section (&optional n)howm-view-summary-next-section354,14633
+(defun howm-view-summary-previous-section (&optional n)howm-view-summary-previous-section362,14888
+(defun howm-view-summary-next-section-sub (step)howm-view-summary-next-section-sub366,15026
+(defun howm-view-contents-open (&optional reverse-delete-p)howm-view-contents-open383,15593
+(defvar *howm-view-item-privilege* nil) ;; dirty*howm-view-item-privilege*392,15939
+(defun howm-view-contents-open-sub (&optional kill)howm-view-contents-open-sub394,15989
+(defun howm-view-open-item (item &optional position-setter merely)howm-view-open-item416,16916
+(defun howm-view-open-postprocess ()howm-view-open-postprocess425,17252
+(defvar howm-view-previous-section-page nil "For internal use")howm-view-previous-section-page428,17326
+(defvar howm-view-previous-section-beg nil "For internal use")howm-view-previous-section-beg429,17390
+(defvar howm-view-previous-section-end nil "For internal use")howm-view-previous-section-end430,17453
+(defun howm-view-contents-item (item)howm-view-contents-item432,17517
+(defvar howm-view-string-point-count-strict nil)howm-view-string-point-count-strict457,18645
+(defun howm-view-string-point-count (str)howm-view-string-point-count458,18694
+(defun howm-view-contents-item-sub (item page place header viewer c)howm-view-contents-item-sub473,19320
+(defvar howm-view-preview-narrow t)howm-view-preview-narrow496,20159
+(defun howm-view-contents-region (filename)howm-view-contents-region497,20195
+(defun howm-view-contents-indicator (viewer fname)howm-view-contents-indicator505,20444
+(defun howm-view-paragraph-region (&optional include-following-blank-p)howm-view-paragraph-region508,20545
+(defun howm-view-set-mark-command ()howm-view-set-mark-command532,21519
+(defun howm-view-file-list (&optional item-list)howm-view-file-list539,21686
+(defun howm-view-mtime (file)howm-view-mtime544,21927
+(defun howm-view-time-to-string (ti)howm-view-time-to-string553,22212
+(defun howm-view-string> (a b)howm-view-string>556,22293
+(defun howm-view-string<= (a b)howm-view-string<=559,22342
+(defun howm-view-string< (a b)howm-view-string<562,22398
+(defcustom howm-ruby-mode-bug nilhowm-ruby-mode-bug568,22523
+(defun howm-view-directory (dir &optional recursive-p)howm-view-directory574,22722
+(defun howm-view-filter (&optional remove-p)howm-view-filter585,23075
+(defun howm-view-filter-uniq ()howm-view-filter-uniq594,23450
+(defun howm-view-filter-by-name (&optional remove-p regexp)howm-view-filter-by-name598,23551
+(defun howm-view-filter-by-summary (&optional remove-p regexp)howm-view-filter-by-summary603,23750
+(defun howm-view-filter-by-name/summary (filter regexp remove-p)howm-view-filter-by-name/summary608,23955
+(defun howm-view-filter-by-date (&optional remove-p)howm-view-filter-by-date615,24305
+(defun howm-view-filter-by-reminder (&optional remove-p)howm-view-filter-by-reminder620,24486
+(defun howm-view-filter-by-mtime (&optional remove-p range)howm-view-filter-by-mtime624,24641
+(defun howm-view-filter-by-time-range (filter &optional remove-p range)howm-view-filter-by-time-range628,24802
+(defun howm-view-filter-by-region (beg end)howm-view-filter-by-region636,25130
+(defvar howm-view-filter-by-around-default 10)howm-view-filter-by-around-default641,25314
+(defun howm-view-filter-by-around (&optional distance)howm-view-filter-by-around642,25361
+(defun howm-view-filter-by-line-range (beg end)howm-view-filter-by-line-range648,25592
+(defun howm-view-filter-by-contents (&optional remove-p regexp)howm-view-filter-by-contents659,26041
+(defcustom howm-view-search-in-result-correctly nilhowm-view-search-in-result-correctly668,26372
+(defun howm-view-search-in-result (regexp)howm-view-search-in-result673,26534
+(defun howm-view-remove-by-contents (regexp)howm-view-remove-by-contents687,27164
+(defun howm-view-sort/filter-doit (proc &optional switch)howm-view-sort/filter-doit703,27934
+(defalias 'howm-view-filter-doit 'howm-view-sort/filter-doit)howm-view-filter-doit711,28267
+(defun howm-view-filter-general (pred)howm-view-filter-general714,28391
+(defmacro howm-filter-items (pred lis &optional remove-p)howm-filter-items730,29065
+(defun howm-filter-items-uniq (item-list &optional remove-p)howm-filter-items-uniq735,29221
+(defun howm-filter-items-by-name (item-list regexp &optional remove-p)howm-filter-items-by-name762,30611
+(defun howm-filter-items-by-summary (item-list regexp &optional remove-p)howm-filter-items-by-summary766,30811
+(defun howm-filter-items-by-name/summary (accessor item-list regexp remove-p)howm-filter-items-by-name/summary770,31013
+(defun howm-filter-items-by-date (item-list from to &optional remove-p)howm-filter-items-by-date775,31240
+(defun howm-filter-items-by-reminder (item-list from to &optional remove-p)howm-filter-items-by-reminder788,31832
+(defun howm-filter-items-by-mtime (item-list from to &optional remove-p)howm-filter-items-by-mtime803,32570
+(defun howm-view-file-name-format ()howm-view-file-name-format813,32955
+(defun howm-view-ask-time-range (&optional remove-p)howm-view-ask-time-range816,33047
+(defvar howm-view-min-year 1950)howm-view-min-year822,33270
+(defvar howm-view-max-year 2030)howm-view-max-year823,33303
+(defun howm-view-ask-time (prompt default &optional from-p remove-p)howm-view-ask-time824,33336
+(defun howm-ask-time-sub (prompt ymd default remove-p)howm-ask-time-sub844,34208
+(defun howm-view-encode-time (sec min hour d m y)howm-view-encode-time854,34550
+(defun howm-view-filter-read-from-minibuffer (message &optional remove-p)howm-view-filter-read-from-minibuffer860,34709
+(defun howm-view-summary-rebuild (item-list &optional fl-keywords)howm-view-summary-rebuild865,34915
+(defcustom howm-view-list-title-type 1howm-view-list-title-type888,35882
+(defun howm-view-list-title (title-regexp)howm-view-list-title900,36345
+(defun howm-view-list-title1 (title-regexp)howm-view-list-title1905,36513
+(defun howm-view-list-title2 (title-regexp)howm-view-list-title2910,36690
+(defun howm-entitle-items (title-regexp item-list)howm-entitle-items915,36890
+(defun howm-entitle-items-style1 (title-regexp item-list)howm-entitle-items-style1920,37094
+(defun howm-entitle-items-style2 (title-regexp item-list)howm-entitle-items-style2946,38436
+(defun howm-item-with-temp-buffer (item proc)howm-item-with-temp-buffer961,39187
+(defun howm-item-titles (item)howm-item-titles973,39599
+(defun howm-item-range (item)howm-item-range989,40181
+(defun howm-item-list-rangeset (item-list)howm-item-list-rangeset1017,41108
+(defun howm-item-list-filter (item-list reference-item-listhowm-item-list-filter1039,42058
+(defun howm-make-rangeset (&optional beg-end)howm-make-rangeset1072,43663
+(defun howm-rangeset-belong-p (point rs)howm-rangeset-belong-p1078,43838
+(defun howm-rangeset-add! (rs beg-end)howm-rangeset-add!1083,44014
+(defun howm-view-change-title (item)howm-view-change-title1159,46755
+(defun howm-view-get-title-line ()howm-view-get-title-line1167,47146
+(defun howm-view-search (str file-list &optionalhowm-view-search1178,47494
+(defun howm-view-search-items (str file-list &optional summarizer fixed-p)howm-view-search-items1184,47795
+(defun howm-view-search-folder (&rest args)howm-view-search-folder1188,47997
+(defun howm-view-search-folder-internal (str folderhowm-view-search-folder-internal1192,48163
+(defun howm-view-search-folder-doit (p)howm-view-search-folder-doit1220,49478
+(defun howm-view-search-folder-items (str folder &optional summarizer fixed-p)howm-view-search-folder-items1223,49571
+(defun howm-view-sort ()howm-view-sort1241,50341
+(defmacro howm-view-defun-sort-by (name)howm-view-defun-sort-by1247,50540
+(defalias 'howm-view-sort-reverse 'howm-view-sort-by-reverse)howm-view-sort-reverse1265,51269
+(defalias 'howm-view-sort-doit 'howm-view-sort/filter-doit)howm-view-sort-doit1267,51332
+(defmacro howm-sort-items (evaluator comparer item-listhowm-sort-items1269,51393
+(defalias 'howm-view-sort-by-random-internal 'howm-sort-items-by-random)howm-view-sort-by-random-internal1291,52397
+(defalias 'howm-view-sort-by-name-internal 'howm-sort-items-by-name)howm-view-sort-by-name-internal1292,52470
+(defalias 'howm-view-sort-by-numerical-name-internalhowm-view-sort-by-numerical-name-internal1293,52539
+(defalias 'howm-view-sort-by-date-internal 'howm-sort-items-by-date)howm-view-sort-by-date-internal1295,52630
+(defalias 'howm-view-sort-by-reverse-date-internalhowm-view-sort-by-reverse-date-internal1296,52699
+(defalias 'howm-view-sort-by-summary-internal 'howm-sort-items-by-summary)howm-view-sort-by-summary-internal1298,52786
+(defalias 'howm-view-sort-by-reminder-internal 'howm-sort-items-by-reminder)howm-view-sort-by-reminder-internal1299,52861
+(defalias 'howm-view-sort-by-mtime-internal 'howm-sort-items-by-mtime)howm-view-sort-by-mtime-internal1300,52938
+(defalias 'howm-view-sort-by-reverse-internal 'howm-sort-items-by-reverse)howm-view-sort-by-reverse-internal1301,53009
+(defun howm-sort-items-by-random (item-list &optional reverse-p)howm-sort-items-by-random1303,53085
+(defun howm-sort-items-by-name (item-list &optional reverse-p)howm-sort-items-by-name1306,53224
+(defun howm-sort-items-by-numerical-name (item-list &optional reverse-p)howm-sort-items-by-numerical-name1309,53355
+(defvar howm-view-sort-by-date-ignore-regexp "^[a-zA-Z]")howm-view-sort-by-date-ignore-regexp1317,53740
+(defun howm-sort-items-by-date (item-list &optional reverse-p)howm-sort-items-by-date1318,53798
+(defun howm-sort-items-by-reverse-date (item-list &optional reverse-p)howm-sort-items-by-reverse-date1326,54207
+(defun howm-sort-items-by-summary (item-list &optional reverse-p)howm-sort-items-by-summary1329,54334
+(defun howm-sort-items-by-reminder (item-list &optional reverse-p)howm-sort-items-by-reminder1333,54504
+(defun howm-sort-items-by-mtime (item-list &optional reverse-p)howm-sort-items-by-mtime1346,55238
+(defun howm-sort-items-by-reverse (item-list &optional dummy)howm-sort-items-by-reverse1352,55488
+(defun howm-view-lift-by-name (&optional reverse-p regexp path-p)howm-view-lift-by-name1357,55616
+(defun howm-view-lift-by-summary (&optional reverse-p regexp)howm-view-lift-by-summary1364,55900
+(defun howm-view-lift-by-summary-substring (&optional reverse-p regexphowm-view-lift-by-summary-substring1369,56085
+(defun howm-view-lift-doit (sorter &optional reverse-p regexphowm-view-lift-doit1375,56366
+(defun howm-view-lift-internal (picker item-list regexphowm-view-lift-internal1393,57283
+(defun howm-view-lift-by-name-internal (item-list regexp &optional reverse-p)howm-view-lift-by-name-internal1418,58458
+(defun howm-view-lift-by-path-internal (item-list regexp &optional reverse-p)howm-view-lift-by-path-internal1422,58646
+(defun howm-view-lift-by-summary-internal (item-list regexp &optional reverse-p)howm-view-lift-by-summary-internal1425,58798
+(defun howm-view-lift-by-summary-substring-internal (item-list regexphowm-view-lift-by-summary-substring-internal1428,58961
+(defalias 'howm-view-sort-by-name-match 'howm-view-lift-by-name)howm-view-sort-by-name-match1436,59405
+(defalias 'howm-view-sort-by-summary-match 'howm-view-lift-by-summary)howm-view-sort-by-summary-match1437,59470
+(defalias 'howm-view-sort-by-summary-match-stringhowm-view-sort-by-summary-match-string1438,59541
+(defvar howm-view-dired-buffer-name "*howm-dired*")howm-view-dired-buffer-name1444,59712
+(defun dired-virtual (dir)dired-virtual1448,59872
+(defun howm-view-dired ()howm-view-dired1451,59941
+(defun howm-view-dired-goto (rname)howm-view-dired-goto1485,61621
+(defun howm-view-summary-shell-command ()howm-view-summary-shell-command1500,62294
+
+howm.el,0
+
+illusion.el,713
+(defvar illusion-lighter " _i_")illusion-lighter30,1149
+(defvar illusion-submit-key "\C-c\C-c")illusion-submit-key31,1182
+(defvar illusion-submit-funcillusion-submit-func33,1223
+(defun illusion-submit ()illusion-submit41,1544
+(defun illusion-generate (name loader submitter)illusion-generate46,1651
+(defun yarot13-find-file (file)yarot13-find-file85,2692
+(defun yarot13-insert-file-contents (file)yarot13-insert-file-contents91,2964
+(defun yarot13-save-buffer-to (file)yarot13-save-buffer-to100,3244
+(defun yarot13-rotate-buffer ()yarot13-rotate-buffer108,3444
+(defun yarot13-rotate-string (str)yarot13-rotate-string118,3725
+(defun yarot13-rotate-char (x beg end)yarot13-rotate-char124,3848
+
+riffle.el,6059
+(defcustom howm-view-summary-window-size nilhowm-view-summary-window-size36,1288
+(defcustom howm-view-split-horizontally nilhowm-view-split-horizontally41,1476
+(defcustom howm-view-keep-one-window nilhowm-view-keep-one-window45,1637
+(defcustom howm-view-pop-up-windows thowm-view-pop-up-windows50,1833
+(defvar howm-view-search-recenter 5)howm-view-search-recenter56,2022
+(defvar riffle-keep-window nil)riffle-keep-window59,2089
+(defvar *riffle-summary-check* t)*riffle-summary-check*64,2227
+(defvar riffle-name nil)riffle-name66,2262
+(defvar riffle-item-list nil)riffle-item-list67,2287
+(defvar riffle-type nil)riffle-type68,2317
+(defvar riffle-summary-last-line nil)riffle-summary-last-line69,2342
+(defvar riffle-contents-end nil)riffle-contents-end70,2380
+(defun riffle-name () riffle-name)riffle-name79,2703
+(defun riffle-item-list () riffle-item-list)riffle-item-list80,2738
+(defun riffle-set-item-list (item-list) (setq riffle-item-list item-list))riffle-set-item-list81,2783
+(defun riffle-p () riffle-type)riffle-p84,2871
+(defun riffle-contents-first-time-p () (null riffle-contents-end))riffle-contents-first-time-p85,2903
+(defvar *riffle-preview-p* nil)*riffle-preview-p*87,2971
+(defun riffle-preview-p () *riffle-preview-p*)riffle-preview-p88,3003
+(defmacro riffle-define-derived-mode (child parent nameriffle-define-derived-mode98,3351
+(defun riffle-type (&rest r)riffle-type110,3738
+(defvar riffle-dispatchers (list #'riffle-type))riffle-dispatchers112,3782
+(defcustom riffle-mode-hook nilriffle-mode-hook128,4322
+(defvar riffle-mode-map nil)riffle-mode-map133,4440
+(defvar riffle-mode-syntax-table (make-syntax-table))riffle-mode-syntax-table135,4516
+(defvar riffle-mode-abbrev-table nil)riffle-mode-abbrev-table136,4570
+(defun riffle-mode ()riffle-mode138,4609
+(defun riffle-summary (&optional name item-list type background)riffle-summary150,4951
+(defun riffle-summary-subr (name item-list)riffle-summary-subr168,5644
+(defun riffle-summary-show (item-list)riffle-summary-show174,5811
+(defun riffle-summary-show-item (item)riffle-summary-show-item185,6116
+(defun riffle-post-command ()riffle-post-command195,6435
+(defun riffle-summary-current-item ()riffle-summary-current-item201,6598
+(defun riffle-summary-check (&optional force)riffle-summary-check205,6709
+(defun riffle-summary-update (item &optional new)riffle-summary-update219,7245
+(defun riffle-summary-update-subr (item &optional new)riffle-summary-update-subr222,7396
+(defun riffle-pop-window ()riffle-pop-window242,8228
+(defun riffle-pop-or-scroll-other-window ()riffle-pop-or-scroll-other-window249,8353
+(defun riffle-toggle-window ()riffle-toggle-window254,8470
+(defun riffle-summary-to-contents ()riffle-summary-to-contents259,8575
+(defun riffle-contents (name item-list type default-dir)riffle-contents275,9070
+(defun riffle-contents-show (item-list)riffle-contents-show292,9643
+(defun riffle-contents-show-item (item)riffle-contents-show-item304,9964
+(defun riffle-contents-item-number (position)riffle-contents-item-number308,10055
+(defun riffle-contents-current-item ()riffle-contents-current-item316,10320
+(defun riffle-contents-beginning (n)riffle-contents-beginning319,10426
+(defun riffle-contents-to-summary ()riffle-contents-to-summary322,10504
+(defun riffle-contents-goto-next-item (&optional n)riffle-contents-goto-next-item329,10783
+(defun riffle-contents-goto-previous-item (&optional n)riffle-contents-goto-previous-item347,11407
+(defun riffle-summary-buffer (&optional new)riffle-summary-buffer354,11604
+(defun riffle-contents-buffer (&optional new)riffle-contents-buffer356,11709
+(defun riffle-get-buffer (name-format &optional name new)riffle-get-buffer362,12028
+(defun riffle-kill-buffer ()riffle-kill-buffer369,12271
+(defun riffle-setup-buffer (name-format-func name item-list type)riffle-setup-buffer381,12588
+(defun riffle-line-number (&optional pos)riffle-line-number389,12910
+(defun riffle-persistent-p (z)riffle-persistent-p398,13112
+(defun riffle-get-value (z)riffle-get-value408,13424
+(defun riffle-restore-window-configuration ()riffle-restore-window-configuration413,13499
+(defun riffle-refresh-window-configuration ()riffle-refresh-window-configuration416,13587
+(defvar riffle-window-initializer 'delete-other-windows)riffle-window-initializer423,13827
+(defun riffle-setup-window-configuration ()riffle-setup-window-configuration426,14010
+(defun riffle-scroll-up (count)riffle-scroll-up437,14408
+(defun riffle-scroll-down (count)riffle-scroll-down440,14481
+(defun riffle-scroll-other-window (count)riffle-scroll-other-window443,14558
+(defun riffle-scroll-other-window-down (count)riffle-scroll-other-window-down446,14651
+(defvar even-window-heights nil)  ;; xemacs doesn't have it.even-window-heights450,14755
+(defun riffle-pop-to-buffer (buf &optional size)riffle-pop-to-buffer451,14816
+(defun riffle-set-place (place)riffle-set-place463,15226
+(defun riffle-get-place (&optional point)riffle-get-place465,15279
+(defvar riffle-sample-item-listriffle-sample-item-list549,17931
+(defvar riffle-sample-summary-name "sampleS:%s")riffle-sample-summary-name557,18232
+(defvar riffle-sample-contents-name "sampleC:%s")riffle-sample-contents-name558,18281
+(defvar riffle-sample-cursor-point 3)riffle-sample-cursor-point559,18331
+(defun riffle-home:sample (item)riffle-home:sample561,18370
+(defun riffle-summary-item:sample (item)riffle-summary-item:sample563,18433
+(defun riffle-contents-item:sample (item)riffle-contents-item:sample565,18488
+(defun riffle-summary-set-mode:sample ()riffle-summary-set-mode:sample567,18588
+(defun riffle-contents-set-mode:sample ()riffle-contents-set-mode:sample569,18661
+(defun riffle-summary-name-format:sample ()riffle-summary-name-format:sample571,18736
+(defun riffle-contents-name-format:sample ()riffle-contents-name-format:sample573,18810
+(defun riffle-post-update:sample (item)riffle-post-update:sample575,18886
+(defun riffle-sample ()riffle-sample620,20213
