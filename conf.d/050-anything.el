@@ -32,13 +32,13 @@
 
 (defvar anything-for-open-source-list
   '(anything-c-source-ffap-guesser
-    anything-c-source-buffers+
+    anything-c-source-buffers-list
     anything-c-source-escreen-for-open
     anything-c-source-historyf
     anything-c-source-recentf
     anything-c-source-files-in-current-dir+
     anything-c-source-bookmarks))
-(add-to-list 'anything-c-source-buffers+ '(candidate-number-limit . 30) t)
+(add-to-list 'anything-c-source-buffers-list '(candidate-number-limit . 30) t)
 (defun anything-for-open ()
   (interactive)
   (anything-at-point-raw anything-for-open-source-list nil nil nil nil

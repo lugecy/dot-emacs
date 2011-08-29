@@ -16,6 +16,7 @@
 (add-load-path-subdirs "~/.emacs.d/local-elisp")
 
 (defun reload-path-subdirs (path)
+  (interactive (list (completing-read "Reload Dir: " load-path nil t)))
   (setq load-path (delete path load-path)
         normal-top-level-add-subdirs-inode-list (delete path normal-top-level-add-subdirs-inode-list))
   (add-load-path-subdirs path))

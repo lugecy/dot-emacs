@@ -87,3 +87,52 @@ register the region as oneshot snippet, Otherwise expand it."
           map)))
 (yas/trigger-key-reload "TAB")
 (yas/keymap-reload)
+
+;;;; テンプレート展開中であることをわかりやすくする
+;;; change mode-line-face
+;; (defvar ly:yas-before-expand-modeline-face nil)
+;; (defvar ly:yas-expanding-modeline-face "White")
+;; (defun ly:yas-expanding-face-before-hook ()
+;;   (setq ly:yas-before-expand-modeline-face (face-attribute 'mode-line :background))
+;;   (set-face-background 'mode-line ly:yas-expanding-modeline-face))
+;; (defun ly:yas-expanding-face-after-hook ()
+;;   (set-face-background 'mode-line ly:yas-before-expand-modeline-face)
+;;   (setq ly:yas-before-expand-modeline-face nil))
+;; (add-hook 'yas/before-expand-snippet-hook 'ly:yas-expanding-face-before-hook)
+;; (add-hook 'yas/after-exit-snippet-hook 'ly:yas-expanding-face-after-hook)
+;;; change blink interval
+(defvar ly:yas-backup-blink-time nil)
+(defvar ly:yas-before-blink-time nil)
+(defvar ly:yas-visualize-blink-time (cons 0.1 0.1))
+(defun ly:yas-visualize-expanding-pre-func ()
+  (unless ly:yas-backup-blink-time
+    (setq ly:yas-backup-blink-time (cons blink-cursor-interval blink-cursor-delay)))
+  (setq ly:yas-before-blink-time (cons blink-cursor-interval blink-cursor-delay))
+  (setq blink-cursor-interval (car ly:yas-visualize-blink-time)
+        blink-cursor-delay (cdr ly:yas-visualize-blink-time)))
+(defun ly:yas-visualize-expanding-post-func ()
+  (setq blink-cursor-interval (car ly:yas-before-blink-time)
+        blink-cursor-delay (cdr ly:yas-before-blink-time))
+  (setq ly:yas-before-blink-time nil))
+(defun ly:yas-visualize-reset-blink-time ()
+  (interactive)
+  (when ly:yas-backup-blink-time
+    (setq blink-cursor-interval (car ly:yas-backup-blink-time)
+          blink-cursor-delay (cdr ly:yas-backup-blink-time))))
+(add-hook 'yas/before-expand-snippet-hook 'ly:yas-visualize-expanding-pre-func)
+(add-hook 'yas/after-exit-snippet-hook 'ly:yas-visualize-expanding-post-func)
+
+;;;; with auto-complete
+(defvar ly:yas-expanding-flg nil)
+(defun ly:yas-expanding-flg-on ()
+  (interactive)
+  (setq ly:yas-expanding-flg t))
+(defun ly:yas-expanding-flg-off ()
+  (interactive)
+  (setq ly:yas-expanding-flg nil))
+(add-hook 'yas/before-expand-snippet-hook 'ly:yas-expanding-flg-on)
+(add-hook 'yas/after-exit-snippet-hook 'ly:yas-expanding-flg-off)
+(ly:eval-after-load 'auto-complete-yasnippet
+  (defadvice ac-yasnippet-candidate (around ly:ac-candidiate-disable activate)
+    (unless ly:yas-expanding-flg
+      ad-do-it)))

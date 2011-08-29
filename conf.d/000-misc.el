@@ -450,3 +450,17 @@
          (call-process "xdg-open" nil 0 nil file)))
   (recentf-add-file file)
   (message "Opening %s...done" file))
+
+;;;; 先に挿入先を決めてから，regionで囲った範囲をkill/yankする
+(defun ly:yank-before-point-target ()
+  (interactive)
+  (if (> (recursion-depth) 0)
+      (exit-recursive-edit)
+    (let ((pos (point))
+          content)
+      (recursive-edit)
+      (when (region-active-p)
+        (kill-region (region-beginning) (region-end))
+        (goto-char pos)
+        (yank)))))
+(global-set-key (kbd "C-c C-r") 'ly:before-point-target)

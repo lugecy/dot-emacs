@@ -505,3 +505,25 @@ the current dir is not under hg."
                 ((eq (window-system) 'x)
                  (x-get-clipboard)))
           "\n")))
+
+;;;; 移動した時に内容が全部見えるようにする
+(defadvice clmemo-next-item (after view-center activate)
+  (let ((item-beg (point))
+        (item-end (save-excursion
+                    (if (re-search-forward clmemo-heading-regexp nil t)
+                        (progn
+                          (beginning-of-line)
+                          (skip-syntax-backward "->")
+                          (forward-line 1)
+                          (point))
+                      (re-search-forward "^$" nil t))))
+        (height (window-height)))
+    (when (and item-end
+               (not (pos-visible-in-window-p item-end)))
+      (if (> (- (line-number-at-pos item-end)
+                (line-number-at-pos item-beg))
+             height)
+          (recenter 1)
+        (save-excursion
+          (goto-char item-end)
+          (recenter -1))))))

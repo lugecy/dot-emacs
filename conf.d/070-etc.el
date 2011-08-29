@@ -25,6 +25,9 @@
   (setq jaunte-keys (mapcar #'identity "jklasdfgh")))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(with-loading 'ace-jump-mode
+  (global-set-key (kbd "C-c C-SPC") 'ace-jump-mode)
+  (setq ace-jump-mode-move-keys (list ?a ?s ?d ?f ?g ?h ?j ?k ?l ?q ?w ?e ?r ?t ?y ?u ?i ?o ?z ?x ?c ?v ?b ?n ?m)))
 
 ;;;; local-elisp
 (safe-loading "hah")

@@ -116,6 +116,7 @@
     (define-key map (kbd "p") '(lambda(n)
                                  (interactive "p")
                                  (forward-line (* n -1))))
+    (define-key map [remap undo] 'rebase-mode-undo)
     map)
   "Keymap for rebase-mode.  Note this will be added to by the
 top-level code which defines the edit functions.")
@@ -223,12 +224,12 @@ server connection)."
 (defun rebase-mode-kill-line ()
   "Kill the current action line."
   (interactive)
-  (when (rebase-mode-looking-at-action-or-exec)
-    (save-excursion
-      (beginning-of-line)
-      (if (not (looking-at "#"))
-          (let ((buffer-read-only nil))
-            (insert "#"))))))
+  (when (and (not (eq (char-after (point-at-bol)) ?#))
+             (rebase-mode-looking-at-action-or-exec))
+    (beginning-of-line)
+    (let ((buffer-read-only nil))
+      (insert "#"))
+    (forward-line)))
 
 (defun rebase-mode-exec (edit)
   "Prompt the user for a shell command to be executed, and add it to
@@ -268,6 +269,13 @@ exec line was commented out, also uncomment it."
 
 (defun rebase-mode-read-exec-line (&optional initial-line)
   (read-shell-command "Execute: " initial-line))
+
+(defun rebase-mode-undo (&optional arg)
+  "A thin wrapper around `undo', which allows undoing in
+read-only buffers."
+  (interactive "P")
+  (let ((inhibit-read-only t))
+    (undo arg)))
 
 ;;;###autoload
 (define-derived-mode rebase-mode special-mode "Rebase"

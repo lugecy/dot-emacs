@@ -1,12 +1,12 @@
 --- 
+anything: 
+- elisp/anything-core
+- git://repo.or.cz/anything-config.git
+- e6adba338b0ca30df2c6adc3875471a94fceba6d
 popwin: 
 - elisp/popwin-el
 - http://github.com/m2ym/popwin-el.git
 - 604aa04f08d234983884833c05491cada8ef4546
-anything: 
-- elisp/anything-core
-- git://repo.or.cz/anything-config.git
-- e747c6fdfdd1dee99b0b828002fc6b3ff78a4911
 auto-complete: 
 - elisp/auto-complete
 - http://github.com/m2ym/auto-complete.git
@@ -18,4 +18,4 @@ historyf:
 magit: 
 - elisp/magit
 - http://github.com/magit/magit.git
-- 715e65cf72de9373cd64e19104ebfd68d6dd221b
+- 489a313465cfe3682bc8cb7493b5fd067b11ca9c
