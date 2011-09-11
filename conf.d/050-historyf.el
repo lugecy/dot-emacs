@@ -1,6 +1,7 @@
 (require 'historyf)
 (setq historyf-limit 10)
 (add-to-list 'historyf-minor-modes 'clmemo-mode)
+(add-to-list 'historyf-major-modes 'html-mode)
 (global-set-key (kbd "C-x p") 'historyf-back)
 (global-set-key (kbd "C-x P") 'historyf-forward)
 

@@ -1,4 +1,6 @@
 (require 'zencoding-mode)
+(ly:eval-after-load 'sgml-mode
+  (add-hook 'html-mode-hook 'zencoding-mode))
 (define-key zencoding-mode-keymap (kbd "C-j") nil)
 (ly:eval-after-load 'yasnippet
   (defun zencoding-transform-yas-zero (ast)

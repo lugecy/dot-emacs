@@ -1,12 +1,13 @@
 ;;;; anything.el --- open anything / QuickSilver-like candidate-selection framework
 
 ;; Copyright (C) 2007              Tamas Patrovics
-;;               2008, 2009, 2010  rubikitch <rubikitch@ruby-lang.org>
+;;               2008 ~ 2011       rubikitch <rubikitch@ruby-lang.org>
+;;               2011              Thierry Volpiatto <thierry.volpiatto@gmail.com>
 
 ;; Author: Tamas Patrovics
 ;; Maintainer: rubikitch <rubikitch@ruby-lang.org>
 ;; Keywords: files, frames, help, matching, outlines, processes, tools, convenience, anything
-;; URL: http://www.emacswiki.org/cgi-bin/wiki/download/anything.el
+;; X-URL: http://repo.or.cz/w/anything-config.git
 ;; Site: http://www.emacswiki.org/cgi-bin/emacs/Anything
 
 ;; This file is free software; you can redistribute it and/or modify
@@ -598,7 +599,7 @@
 ;;; Code:
 
 (defvar anything-version nil)
-(setq anything-version "2.0")
+(setq anything-version "1.3")
 
 (require 'cl)
 
@@ -738,6 +739,8 @@ See also `anything-set-source-filter'.")
 
     (define-key map (kbd "C-r")             'undefined)
     (define-key map (kbd "C-t")             'anything-toggle-resplit-window)
+    (define-key map (kbd "C-}")             'anything-narrow-window)
+    (define-key map (kbd "C-{")             'anything-enlarge-window)
     (define-key map (kbd "C-x C-f")         'anything-quit-and-find-file)
 
     (define-key map (kbd "C-c C-d")         'anything-delete-current-selection)
@@ -1071,9 +1074,9 @@ ARGS are args given to `format'."
 (defmacro anything-aif (test-form then-form &rest else-forms)
   "Like `if' but set the result of TEST-FORM in a temprary variable called `it'.
 THEN-FORM and ELSE-FORMS are then excuted just like in `if'."
+  (declare (indent 2) (debug t))
   `(let ((it ,test-form))
      (if it ,then-form ,@else-forms)))
-(put 'anything-aif 'lisp-indent-function 2)
 
 (defun anything-mklist (obj)
   "If OBJ is a list \(but not lambda\), return itself.
@@ -1100,17 +1103,23 @@ Otherwise make a list with one element."
 
 (defmacro with-anything-window (&rest body)
   "Be sure BODY is excuted in the anything window."
-  `(let ((--tmpfunc-- (lambda () ,@body)))
-     (if anything-test-mode
-         (with-current-buffer (anything-buffer-get)
-           (funcall --tmpfunc--))
+  (declare (indent 0) (debug t))
+  `(if anything-test-mode
+       (with-current-buffer (anything-buffer-get)
+         ,@body)
        (with-selected-window (anything-window)
-         (funcall --tmpfunc--)))))
-(put 'with-anything-window 'lisp-indent-function 0)
+         ,@body)))
+
+(defmacro with-anything-current-buffer (&rest body)
+  "Eval BODY inside `anything-current-buffer'."
+  (declare (indent 0) (debug t))
+  `(with-current-buffer anything-current-buffer
+    ,@body))
 
 (defmacro with-anything-restore-variables(&rest body)
   "Restore `anything-restored-variables' after executing BODY.
 `post-command-hook' is handled specially."
+  (declare (indent 0) (debug t))
   `(let ((--orig-vars (mapcar (lambda (v)
                                 (cons v (symbol-value v)))
                               anything-restored-variables))
@@ -1124,7 +1133,6 @@ Otherwise make a list with one element."
        (setq post-command-hook (car --post-command-hook-pair))
        (setq-default post-command-hook (cdr --post-command-hook-pair))
        (anything-log "restore variables"))))
-(put 'with-anything-restore-variables 'lisp-indent-function 0)
 
 (defun* anything-attr (attribute-name &optional (src (anything-get-current-source)))
   "Get the value of ATTRIBUTE-NAME of SRC.
@@ -1345,6 +1353,7 @@ Use this function is better than setting `anything-type-attributes' directly."
   "Register ATTRIBUTE documentation introduced by plug-in.
 SHORT-DOC is displayed beside attribute name.
 LONG-DOC is displayed below attribute name and short documentation."
+  (declare (indent 2) (debug t))
   (if long-doc
       (setq short-doc (concat "(" short-doc ")"))
     (setq long-doc short-doc
@@ -1353,22 +1362,7 @@ LONG-DOC is displayed below attribute name and short documentation."
   (put attribute 'anything-attrdoc
        (concat "- " (symbol-name attribute)
                " " short-doc "\n\n" long-doc "\n")))
-(put 'anything-document-attribute 'lisp-indent-function 2)
 
-(defun anything-require-at-least-version (version)
-  "Output error message unless anything.el is older than VERSION.
-This is suitable for anything applications."
-  (when (and (string= "1." (substring version 0 2))
-             (string-match "1\.\\([0-9]+\\)" anything-version)
-             (< (string-to-number (match-string 1 anything-version))
-                (string-to-number (substring version 2))))
-    (error "Please update anything.el!!
-
-M-x auto-install-batch anything
-
-You must have auto-install.el too.
-http://www.emacswiki.org/cgi-bin/wiki/download/auto-install.el
-")))
 
 (defun anything-interpret-value (value &optional source)
   "Interpret VALUE as variable, function or literal.
@@ -1479,30 +1473,35 @@ It is used to check if candidate number is 0, 1, or 2+."
           (goto-char (anything-get-previous-header-pos))
           (goto-char (point-min)))
       (forward-line 1)
-      (let ((lines (save-excursion
-                     (loop with ln = 0
-                        while (not (if in-current-source
-                                       (or (anything-pos-header-line-p) (eobp))
-                                       (eobp)))
-                        unless (anything-pos-header-line-p)
-                        do (incf ln)
-                        do (forward-line 1) finally return ln)))
-            (count-multi 1))
+      (let ((count-multi 1))
         (if (anything-pos-multiline-p)
             (save-excursion
-              (loop while (search-forward anything-candidate-separator nil t)
-                 do (incf count-multi) finally return count-multi))
-            lines)))))
+              (loop while (and (not (if in-current-source
+                                        (save-excursion
+                                          (forward-line 2)
+                                          (or (anything-pos-header-line-p) (eobp)))
+                                        (eobp)))
+                               (search-forward anything-candidate-separator nil t))
+                 do (incf count-multi)
+                 finally return count-multi))
+            (save-excursion
+              (loop with ln = 0
+                 while (not (if in-current-source
+                                (or (anything-pos-header-line-p) (eobp))
+                                (eobp)))
+                 unless (anything-pos-header-line-p)
+                 do (incf ln)
+                 do (forward-line 1) finally return ln)))))))
 
 (defmacro with-anything-quittable (&rest body)
   "If an error occur in execution of BODY, quit anything safely."
+  (declare (indent 0) (debug t))
   `(let (inhibit-quit)
      (condition-case v
          (progn ,@body)
        (quit (setq anything-quit t)
              (exit-minibuffer)
              (keyboard-quit)))))
-(put 'with-anything-quittable 'lisp-indent-function 0)
 
 (defun anything-compose (arg-lst func-lst)
   "Apply arguments specified in ARG-LST with each function of FUNC-LST.
@@ -1594,8 +1593,6 @@ means starting anything session with `anything-c-source-buffers'
 source in *buffers* buffer and set variable `anything-candidate-number-limit'
 to 10 as session local variable."
   (interactive)
-  (iswitchb-mode -1)
-  (ido-mode -1)
   (if (keywordp (car plist))
       (anything-let-internal
        (anything-parse-keys plist)
@@ -1608,7 +1605,9 @@ to 10 as session local variable."
 (defun* anything-resume (&optional
                          (any-buffer anything-last-buffer)
                          buffer-pattern (any-resume t))
-  "Resurrect previously invoked `anything'."
+  "Resurrect previously invoked `anything'.
+Called with a prefix arg, allow choosing among all existing
+anything buffers.  i.e choose among various anything sessions."
   (interactive)
   (when (or current-prefix-arg buffer-pattern)
     (setq any-buffer (anything-resume-select-buffer buffer-pattern)))
@@ -1752,17 +1751,25 @@ For ANY-RESUME ANY-INPUT and ANY-SOURCES See `anything'."
 ;;; (@* "Core: Accessors")
 ;;; rubikitch: I love to create functions to control variables.
 (defvar anything-current-position nil
-  "Cons of (point) and (window-start) when `anything' is invoked.
-It is needed because restoring position when `anything' is keyboard-quitted.")
+  "Cons of \(point . window-start\)  when `anything' is invoked.
+It is needed to restore position in `anything-current-buffer'
+when `anything' is keyboard-quitted.")
 (defun anything-current-position (save-or-restore)
-  "Restore or save current position in `anything-buffer'.
+  "Restore or save current position in `anything-current-buffer'.
 Argument SAVE-OR-RESTORE is one of save or restore."
   (case save-or-restore
     (save
+     (anything-log "Save position at %S" (cons (point) (window-start)))
      (setq anything-current-position (cons (point) (window-start))))
     (restore
+     (anything-log "Restore position at  %S in buffer %s"
+                   anything-current-position
+                   (buffer-name (current-buffer)))
      (goto-char (car anything-current-position))
-     (set-window-start (selected-window) (cdr anything-current-position)))))
+     ;; Fix this position with the NOFORCE arg of `set-window-start'
+     ;; otherwise, if there is some other buffer than `anything-current-buffer'
+     ;; one, position will be lost.
+     (set-window-start (selected-window) (cdr anything-current-position) t))))
 
 
 ;; Internal.
@@ -1803,6 +1810,7 @@ It use `switch-to-buffer' or `pop-to-buffer' depending of value of
   (funcall (if anything-samewindow 'switch-to-buffer 'pop-to-buffer) buf))
 
 ;; (@* "Core: initialize")
+(defvar anything-split-window-state nil)
 (defun anything-initial-setup ()
   "Initialize anything settings and set up the anything buffer."
   (anything-log-run-hook 'anything-before-initialize-hook)
@@ -1814,6 +1822,11 @@ It use `switch-to-buffer' or `pop-to-buffer' depending of value of
   (setq anything-issued-errors nil)
   (setq anything-compiled-sources nil)
   (setq anything-saved-current-source nil)
+  (if (or (not split-width-threshold)
+          (and (integerp split-width-threshold)
+               (>= split-width-threshold (+ (frame-width) 4))))
+      (setq anything-split-window-state 'vertical)
+      (setq anything-split-window-state 'horizontal))
   ;; Call the init function for sources where appropriate
   (anything-funcall-foreach 'init)
   (setq anything-pattern "")
@@ -1937,12 +1950,18 @@ hooks concerned are `post-command-hook' and `minibuffer-setup-hook'."
   (anything-log-run-hook 'anything-cleanup-hook)
   (anything-hooks 'cleanup)
   (anything-frame-or-window-configuration 'restore)
+  ;; This is needed in some cases where last input
+  ;; is yielded indefinitely in minibuffer after anything session.
   (anything-clean-up-minibuffer))
 
 (defun anything-clean-up-minibuffer ()
   "Remove contents of minibuffer."
-  (with-current-buffer (window-buffer (minibuffer-window))
-    (delete-minibuffer-contents)))
+  (let ((miniwin (minibuffer-window)))
+    ;; Clean only current minibuffer used by anything.
+    ;; i.e The precedent one is active.
+    (unless (minibuffer-window-active-p miniwin)
+      (with-current-buffer (window-buffer miniwin)
+        (delete-minibuffer-contents)))))
 
 ;; (@* "Core: input handling")
 (defun anything-check-minibuffer-input ()
@@ -2940,9 +2959,9 @@ to a list of forms.\n\n")
 (defmacro anything-edit-current-selection (&rest forms)
   "Evaluate FORMS at current selection in the anything buffer.
 You can edit the line."
+  (declare (indent 0) (debug t))
   `(anything-edit-current-selection-internal
     (lambda () ,@forms)))
-(put 'anything-edit-current-selection 'lisp-indent-function 0)
 
 (defun anything-set-pattern (pattern &optional noupdate)
   "Set minibuffer contents to PATTERN.
@@ -3240,9 +3259,32 @@ Acceptable values of CREATE-OR-BUFFER:
       (delete-window)
       (set-window-buffer
        (select-window (if (= (window-height) before-height)
-                          (split-window-vertically)
-                        (split-window-horizontally)))
+                          (prog1
+                            (split-window-vertically)
+                            (setq anything-split-window-state 'vertical))
+                          (setq anything-split-window-state 'horizontal)
+                          (split-window-horizontally)))
        anything-buffer))))
+
+;; (@* "Utility: Resize anything window.")
+(defvar anything-split-window-state nil)
+(defun anything-enlarge-window-1 (n)
+  "Enlarge or narrow anything window.
+If N is positive enlarge, if negative narrow."
+  (unless anything-samewindow
+    (let ((horizontal-p (eq anything-split-window-state 'horizontal)))
+      (with-anything-window
+        (enlarge-window n horizontal-p)))))
+
+(defun anything-narrow-window ()
+  "Narrow anything window."
+  (interactive)
+  (anything-enlarge-window-1 -1))
+
+(defun anything-enlarge-window ()
+  "Enlarge anything window."
+  (interactive)
+  (anything-enlarge-window-1 1))
 
 ;; (@* "Utility: select another action by key")
 (defun anything-select-nth-action (n)
@@ -3292,9 +3334,9 @@ Otherwise goto the end of minibuffer."
 (defmacro with-anything-display-same-window (&rest body)
   "Execute BODY in the window used for persistent action.
 Make `pop-to-buffer' and `display-buffer' display in the same window."
+  (declare (indent 0) (debug t))
   `(let ((display-buffer-function 'anything-persistent-action-display-buffer))
      ,@body))
-(put 'with-anything-display-same-window 'lisp-indent-function 0)
 
 (defvar anything-persistent-action-display-window nil)
 (defun anything-initialize-persistent-action ()

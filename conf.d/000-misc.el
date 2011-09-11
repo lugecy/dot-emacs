@@ -463,4 +463,4 @@
         (kill-region (region-beginning) (region-end))
         (goto-char pos)
         (yank)))))
-(global-set-key (kbd "C-c C-r") 'ly:before-point-target)
+(global-set-key (kbd "C-c C-r") 'ly:yank-before-point-target)
