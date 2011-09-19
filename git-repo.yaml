@@ -1,12 +1,22 @@
 --- 
-popwin: 
-- elisp/popwin-el
-- http://github.com/m2ym/popwin-el.git
-- 604aa04f08d234983884833c05491cada8ef4546
+checked: []
+
+ace-jump-mode: 
+- elisp/ace-jump-mode
+- http://github.com/winterTTr/ace-jump-mode.git
+- 4436de0f6466b0344a0b281446070f31bc2bb671
 anything: 
 - elisp/anything-core
 - git://repo.or.cz/anything-config.git
-- 6ee4e8fdf0f86b09caf14efa5238c0eb8c109a50
+- 836352fa918a669651a67b30abc47dd6e97946e3
+popwin: 
+- elisp/popwin-el
+- http://github.com/m2ym/popwin-el.git
+- f95e6a634bec15f849fb43903cfbb89af31f38b0
+zencoding: 
+- elisp/zencoding
+- http://github.com/rooney/zencoding.git
+- 1f62291a67ee3ef86df0d4a2304395cdfb315b31
 auto-complete: 
 - elisp/auto-complete
 - http://github.com/m2ym/auto-complete.git
@@ -19,11 +29,3 @@ magit:
 - elisp/magit
 - http://github.com/magit/magit.git
 - fa0f15fb85e8a0617f450b6f74afc02c139bfc77
-ace-jump-mode:
-- elisp/ace-jump-mode
-- http://github.com/winterTTr/ace-jump-mode.git
-- 4436de0f6466b0344a0b281446070f31bc2bb671
-zencoding:
-- elisp/zencoding
-- http://github.com/rooney/zencoding.git
-- 1f62291a67ee3ef86df0d4a2304395cdfb315b31

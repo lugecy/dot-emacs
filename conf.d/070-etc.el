@@ -1,3 +1,5 @@
+(with-loading 'color-theme
+  (setq color-theme-history-max-length 10))
 (safe-loading "dabbrev-ja")
 (safe-loading 'el-expectations)
 (safe-loading 'lispxmp)

@@ -4,7 +4,7 @@
 
 ;; Author: Tomohiro Matsuyama <tomo@cx4a.org>
 ;; Keywords: convenience
-;; Version: 0.3
+;; Version: 0.4
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -70,6 +70,18 @@
 
 
 ;;; Common API
+
+(defmacro popwin:save-selected-window (&rest body)
+  "Evaluate BODY saving the selected window."
+  `(with-selected-window (selected-window) ,@body))
+
+(defun popwin:switch-to-buffer (buffer-or-name &optional norecord)
+  "Call `switch-to-buffer' forcing BUFFER-OF-NAME be displayed in
+the selected window."
+  (with-no-warnings 
+    (if (>= emacs-major-version 24)
+        (switch-to-buffer buffer-or-name norecord t)
+      (switch-to-buffer buffer-or-name norecord))))
 
 (defun popwin:last-selected-window ()
   "Return currently selected window or lastly selected window if
@@ -142,7 +154,7 @@ horizontal factor HFACTOR, and vertical factor VFACTOR."
           (cdr node)
         (popwin:adjust-window-edges window edges hfactor vfactor)
         (with-selected-window window
-          (switch-to-buffer buffer t))
+          (popwin:switch-to-buffer buffer t))
         (when selected
           (select-window window)))
     (destructuring-bind (dir edges . windows) node
@@ -221,7 +233,8 @@ window-configuration."
          (root-win (popwin:last-selected-window))
          (hfactor 1)
          (vfactor 1))
-    (delete-other-windows root-win)
+    (popwin:save-selected-window
+     (delete-other-windows root-win))
     (let ((root-width (window-width root-win))
           (root-height (window-height root-win)))
       (when adjust
@@ -238,7 +251,7 @@ window-configuration."
           (popwin:create-popup-window-1 root-win size position)
         ;; Mark popup-win being a popup window.
         (with-selected-window popup-win
-          (switch-to-buffer (popwin:empty-buffer) t))
+          (popwin:switch-to-buffer (popwin:empty-buffer) t))
         (popwin:replicate-window-config master-win root hfactor vfactor)
         (list master-win popup-win)))))
 
@@ -410,7 +423,7 @@ BUFFER."
               popwin:selected-window (selected-window))
         (popwin:start-close-popup-window-timer))))
   (with-selected-window popwin:popup-window
-    (switch-to-buffer buffer))
+    (popwin:switch-to-buffer buffer))
   (setq popwin:popup-buffer buffer
         popwin:popup-window-stuck-p stick)
   (if noselect
@@ -437,6 +450,10 @@ be closed by `popwin:close-popup-window'."
 
 
 ;;; Special Display
+
+(defmacro popwin:without-special-display (&rest body)
+  "Evaluate BODY without special displaying."
+  `(let (display-buffer-function special-display-function) ,@body))
 
 (defcustom popwin:special-display-config
   '(("*Help*")
@@ -481,13 +498,13 @@ buffers will be shown at the left of the frame with width 80."
 
 (defun popwin:original-display-buffer (buffer &optional not-this-window)
   "Call `display-buffer' for BUFFER without special displaying."
-  (let (display-buffer-function special-display-function)
-    ;; Close the popup window here so that the popup window won't to
-    ;; be splitted.
-    (when (and (eq (selected-window) popwin:popup-window)
-               (not (same-window-p (buffer-name buffer))))
-      (popwin:close-popup-window))
-    (display-buffer buffer not-this-window)))
+  (popwin:without-special-display
+   ;; Close the popup window here so that the popup window won't to
+   ;; be splitted.
+   (when (and (eq (selected-window) popwin:popup-window)
+              (not (same-window-p (buffer-name buffer))))
+     (popwin:close-popup-window))
+   (display-buffer buffer not-this-window)))
 
 (defun* popwin:display-buffer-1 (buffer-or-name &key default-config-keywords if-buffer-not-found if-config-not-found)
   "Display BUFFER-OR-NAME, if possible, in a popup

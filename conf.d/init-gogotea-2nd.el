@@ -134,3 +134,6 @@
     (when (string= file "/bin/bash")
       (eshell-search-path "bash"))))
 (setq eshell-history-size 1024)
+
+;;;; color-theme configure (need frame parameter after)
+(and (load "zen-and-art") (color-theme-zen-and-art))
