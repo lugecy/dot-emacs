@@ -19,7 +19,6 @@
     (define-key map "\M-M" 'mark-to-char-backward)
     map)
   "Fastnav keymap.")
-(global-set-key (kbd "M-z") fastnav-sub-map)
 
 (defun zap-to-char-forward (arg)
   "Kill text to the ARG'th occurence of a character queried

@@ -1,5 +1,4 @@
 (require 'thing-cmds)
-(global-set-key (kbd "C-M-@") 'cycle-thing-region) ;; default mark-word
 
 ;;;; for thing-cmds.el feature popup
 (ly:eval-after-load "popup"
@@ -30,7 +29,7 @@
                     ((stringp event) (string-to-char event))))
            (thing (assoc-default c thing-types-map)))
       (if thing (return thing))))
-  (global-set-key (kbd "C-M-@") 'mark-thing-popup))
+  )
 
 ;;;; thing-opt.el
 (require 'thing-opt)
@@ -48,15 +47,10 @@
 ;; (?U . url)
 ;; (?P . page)
 
-;; (global-set-key (kbd "C-w") 'kill-region-dwim)
-;; (define-key viper-insert-global-user-map (kbd "C-w") 'kill-region-dwim)
-(global-set-key (kbd "M-w") 'kill-ring-save-dwim)
-
 (defun wrap-unix-werase-or-kill (arg)
   (interactive "P")
   (if (equal arg '(4))
       (kill-region-dwim)
     (call-interactively 'unix-werase-or-kill))) ; conf-misc.el
-(global-set-key (kbd "C-w") 'wrap-unix-werase-or-kill)
 (eval-after-load "viper"
   '(define-key viper-insert-global-user-map (kbd "C-w") 'wrap-unix-werase-or-kill))

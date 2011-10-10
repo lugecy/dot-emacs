@@ -2,8 +2,6 @@
 (setq historyf-limit 10)
 (add-to-list 'historyf-minor-modes 'clmemo-mode)
 (add-to-list 'historyf-major-modes 'html-mode)
-(global-set-key (kbd "C-x p") 'historyf-back)
-(global-set-key (kbd "C-x P") 'historyf-forward)
 
 ;;;; for escreen
 (ly:eval-after-load 'escreen
@@ -42,4 +40,3 @@
   (anything :sources 'anything-c-source-historyf
             :buffer "*anything historyf*"
             :preselect (format "^%3d:" 0)))
-(global-set-key (kbd "C-x C-:") 'anything-historyf)

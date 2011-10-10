@@ -38,7 +38,6 @@ When argument is negative value, enable insert eval-expression."
             (when old-point (push-mark old-point))))
         (goto-char (point-max))
         (ielm-change-working-buffer buf)))))
-(global-set-key (kbd "M-:") 'ielm-with-current-buffer)
 
 (defun lugecy-setup-ielm-mode ()
   "Configure function for ielm-mode"

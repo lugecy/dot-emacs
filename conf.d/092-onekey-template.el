@@ -20,7 +20,6 @@
   "The `one-key' menu for C-x RET"
   (interactive)
   (one-key-menu "C-x RET" one-key-menu-C-x-RET-alist))
-(global-set-key (kbd "C-x RET") 'one-key-menu-C-x-RET)
 
 (defvar one-key-menu-C-x-ESC-alist nil
   "The `one-key' menu alist for C-x ESC.")
@@ -59,7 +58,6 @@
   "The `one-key' menu for C-x 4"
   (interactive)
   (one-key-menu "C-x 4" one-key-menu-C-x-4-alist))
-(global-set-key (kbd "C-x 4") 'one-key-menu-C-x-4)
 
 (defvar one-key-menu-C-x-5-alist nil
   "The `one-key' menu alist for C-x 5.")
@@ -84,7 +82,6 @@
   "The `one-key' menu for C-x 5"
   (interactive)
   (one-key-menu "C-x 5" one-key-menu-C-x-5-alist))
-(global-set-key (kbd "C-x 5") 'one-key-menu-C-x-5)
 
 (defvar one-key-menu-C-x-n-alist nil
   "The `one-key' menu alist for C-x n.")
@@ -102,7 +99,6 @@
   "The `one-key' menu for C-x n"
   (interactive)
   (one-key-menu "C-x n" one-key-menu-C-x-n-alist))
-(global-set-key (kbd "C-x n") 'one-key-menu-C-x-n)
 
 (defvar one-key-menu-C-x-r-alist nil
   "The `one-key' menu alist for C-x r.")
@@ -137,7 +133,6 @@
   "The `one-key' menu for C-x r"
   (interactive)
   (one-key-menu "C-x r" one-key-menu-C-x-r-alist))
-(global-set-key (kbd "C-x r") 'one-key-menu-C-x-r)
 
 (defvar one-key-menu-C-x-v-alist nil
   "The `one-key' menu alist for C-x v.")
@@ -168,7 +163,6 @@
   "The `one-key' menu for C-x v"
   (interactive)
   (one-key-menu "C-x v" one-key-menu-C-x-v-alist))
-(global-set-key (kbd "C-x v") 'one-key-menu-C-x-v)
 
 (defvar one-key-menu-M-g-alist nil
   "The `one-key' menu alist for M-g.")
@@ -190,7 +184,6 @@
   "The `one-key' menu for M-g"
   (interactive)
   (one-key-menu "M-g" one-key-menu-M-g-alist))
-(global-set-key (kbd "M-g") 'one-key-menu-M-g)
 
 (defvar one-key-menu-C-x-a-alist nil
   "The `one-key' menu alist for C-x a.")
@@ -216,7 +209,6 @@
   "The `one-key' menu for C-x a"
   (interactive)
   (one-key-menu "C-x a" one-key-menu-C-x-a-alist))
-(global-set-key (kbd "C-x a") 'one-key-menu-C-x-a)
 
 (defvar one-key-menu-C-x-alist nil
   "The `one-key' menu alist for C-x.")
@@ -346,4 +338,3 @@
   "The `one-key' menu for C-x"
   (interactive)
   (one-key-menu "C-x" one-key-menu-C-x-alist))
-(global-set-key (kbd "C-x ?") 'one-key-menu-C-x)

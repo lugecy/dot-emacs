@@ -30,8 +30,6 @@
                   ((org-agenda-ndays 1)))
           (todo nil
            ((org-agenda-todo-ignore-scheduled t)))))))
-(global-set-key (kbd "<C-f9>") 'org-remember)
-(global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;;; コードリーディング用の設定
 (defvar org-code-reading-software-name nil)

@@ -74,10 +74,6 @@
 
 ;;; Code:
 
-;; magit core
-(require 'magit-key-mode)
-(require 'magit-bisect)
-
 (eval-when-compile (require 'cl))
 (require 'log-edit)
 (require 'easymenu)
@@ -326,6 +322,11 @@ many spaces.  Otherwise, highlight neither."
                                (integer :tag "Spaces" :value ,tab-width)
                                (const :tag "Neither" nil))))
   :set 'magit-set-variable-and-refresh)
+
+(defcustom magit-use-cygwin-git-flag nil
+  "If non-nil mean, magit use cygwin git."
+  :group 'magit
+  :type 'boolean)
 
 (defvar magit-current-indentation nil
   "Indentation highlight used in the current buffer, as specified
@@ -1016,11 +1017,6 @@ out revs involving HEAD."
 (defun magit-put-line-property (prop val)
   (put-text-property (line-beginning-position) (line-beginning-position 2)
 		     prop val))
-
-(defcustom magit-use-cygwin-git-flag nil
-  "If non-nil mean, magit use cygwin git."
-  :group 'magit
-  :type 'boolean)
 
 (defun magit-escape-for-w32 (str)
   (replace-regexp-in-string "\\([{}]\\)" "\\\\\\1" str)) ; "{" => "\{"
@@ -3051,18 +3047,21 @@ insert a line to tell how to insert more of them"
                     'mouse-face 'magit-item-highlight
                     'face 'magit-log-sha1))
 
+(defvar magit-have-abbrev) ;below
+
 (defun magit-refresh-commit-buffer (commit)
   (magit-configure-have-abbrev)
+  (magit-configure-have-decorate)
   (magit-create-buffer-sections
     (apply #'magit-git-section nil nil
 	   'magit-wash-commit
 	   "log"
-	   "--decorate=full"
-	   "--max-count=1"
-	   "--pretty=medium"
-	   `(,@(if magit-have-abbrev (list "--no-abbrev-commit"))
-	     "--cc"
-	     "-p" ,commit))))
+           "--max-count=1"
+           "--pretty=medium"
+           `(,@(if magit-have-abbrev (list "--no-abbrev-commit"))
+             ,@(if magit-have-decorate (list "--decorate=full"))
+             "--cc"
+             "-p" ,commit))))
 
 (define-derived-mode magit-commit-mode magit-mode "Magit"
   "Mode to view a git commit.
@@ -3237,6 +3236,8 @@ PREPEND-REMOTE-NAME is non-nil."
        ")"))
    (t
     (run-hook-with-args-until-success 'magit-remote-string-hook))))
+
+(declare-function magit--bisect-info-for-status "magit-bisect" (branch))
 
 (defun magit-refresh-status ()
   (magit-create-buffer-sections
@@ -3469,7 +3470,7 @@ With prefix argument, add remaining untracked files as well.
   (concat remote "-" (escape-branch-name branch)))
 
 (defun magit-default-tracking-name-branch-only
-  (remote banch)
+  (remote branch)
   "Use just the escaped branch name for tracking branches."
   (escape-branch-name branch))
 
@@ -3947,6 +3948,7 @@ typing and automatically refreshes the status buffer."
     (define-key map (kbd "C-x #") 'magit-log-edit-commit)
     (define-key map (kbd "C-c C-a") 'magit-log-edit-toggle-amending)
     (define-key map (kbd "C-c C-s") 'magit-log-edit-toggle-signoff)
+    (define-key map (kbd "C-c C-t") 'magit-log-edit-toggle-author)
     (define-key map (kbd "C-c C-e") 'magit-log-edit-toggle-allow-empty)
     (define-key map (kbd "M-p") 'log-edit-previous-comment)
     (define-key map (kbd "M-n") 'log-edit-next-comment)
@@ -4042,10 +4044,28 @@ toggled on.  When it's toggled on for the first time, return
     (magit-log-edit-set-fields fields)
     yesp))
 
+(defun magit-log-edit-toggle-input (name default)
+  "Toggle the log-edit input named NAME.
+If it's currently unset, set it to DEFAULT (a string). If it is
+set remove it.
+
+Return nil if the input is toggled off, and its valud if it's
+toggled on."
+  (let* ((fields (magit-log-edit-get-fields))
+	 (cell (assq name fields))
+         result)
+    (if cell
+        (progn
+          (setq fields (assq-delete-all name fields)
+                result (cdr cell)))
+      (setq fields (acons name default fields)))
+    (magit-log-edit-set-fields fields)
+    result))
+
 (defun magit-log-edit-setup-author-env (author)
   (cond (author
 	 ;; XXX - this is a bit strict, probably.
-	 (or (string-match "\\(.*\\) <\\(.*\\)>" author)
+	 (or (string-match "\\(.*\\) <\\(.*\\)>\\(?:,\\s-*\\(.+\\)\\)?" author)
 	     (error "Can't parse author string"))
 	 ;; Shucks, setenv destroys the match data.
 	 (let ((name (match-string 1 author))
@@ -4053,7 +4073,8 @@ toggled on.  When it's toggled on for the first time, return
 	       (date  (match-string 3 author)))
 	   (setenv "GIT_AUTHOR_NAME" name)
 	   (setenv "GIT_AUTHOR_EMAIL" email)
-	   (setenv "GIT_AUTHOR_DATE" date)))
+           (if date
+               (setenv "GIT_AUTHOR_DATE" date))))
 	(t
 	 (setenv "GIT_AUTHOR_NAME")
 	 (setenv "GIT_AUTHOR_EMAIL")
@@ -4139,6 +4160,15 @@ toggled on.  When it's toggled on for the first time, return
 \(i.e., whether eventual commit does 'git commit --signoff')"
   (interactive)
   (magit-log-edit-toggle-field 'sign-off (not magit-commit-signoff)))
+
+(defun magit-log-edit-toggle-author ()
+  "Toggle whether this commit will include an author.
+\(i.e., whether eventual commit is run with GIT_AUTHOR_NAME and
+GIT_AUTHOR_EMAIL set)"
+  (interactive)
+  (magit-log-edit-toggle-input 'author (format "%s <%s>"
+                                               (or (magit-get "user" "name") "Author Name")
+                                               (or (magit-get "user" "email") "author@email"))))
 
 (defun magit-log-edit-toggle-allow-empty ()
   "Toggle whether this commit is allowed to be empty.
@@ -5340,4 +5370,9 @@ With a prefix arg, do a submodule update --init"
       (magit-start-process "Gitk" nil magit-gitk-executable "--all")))))
 
 (provide 'magit)
+
+;; rest of magit core
+(require 'magit-key-mode)
+(require 'magit-bisect)
+
 ;;; magit.el ends here

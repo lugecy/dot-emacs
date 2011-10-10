@@ -3,13 +3,10 @@
 (setq undo-strong-limit 130000) ; default: 30000
 
 ;;;; redo.el
-(when (require 'redo+ nil t)
-  (global-set-key (kbd "C-.") 'redo))
+(require 'redo+ nil t)
 
 ;;;; point-undo.el configure
 (require 'point-undo)
-(global-set-key (kbd "C-c p i") 'point-undo)
-(global-set-key (kbd "C-c p u") 'point-redo)
 
 ;;;; undo-tree.el
 (require 'undo-tree)

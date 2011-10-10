@@ -13,4 +13,3 @@
       (goto-char newpt)
       (setq this-command 'newline)
       ())))
-(global-set-key "\C-m" 'sane-newline)

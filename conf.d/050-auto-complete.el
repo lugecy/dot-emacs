@@ -25,7 +25,6 @@
 (define-key ac-completing-map (kbd "C-c C-u") 'ac-symbols-cache-reset)
 (define-key ac-completing-map (kbd "C-c C-.") 'ac-switch-source)
 (define-key ac-completing-map (kbd "C-c C-/") 'ac-switch-source-reverse)
-(ac-set-trigger-key "TAB")
 (define-key ac-mode-map (kbd "M-\\") 'auto-complete-select-source)
 (define-key ac-mode-map (kbd "C-c C-f") 'auto-complete-filename-maybe)
 (define-key ac-mode-map (kbd "C-M-o") 'auto-complete-swank-maybe)

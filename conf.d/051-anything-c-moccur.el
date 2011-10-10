@@ -1,5 +1,4 @@
 (require 'anything-c-moccur)
-(global-set-key (kbd "M-i") 'anything-c-moccur-occur-by-moccur) ;バッファ内検索 default: tab-to-tab-stop
 (define-key isearch-mode-map "\M-i" 'anything-c-moccur-from-isearch) ;; isearch-modeから移行する
 (setq anything-c-moccur-anything-idle-delay 0.2 ;`anything-idle-delay'
       anything-c-moccur-higligt-info-line-flag t ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする

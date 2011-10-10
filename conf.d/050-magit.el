@@ -8,7 +8,6 @@
         (define-key map "i" 'magit-status)
         (define-key map "l" 'magit-log)
         map))
-(global-set-key (kbd "C-c j") magit-global-map)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'magit-log-edit-mode t))
 (ly:eval-after-load 'viper
@@ -44,13 +43,18 @@
 (defun ly:magit-move-section-and-recenter ()
   (let ((sec (magit-current-section)))
     (when (and (eq 'hunk (magit-section-type sec))
-               (not (magit-section-hidden sec))
-               (> (- (line-number-at-pos
-                      (magit-section-end sec))
-                     (line-number-at-pos
-                      (magit-section-beginning sec)))
-                  (window-height)))
-      (recenter 0))))
+               (not (magit-section-hidden sec)))
+      (let ((hunk-height (- (line-number-at-pos
+                             (magit-section-end sec))
+                            (line-number-at-pos
+                             (magit-section-beginning sec))))
+            (to-bottom-height (- (line-number-at-pos (window-end))
+                                 (line-number-at-pos
+                                  (magit-section-beginning sec)))))
+        (when (> hunk-height to-bottom-height)
+          (recenter (if (>= hunk-height (window-height))
+                        0               ; window-top
+                      (- hunk-height))))))))
 
 (defadvice magit-goto-next-section (after view-recenter activate)
   (ly:magit-move-section-and-recenter))

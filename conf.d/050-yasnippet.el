@@ -1,30 +1,23 @@
 ;; -*- coding: utf-8-unix -*-
-(require 'yasnippet)
+;; (require 'yasnippet)
+(require 'yas-jit)
 ;; (load "yasnippet-compiled-snippet")
-(setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
+(setq yas/root-directory (expand-file-name "snippets" user-emacs-directory))
+;; (dolist (d yas/root-directory)
+;;   (yas/load-directory d))
+;; (yas/reload-all)
+(setq yas/jit-cache-snippets nil)
+(yas/jit-load)
+(require 'yas-andy-bundle)
+(setq yas/prompt-functions '(yas/dropdown-prompt yas/completing-prompt))
+(yas/global-mode 1)
 
 (require 'anything-c-yasnippet)
 (setq anything-c-yas-display-key-on-candidate t)
 (setq anything-c-yas-match-name-and-key t)
-(global-set-key (kbd "C-c C-y") 'anything-c-yas-complete) 
-(setq yas/root-directory (list "~/.emacs.d/my-snippet"))
-;; (yas/reload-all)
-(require 'yas-andy-bundle)
-(yas/global-mode 1)
 
-;;;; my snippent
-(yas/define 'ruby-mode "desc" "describe ${1} do
-  $0
-end" "describe ... do ... end")
-(yas/define 'ruby-mode "it" "it ${1:should} do
-  $0
-end" "it \"...\" do ... end")
-(yas/define 'ruby-mode "bef" "before do
-  $0
-end" "before do ... end")
-(yas/define 'elisp-mode "llt" "(let ($1)
-  $0)" "(let (...) ...)" nil nil)
-(yas/define 'elisp-mode "lkk" "(lookup-key ${1:global-map} (kbd \"$2\"))$0" "(lookup-key ...)")
+;;;; my snippent (move to ~/.emacs.d/snippets)
+;; (yas/define 'elisp-mode "lkk" "(lookup-key ${1:global-map} (kbd \"$2\"))$0" "(lookup-key ...)")
 
 ;; yasnippetで同じパターンを連続入力する - (rubikitch loves (Emacs Ruby CUI))
 ;; http://d.hatena.ne.jp/rubikitch/20090702/1246477577
@@ -50,9 +43,6 @@ register the region as oneshot snippet, Otherwise expand it."
       (yas/register-oneshot-snippet (region-beginning) (region-end))
     (yas/expand-oneshot-snippet)))
 
-(ly:eval-after-load "sequential-command"
-  (define-key global-map "\C-x\C-y" 'yas/oneshot-snippet))
-
 ;;;; 括弧の中でyas/expandした時に外側の括弧を削除する
 (defun yas/before-lisp-surround-delete ()
   (when (and (memq major-mode '(emacs-lisp-mode lisp-interaction-mode inferior-emacs-lisp-mode))
@@ -72,9 +62,7 @@ register the region as oneshot snippet, Otherwise expand it."
                (yas/snippet-table-hash table))
       acc)))
 
-;; TABはauto-completeで使っているので<tab>へ変更
-(setq yas/trigger-key "<tab>"
-      yas/next-field-key '("<tab>"))
+;; yas/keymap用のreload関数を定義(for yas/trigger-key-reload)
 (defun yas/keymap-reload ()
   (setq yas/keymap
         (let ((map (make-sparse-keymap)))
@@ -85,8 +73,6 @@ register the region as oneshot snippet, Otherwise expand it."
                   ("C-g"                   . yas/abort-snippet)
                   (,yas/skip-and-clear-key . yas/skip-and-clear-or-delete-char)))
           map)))
-(yas/trigger-key-reload "TAB")
-(yas/keymap-reload)
 
 ;;;; テンプレート展開中であることをわかりやすくする
 ;;; change mode-line-face

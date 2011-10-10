@@ -5,11 +5,18 @@
 ;;               2011              Thierry Volpiatto <thierry.volpiatto@gmail.com>
 
 ;; Author: Tamas Patrovics
-;; Maintainer: rubikitch <rubikitch@ruby-lang.org>
+
+;; Maintainers: rubikitch <rubikitch@ruby-lang.org>
+;;              Thierry Volpiatto <thierry.volpiatto@gmail.com>
+
 ;; Keywords: files, frames, help, matching, outlines, processes, tools, convenience, anything
 ;; X-URL: http://repo.or.cz/w/anything-config.git
 ;; Site: http://www.emacswiki.org/cgi-bin/emacs/Anything
 
+;;; This file is NOT part of GNU Emacs
+
+;;; License
+;;
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
@@ -79,6 +86,10 @@
 ;; Same as `delete-minibuffer-contents' but this is a command.
 ;; `anything-toggle-resplit-window'
 ;; Toggle resplit anything window, vertically or horizontally.
+;; `anything-narrow-window'
+;; Narrow anything window.
+;; `anything-enlarge-window'
+;; Enlarge anything window.
 ;; `anything-select-2nd-action'
 ;; Select the 2nd action for the currently selected candidate.
 ;; `anything-select-3rd-action'
@@ -90,9 +101,9 @@
 ;; `anything-execute-persistent-action'
 ;; Perform the associated action ATTR without quitting anything.
 ;; `anything-scroll-other-window'
-;; Scroll other window (not *Anything* window) upward.
+;; Scroll other window	(not *Anything* window) upward.
 ;; `anything-scroll-other-window-down'
-;; Scroll other window (not *Anything* window) downward.
+;; Scroll other window	(not *Anything* window) downward.
 ;; `anything-toggle-visible-mark'
 ;; Toggle anything visible mark at point.
 ;; `anything-display-all-visible-marks'
@@ -123,9 +134,9 @@
 ;; `anything-version'
 ;; Not documented.
 ;; `anything-sources'
-;; The source of candidates for anything.
+;; A list of sources to use with `anything'.
 ;; `anything-type-attributes'
-;; It's a list of                                      (TYPE ATTRIBUTES ...).
+;; It's a list of					(TYPE ATTRIBUTES ...).
 ;; `anything-enable-shortcuts'
 ;; *Whether to use digit/alphabet shortcut to select the first nine matches.
 ;; `anything-shortcut-keys-alist'
@@ -133,7 +144,7 @@
 ;; `anything-display-source-at-screen-top'
 ;; *Display candidates at the top of screen.
 ;; `anything-candidate-number-limit'
-;; `anything-candidate-number-limit' variable may be overridden by SOURCE.
+;; Apply candidate-number-limit attribute value.
 ;; `anything-idle-delay'
 ;; *Be idle for this many seconds, before updating in delayed sources.
 ;; `anything-input-idle-delay'
@@ -145,9 +156,9 @@
 ;; `anything-map'
 ;; Keymap for anything.
 ;; `anything-header-face'
-;; Face for header lines in the anything buffer.
+;; *Face for header lines in the anything buffer.
 ;; `anything-selection-face'
-;; Face for currently selected item.
+;; *Face for currently selected item.
 ;; `anything-buffer'
 ;; Buffer showing completions.
 ;; `anything-action-buffer'
@@ -155,7 +166,7 @@
 ;; `anything-selection-overlay'
 ;; Overlay used to highlight the currently selected item.
 ;; `anything-digit-overlays'
-;; Overlays for digit shortcuts. See `anything-enable-shortcuts'.
+;; Overlays for digit shortcuts.  See `anything-enable-shortcuts'.
 ;; `anything-candidate-cache'
 ;; Holds the available candidate withing a single anything invocation.
 ;; `anything-pattern'
@@ -188,12 +199,14 @@
 ;; Variables which are restored after `anything' invocation.
 ;; `anything-saved-selection'
 ;; Value of the currently selected object when the action list is shown.
+;; `anything-current-prefix-arg'
+;; Record `current-prefix-arg' when exiting minibuffer.
 ;; `anything-candidate-separator'
 ;; Candidates separator of `multiline' source.
 ;; `anything-current-buffer'
 ;; Current buffer when `anything' is invoked.
 ;; `anything-buffer-file-name'
-;; `buffer-file-name' when `anything' is invoked.
+;; Variable `buffer-file-name' when `anything' is invoked.
 ;; `anything-saved-action'
 ;; Saved value of the currently selected action by key.
 ;; `anything-last-sources'
@@ -227,7 +240,7 @@
 ;; `anything-help-message'
 ;; Detailed help message string for `anything'.
 ;; `anything-source-in-each-line-flag'
-;; If non-nil, add anything-source text-property in each candidate.
+;; Non-nil means add anything-source text-property in each candidate.
 ;; `anything-debug-forms'
 ;; Forms to show in `anything-debug-output'.
 ;; `anything-debug'
@@ -258,10 +271,12 @@
 ;; If this mode is on, persistent action is executed everytime the cursor is moved.
 ;; `anything-let-variables'
 ;; Not documented.
+;; `anything-split-window-state'
+;; Not documented.
 ;; `anything-last-log-file'
 ;; Not documented.
 ;; `anything-compile-source-functions'
-;; Functions to compile elements of `anything-sources' (plug-in).
+;; Functions to compile elements of `anything-sources'	(plug-in).
 ;; `anything-quit'
 ;; Not documented.
 ;; `anything-additional-attributes'
@@ -269,7 +284,7 @@
 ;; `anything-buffers'
 ;; All of `anything-buffer' in most recently used order.
 ;; `anything-current-position'
-;; Not documented.
+;; Restore or save current position in `anything-current-buffer'.
 ;; `anything-last-frame-or-window-configuration'
 ;; Used to store window or frame configuration when anything start.
 ;; `anything-reading-pattern'
@@ -289,7 +304,7 @@
 ;; `anything-orig-enable-shortcuts'
 ;; Not documented.
 ;; `anything-persistent-action-display-window'
-;; Not documented.
+;; Return the window that will be used for presistent action.
 ;; `anything-visible-mark-face'
 ;; Not documented.
 ;; `anything-visible-mark-overlays'
@@ -982,6 +997,7 @@ It is disabled by default because *Anything Log* grows quickly.")
 (defvar anything-once-called-functions nil)
 (defvar anything-follow-mode nil)
 (defvar anything-let-variables nil)
+(defvar anything-split-window-state nil)
 
 ;; (@* "Utility: logging")
 (defun anything-log (format-string &rest args)
@@ -1530,7 +1546,8 @@ This is used in transformers to modify candidates list."
 
 ;; (@* "Core: entry point")
 (defconst anything-argument-keys
-  '(:sources :input :prompt :resume :preselect :buffer :keymap))
+  '(:sources :input :prompt :resume :preselect :buffer :keymap :default))
+
 ;;;###autoload
 (defun anything (&rest plist)
   "Main function to execute anything sources.
@@ -1575,6 +1592,11 @@ Basic keywords are the following:
 
   `anything-map' for current `anything' session.
 
+- :default
+
+ A default argument that will be inserted in minibuffer with \
+ \\<minibuffer-local-map>\\[next-history-element].
+ When nil of not present `thing-at-point' will be used instead.
 
 Of course, conventional arguments are supported, the two are same.
 
@@ -1653,12 +1675,13 @@ Call `anything' with only ANY-SOURCES and ANY-BUFFER as args."
 (defun anything-internal (&optional
                             any-sources any-input
                             any-prompt any-resume
-                            any-preselect any-buffer any-keymap)
+                            any-preselect any-buffer
+                            any-keymap any-default)
   "The internal anything function called by `anything'.
 For ANY-SOURCES ANY-INPUT ANY-PROMPT ANY-RESUME ANY-PRESELECT ANY-BUFFER and
 ANY-KEYMAP See `anything'."
   (anything-log "++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-  (anything-log-eval any-prompt any-preselect any-buffer any-keymap)
+  (anything-log-eval any-prompt any-preselect any-buffer any-keymap any-default)
   (unwind-protect
       (condition-case v
           (let ( ;; It is needed because `anything-source-name' is non-nil
@@ -1676,7 +1699,7 @@ ANY-KEYMAP See `anything'."
               (anything-log "show prompt")
               (unwind-protect
                   (anything-read-pattern-maybe
-                   any-prompt any-input any-preselect any-resume any-keymap)
+                   any-prompt any-input any-preselect any-resume any-keymap any-default)
                 (anything-cleanup)))
             (prog1 (unless anything-quit (anything-execute-selection-action-1))
               (anything-log "end session --------------------------------------------")))
@@ -1810,14 +1833,18 @@ It use `switch-to-buffer' or `pop-to-buffer' depending of value of
   (funcall (if anything-samewindow 'switch-to-buffer 'pop-to-buffer) buf))
 
 ;; (@* "Core: initialize")
-(defvar anything-split-window-state nil)
 (defun anything-initial-setup ()
   "Initialize anything settings and set up the anything buffer."
   (anything-log-run-hook 'anything-before-initialize-hook)
   (setq anything-current-prefix-arg nil)
   (setq anything-once-called-functions nil)
   (setq anything-delayed-init-executed nil)
-  (setq anything-current-buffer (current-buffer))
+  (setq anything-current-buffer
+        (if (minibuffer-window-active-p (minibuffer-window))
+            ;; If minibuffer is active be sure to use it's buffer
+            ;; as `anything-current-buffer'.
+            (window-buffer (active-minibuffer-window))
+            (current-buffer)))
   (setq anything-buffer-file-name buffer-file-name)
   (setq anything-issued-errors nil)
   (setq anything-compiled-sources nil)
@@ -1839,18 +1866,12 @@ It use `switch-to-buffer' or `pop-to-buffer' depending of value of
 (defvar anything-reading-pattern nil
   "Whether in `read-string' in anything or not.")
 (defun anything-read-pattern-maybe (any-prompt any-input
-                                    any-preselect any-resume any-keymap)
+                                    any-preselect any-resume any-keymap any-default)
   "Read pattern with prompt ANY-PROMPT and initial input ANY-INPUT.
 For ANY-PRESELECT ANY-RESUME ANY-KEYMAP, See `anything'."
   (if (anything-resume-p any-resume)
       (anything-mark-current-line)
-    (anything-update))
-  ;; FIXME: This make anything write in minibuffer
-  ;; When using a minibuffer frame independent config.
-  ;; Is it really needed and why?
-  ;; I leave it commented for now.
-  ;(select-frame-set-input-focus (window-frame (minibuffer-window)))
-  (anything-preselect any-preselect)
+      (anything-update any-preselect))
   (with-current-buffer (anything-buffer-get)
     (and any-keymap (set (make-local-variable 'anything-map) any-keymap))
     (let ((minibuffer-local-map
@@ -1867,8 +1888,11 @@ For ANY-PRESELECT ANY-RESUME ANY-KEYMAP, See `anything'."
              (and (functionp anything-quit-if-no-candidate)
                   (funcall anything-quit-if-no-candidate)))
             (t
-             (let ((anything-reading-pattern t))
-               (read-string (or any-prompt "pattern: ") any-input)))))))
+             (let ((anything-reading-pattern t)
+                   (tap (or any-default
+                            (with-anything-current-buffer
+                              (thing-at-point 'symbol)))))
+               (read-string (or any-prompt "pattern: ") any-input nil tap)))))))
 
 (defun anything-create-anything-buffer (&optional test-mode)
   "Create newly created `anything-buffer'.
@@ -1951,7 +1975,7 @@ hooks concerned are `post-command-hook' and `minibuffer-setup-hook'."
   (anything-hooks 'cleanup)
   (anything-frame-or-window-configuration 'restore)
   ;; This is needed in some cases where last input
-  ;; is yielded indefinitely in minibuffer after anything session.
+  ;; is yielded infinitely in minibuffer after anything session.
   (anything-clean-up-minibuffer))
 
 (defun anything-clean-up-minibuffer ()
@@ -1976,7 +2000,7 @@ hooks concerned are `post-command-hook' and `minibuffer-setup-hook'."
 (defun anything-check-minibuffer-input-1 ()
   "Check minibuffer content."
   (with-anything-quittable
-    (with-selected-window (minibuffer-window)
+    (with-selected-window (or (active-minibuffer-window) (minibuffer-window))
       (anything-check-new-input (minibuffer-contents)))))
 
 (defun anything-check-new-input (input)
@@ -2278,7 +2302,7 @@ if ITEM-COUNT reaches LIMIT, exit from inner loop."
 ;; (@* "Core: *anything* buffer contents")
 (defvar anything-input-local nil)
 (defvar anything-process-delayed-sources-timer nil)
-(defun anything-update ()
+(defun anything-update (&optional preselect)
   "Update candidates list in `anything-buffer' according to `anything-pattern'."
   (anything-log "start update")
   (setq anything-digit-shortcut-count 0)
@@ -2310,6 +2334,7 @@ if ITEM-COUNT reaches LIMIT, exit from inner loop."
           ;; FIXME I want to execute anything-after-update-hook
           ;; AFTER processing delayed sources
           (anything-log-run-hook 'anything-after-update-hook))
+        (and preselect (anything-preselect preselect))
         (anything-log "end update")))))
 
 (defun anything-update-source-p (source)
@@ -2319,6 +2344,7 @@ if ITEM-COUNT reaches LIMIT, exit from inner loop."
            (anything-aif (assoc 'requires-pattern source)
                (or (cdr it) 1)
              0))))
+
 (defun anything-delayed-source-p (source)
   (or (assoc 'delayed source)
       (and anything-quick-update
@@ -2725,7 +2751,7 @@ it is \"Candidate\(s\)\" by default."
    'source 'next))
 
 (defun anything-goto-source (source-or-name)
-  "Move the selection to the source (SOURCE-OR-NAME)."
+  "Move the selection to the source SOURCE-OR-NAME."
   (anything-move-selection-common
    (lambda ()
      (goto-char (point-min))
@@ -2738,7 +2764,9 @@ it is \"Candidate\(s\)\" by default."
    'source 'next))
 
 (defun anything-mark-current-line ()
-  "Move selection overlay to current line."
+  "Move `anything-selection-overlay' to current line.
+Note that this is not related with visibles marks, which are used
+to mark candidates."
   (move-overlay
    anything-selection-overlay (point-at-bol)
    (if (anything-pos-multiline-p)
@@ -2903,6 +2931,7 @@ to a list of forms.\n\n")
 (add-hook 'kill-buffer-hook 'anything-kill-buffer-hook)
 
 (defun anything-preselect (candidate-or-regexp)
+  "Move `anything-selection-overlay' to CANDIDATE-OR-REGEXP on startup."
   (with-anything-window
     (when candidate-or-regexp
       (goto-char (point-min))
@@ -2966,7 +2995,7 @@ You can edit the line."
 (defun anything-set-pattern (pattern &optional noupdate)
   "Set minibuffer contents to PATTERN.
 if optional NOUPDATE is non-nil, anything buffer is not changed."
-  (with-selected-window (minibuffer-window)
+  (with-selected-window (or (active-minibuffer-window) (minibuffer-window))
     (delete-minibuffer-contents)
     (insert pattern))
   (when noupdate
@@ -3267,7 +3296,6 @@ Acceptable values of CREATE-OR-BUFFER:
        anything-buffer))))
 
 ;; (@* "Utility: Resize anything window.")
-(defvar anything-split-window-state nil)
 (defun anything-enlarge-window-1 (n)
   "Enlarge or narrow anything window.
 If N is positive enlarge, if negative narrow."
@@ -3459,9 +3487,10 @@ second argument of `display-buffer'."
 
 (defun anything-make-visible-mark ()
   (let ((o (make-overlay (point-at-bol) (1+ (point-at-eol)))))
-    (overlay-put o 'face anything-visible-mark-face)
+    (overlay-put o 'face   anything-visible-mark-face)
     (overlay-put o 'source (assoc-default 'name (anything-get-current-source)))
     (overlay-put o 'string (buffer-substring (overlay-start o) (overlay-end o)))
+    (overlay-put o 'real   (anything-get-selection))
     (add-to-list 'anything-visible-mark-overlays o))
   (push (cons (anything-get-current-source) (anything-get-selection))
         anything-marked-candidates))
@@ -3514,13 +3543,21 @@ It is analogous to `dired-get-marked-files'."
     (equal name (anything-current-line-contents))))
 
 (defun anything-revive-visible-mark ()
+  "Restore marked candidates when anything update display."
   (with-current-buffer anything-buffer
     (dolist (o anything-visible-mark-overlays)
       (goto-char (point-min))
       (while (and (search-forward (overlay-get o 'string) nil t)
                   (anything-current-source-name= (overlay-get o 'source)))
-        ;; Now the next line of visible mark
-        (move-overlay o (point-at-bol 0) (1+ (point-at-eol 0)))))))
+        ;; Calculate real value of candidate.
+        ;; It can be nil if candidate have only a display value.
+        (let ((real (get-text-property (point-at-bol 0) 'anything-realvalue)))
+          (if real
+              ;; Check if real value of current candidate is the same
+              ;; that the one stored in overlay.
+              (and (string= (overlay-get o 'real) real)
+                   (move-overlay o (point-at-bol 0) (1+ (point-at-eol 0))))
+              (move-overlay o (point-at-bol 0) (1+ (point-at-eol 0)))))))))
 (add-hook 'anything-update-hook 'anything-revive-visible-mark)
 
 (defun anything-next-point-in-list (curpos points &optional prev)

@@ -3,11 +3,6 @@
 (require 'anything-complete)
 (require 'anything-show-completion)
 (setq anything-candidate-number-limit 100) ; default 50
-(global-set-key (kbd "C-:") 'anything-for-open)
-(global-set-key [?\C-c?\C-:] 'anything-for-current-buffer)
-(global-set-key (kbd "M-y") 'anything-show-kill-ring) ;; default yank-pop
-(global-set-key (kbd "C-M-:") 'anything-elisp-apropos)
-(global-set-key (kbd "C-c C-/") 'anything-for-current-buffer-with-prefix)
 (define-key isearch-mode-map [?\C-:] 'anything-for-current-buffer)
 (define-key anything-map "\C-r" 'anything-execute-persistent-action)
 (define-key anything-map (kbd "C-M-p") 'anything-previous-source)

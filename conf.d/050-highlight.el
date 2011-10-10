@@ -1,12 +1,5 @@
 ;;;; highlight series
 (require 'highlight-symbol)
-(global-set-key (kbd "C-c s s") 'highlight-symbol-at-point)
-(global-set-key (kbd "C-c s [") 'highlight-symbol-prev)
-(global-set-key (kbd "C-c s ]") 'highlight-symbol-next)
-(global-set-key (kbd "C-c s r") 'highlight-symbol-query-replace)
-(global-set-key (kbd "C-c s p") 'highlight-symbol-jump-prev-hi-lock-symbol)
-(global-set-key (kbd "C-c s n") 'highlight-symbol-jump-next-hi-lock-symbol)
-(global-set-key (kbd "C-c s j") 'highlight-symbol-walk-mode)
 
 ;;;; 前後のhighlight-symbolされている箇所へjump
 (defun highlight-symbol-jump-next-hi-lock-symbol ()
@@ -71,7 +64,6 @@
 
 ;;;;
 (require 'highlight)
-(global-set-key (kbd "C-c s l") 'hlt-highlight)
 
 (require 'highlight-parentheses)
 (custom-set-variables '(hl-paren-colors '("firebrick1" "yellow" "ForestGreen" "orange4")))

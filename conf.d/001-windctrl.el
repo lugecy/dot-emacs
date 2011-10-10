@@ -1,26 +1,21 @@
-;;;; windowを一つにする
-(global-set-key (kbd "<f8>") 'delete-other-windows)
-(global-set-key (kbd "<C-f8>") 'kill-buffer-and-window)
-
 ;; (require 'windmove)
-(define-prefix-command 'C-q-keymap)
-(define-key C-q-keymap (kbd "C-q") 'quoted-insert)
-(define-key C-q-keymap (kbd "C-j") 'windmove-down)
-(define-key C-q-keymap (kbd "C-k") 'windmove-up)
-(define-key C-q-keymap (kbd "C-h") 'windmove-left)
-(define-key C-q-keymap (kbd "DEL") 'windmove-left)
-(define-key C-q-keymap (kbd "C-l") 'windmove-right)
-(define-key C-q-keymap (kbd "TAB") 'other-window-or-split)
-(define-key C-q-keymap (kbd "C-w") 'window-resizer)
-(define-key C-q-keymap (kbd "C-u") 'window-toggle-division)
-(define-key C-q-keymap (kbd "C-o") 'delete-other-windows)
-(define-key C-q-keymap (kbd "C-M-o") 'kill-buffer-and-window)
-(define-key C-q-keymap (kbd "0") 'delete-window)
-(define-key C-q-keymap (kbd "C-0") 'delete-window)
-(define-key C-q-keymap (kbd "C-v") 'popwin:display-last-buffer)
-(define-key C-q-keymap (kbd "C-M-v") 'popwin:close-popup-window)
-(define-key C-q-keymap (kbd "C-@") 'popwin:stick-popup-window)
-(global-set-key (kbd "C-q") 'C-q-keymap)
+(define-prefix-command 'wincmd-keymap)
+(define-key wincmd-keymap (kbd "C-q") 'quoted-insert)
+(define-key wincmd-keymap (kbd "C-j") 'windmove-down)
+(define-key wincmd-keymap (kbd "C-k") 'windmove-up)
+(define-key wincmd-keymap (kbd "C-h") 'windmove-left)
+(define-key wincmd-keymap (kbd "DEL") 'windmove-left)
+(define-key wincmd-keymap (kbd "C-l") 'windmove-right)
+(define-key wincmd-keymap (kbd "TAB") 'other-window-or-split)
+(define-key wincmd-keymap (kbd "C-w") 'window-resizer)
+(define-key wincmd-keymap (kbd "C-u") 'window-toggle-division)
+(define-key wincmd-keymap (kbd "C-o") 'delete-other-windows)
+(define-key wincmd-keymap (kbd "C-M-o") 'kill-buffer-and-window)
+(define-key wincmd-keymap (kbd "0") 'delete-window)
+(define-key wincmd-keymap (kbd "C-0") 'delete-window)
+(define-key wincmd-keymap (kbd "C-v") 'popwin:display-last-buffer)
+(define-key wincmd-keymap (kbd "C-M-v") 'popwin:close-popup-window)
+(define-key wincmd-keymap (kbd "C-@") 'popwin:stick-popup-window)
 ;; windowが無い方向への移動しようとした場合に良きに図らう
 (setq windmove-wrap-around t)
 
@@ -33,8 +28,6 @@
         (split-window-horizontally)
       (split-window-vertically)))
   (other-window 1))
-(unless (locate-library "elscreen")
-  (global-set-key (kbd "C-t") 'other-window-or-split))
 
 ;;;; ウィンドウ 2 分割時に、縦分割<->横分割
 ; ネタ元
@@ -92,7 +85,7 @@
 
 ;;;; escreen configure
 (require 'escreen)
-(setq escreen-prefix-char (kbd "C-t")
+(setq escreen-prefix-char ""            ;(kbd "C-t")
       escreen-install-number-mode-format nil
       escreen-mode-line-format '(escreen-number-mode ("[S" escreen-current-screen-string "] ")))
 (define-key escreen-map (kbd "C-n") 'escreen-goto-next-screen)
@@ -102,8 +95,8 @@
 (define-key escreen-map (kbd "C-d") 'escreen-clone)
 (escreen-install)
 (setq-default mode-line-format (cons escreen-mode-line-format (default-value 'mode-line-format)))
-;; integrate C-q-keymap
-(set-keymap-parent C-q-keymap escreen-map)
+;; integrate wincmd-keymap
+(set-keymap-parent wincmd-keymap escreen-map)
 
 ;; extend escreen
 (defun escreen-clone ()

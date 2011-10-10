@@ -1,18 +1,18 @@
 --- 
 checked: []
 
+popwin: 
+- elisp/popwin-el
+- http://github.com/m2ym/popwin-el.git
+- 5605b5ff019b1a8c3396521aedceeffbf8c87050
+anything: 
+- elisp/anything-core
+- git://repo.or.cz/anything-config.git
+- a2ef5f42ab3b988dfd2bbe9dc219243a0447d44f
 ace-jump-mode: 
 - elisp/ace-jump-mode
 - http://github.com/winterTTr/ace-jump-mode.git
 - 4436de0f6466b0344a0b281446070f31bc2bb671
-anything: 
-- elisp/anything-core
-- git://repo.or.cz/anything-config.git
-- 836352fa918a669651a67b30abc47dd6e97946e3
-popwin: 
-- elisp/popwin-el
-- http://github.com/m2ym/popwin-el.git
-- f95e6a634bec15f849fb43903cfbb89af31f38b0
 zencoding: 
 - elisp/zencoding
 - http://github.com/rooney/zencoding.git
@@ -20,7 +20,7 @@ zencoding:
 auto-complete: 
 - elisp/auto-complete
 - http://github.com/m2ym/auto-complete.git
-- 9d40fc3b43fc16dd4a3a51fa6f062064cc9b272d
+- 09a5fbd52ffdcce046d4552b70cfa5acb7f58d67
 historyf: 
 - elisp/historyf
 - http://github.com/k1LoW/emacs-historyf.git
@@ -28,4 +28,4 @@ historyf:
 magit: 
 - elisp/magit
 - http://github.com/magit/magit.git
-- fa0f15fb85e8a0617f450b6f74afc02c139bfc77
+- e23de66c577a48f73ed3487678caf5a63737fd0a

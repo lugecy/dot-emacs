@@ -1,5 +1,4 @@
 (require 'iedit)
-(global-set-key (kbd "C-;") 'iedit-mode)
 
 (defun iedit-mode-in-defun (&optional arg)
   "Function documantion."
