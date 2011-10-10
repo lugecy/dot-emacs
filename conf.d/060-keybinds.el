@@ -5,6 +5,15 @@
 ;;;; C-h = backspace
 (keyboard-translate ?\C-h 'backspace)
 
+;;;; for terminal key translate (only mintty?)
+(unless window-system
+  (define-key input-decode-map "\e[1;5j" (kbd "C-:"))
+  (define-key input-decode-map "\e[1;5k" (kbd "C-;"))
+  (define-key input-decode-map "\e[1;5n" (kbd "C-."))
+  (define-key input-decode-map "\e[1;5l" (kbd "C-,"))
+  (define-key input-decode-map "\e[1;6x" (kbd "C-("))
+  (define-key input-decode-map "\e[1;6y" (kbd "C-)")))
+
 ;;;; help-for-help
 (global-set-key (kbd "C-c h h") 'help-command)
 
@@ -43,8 +52,9 @@
 
 (global-set-key (kbd "C-M-SPC") 'bm-toggle)
 (global-set-key (kbd "C-c C-SPC") 'bm-toggle)
-(global-set-key (kbd "M-]") 'bm-next)
-(global-set-key (kbd "M-[") 'bm-previous)
+(when window-system                     ; not terminal
+  (global-set-key (kbd "M-]") 'bm-next)
+  (global-set-key (kbd "M-[") 'bm-previous))
 
 ;;;; 050-fastnav.el
 (global-set-key (kbd "M-z") fastnav-sub-map)
