@@ -1,18 +1,18 @@
 --- 
 checked: []
 
-popwin: 
-- elisp/popwin-el
-- http://github.com/m2ym/popwin-el.git
-- 5605b5ff019b1a8c3396521aedceeffbf8c87050
-anything: 
-- elisp/anything-core
-- git://repo.or.cz/anything-config.git
-- a2ef5f42ab3b988dfd2bbe9dc219243a0447d44f
 ace-jump-mode: 
 - elisp/ace-jump-mode
 - http://github.com/winterTTr/ace-jump-mode.git
 - 4436de0f6466b0344a0b281446070f31bc2bb671
+anything: 
+- elisp/anything-core
+- git://repo.or.cz/anything-config.git
+- f8222735271a28b8a13b3bbb688f5659ea2a723e
+popwin: 
+- elisp/popwin-el
+- http://github.com/m2ym/popwin-el.git
+- 5605b5ff019b1a8c3396521aedceeffbf8c87050
 zencoding: 
 - elisp/zencoding
 - http://github.com/rooney/zencoding.git

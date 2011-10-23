@@ -101,6 +101,7 @@
 ;; extend escreen
 (defun escreen-clone ()
   (interactive)
+  (run-hooks 'escreen-goto-screen-before-hook)
   (let ((new-screen-number (escreen-first-unused-screen-number)))
     (or new-screen-number
         (error "escreen: No more screens (see \"escreen-max-screens\")"))

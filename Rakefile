@@ -52,13 +52,13 @@ GIT_REPO.transaction(true) do |db|
       now_head = GIT_REPO.transaction(true){|db| db[k][2] }
       update_flg = Rake::Task["update-#{k}"].invoke
       new_head = GIT_REPO.transaction(true){|db| db[k][2] }
+      checked_list << k
       unless now_head == new_head
         puts "found update #{k}"
         break
       end
       cd current_dir
       puts
-      checked_list << k
     end
     GIT_REPO.transaction do |db|
       db["checked"] = (keys.length == checked_list.length ? [] : checked_list)
