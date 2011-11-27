@@ -4,11 +4,11 @@ checked: []
 ace-jump-mode: 
 - elisp/ace-jump-mode
 - http://github.com/winterTTr/ace-jump-mode.git
-- 4436de0f6466b0344a0b281446070f31bc2bb671
+- 770419b7f67424c6559e5090d860c5328b81a599
 anything: 
 - elisp/anything-core
 - git://repo.or.cz/anything-config.git
-- f8222735271a28b8a13b3bbb688f5659ea2a723e
+- 0f102c346c5688dc9cd81e28440772b1e1958800
 popwin: 
 - elisp/popwin-el
 - http://github.com/m2ym/popwin-el.git
@@ -16,7 +16,7 @@ popwin:
 zencoding: 
 - elisp/zencoding
 - http://github.com/rooney/zencoding.git
-- 1f62291a67ee3ef86df0d4a2304395cdfb315b31
+- 5cd8042040883da8fc54784a9dbf7f68bb9568b7
 auto-complete: 
 - elisp/auto-complete
 - http://github.com/m2ym/auto-complete.git
@@ -28,4 +28,4 @@ historyf:
 magit: 
 - elisp/magit
 - http://github.com/magit/magit.git
-- e23de66c577a48f73ed3487678caf5a63737fd0a
+- a1bdd4750c0de8014a61f0bd214dc42242f449e9

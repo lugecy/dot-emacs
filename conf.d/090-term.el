@@ -9,6 +9,7 @@
   ;; (define-key term-raw-map "\C-x\C-v" '(lambda ()(interactive)(ansi-term "/bin/bash")))
   (define-key term-raw-map (kbd "C-m") 'ly:term-emulate-return)
   (define-key term-raw-map (kbd "M-x") (lookup-key global-map (kbd "M-x")))
+  (define-key term-raw-map (kbd "C-q") (lookup-key global-map (kbd "C-q")))
   (when (featurep 'elscreen)
     (define-key term-raw-map (kbd "C-t") (lookup-key global-map (kbd "C-t")))))
 (add-hook 'term-mode-hook 'ly:initialize-ansi-term)

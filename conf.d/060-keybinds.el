@@ -12,7 +12,8 @@
   (define-key input-decode-map "\e[1;5n" (kbd "C-."))
   (define-key input-decode-map "\e[1;5l" (kbd "C-,"))
   (define-key input-decode-map "\e[1;6x" (kbd "C-("))
-  (define-key input-decode-map "\e[1;6y" (kbd "C-)")))
+  (define-key input-decode-map "\e[1;6y" (kbd "C-)"))
+  (define-key input-decode-map "\e[1;7k" (kbd "C-M-;")))
 
 ;;;; help-for-help
 (global-set-key (kbd "C-c h h") 'help-command)
@@ -27,7 +28,7 @@
 
 ;;;; コメントアウトキーマップ
 (global-set-key (kbd "C-c ;") 'comment-dwim)
-(global-set-key (kbd "C-c C-;") 'comment-dwim)
+;; (global-set-key (kbd "C-c C-;") 'comment-dwim)
 
 (global-set-key (kbd "C-c y") 'djcb-duplicate-line)
 
@@ -40,11 +41,13 @@
 (global-set-key (kbd "C-c C-r") 'ly:yank-before-point-target)
 
 ;;;; anything
-(global-set-key (kbd "C-:") 'anything-for-open)
-(global-set-key [?\C-c?\C-:] 'anything-for-current-buffer)
+(global-set-key (kbd "C-;") 'anything-for-open)
+(global-set-key (kbd "C-c C-;") 'anything-for-current-buffer)
+(global-set-key (kbd "C-M-;") 'anything-elisp-apropos)
 (global-set-key (kbd "M-y") 'anything-show-kill-ring) ;; default yank-pop
-(global-set-key (kbd "C-M-:") 'anything-elisp-apropos)
 (global-set-key (kbd "C-c C-/") 'anything-for-current-buffer-with-prefix)
+(unless window-system
+  (global-set-key (kbd "C-c C-_") 'anything-for-current-buffer-with-prefix))
 
 ;;;; auto-complete
 (when (fboundp 'ac-set-trigger-key)
@@ -52,9 +55,8 @@
 
 (global-set-key (kbd "C-M-SPC") 'bm-toggle)
 (global-set-key (kbd "C-c C-SPC") 'bm-toggle)
-(when window-system                     ; not terminal
-  (global-set-key (kbd "M-]") 'bm-next)
-  (global-set-key (kbd "M-[") 'bm-previous))
+(global-set-key (kbd "M-n") 'bm-next)
+(global-set-key (kbd "M-p") 'bm-previous)
 
 ;;;; 050-fastnav.el
 (global-set-key (kbd "M-z") fastnav-sub-map)
@@ -73,10 +75,10 @@
 ;;;; 050-historyf.el
 (global-set-key (kbd "C-x p") 'historyf-back)
 (global-set-key (kbd "C-x P") 'historyf-forward)
-(global-set-key (kbd "C-x C-:") 'anything-historyf)
+(global-set-key (kbd "C-x C-;") 'anything-historyf)
 
 ;;;; 050-iedit.el
-(global-set-key (kbd "C-;") 'iedit-mode)
+;; (global-set-key (kbd "C-;") 'iedit-mode)
 
 ;;;; 050-ielm.el
 (global-set-key (kbd "M-:") 'ielm-with-current-buffer)
@@ -98,7 +100,6 @@
     (lookup-key global-map (kbd "C-a"))))
 (global-set-key (kbd "C-a") 'seq-home)
 (global-set-key (kbd "C-e") 'seq-end)
-(global-set-key (kbd "M-p") 'seq-move-to-window-line)
 
 ;;;; 050-thing-commands.el
 (global-set-key (kbd "C-M-@") 'cycle-thing-region) ;; default mark-word
@@ -133,7 +134,7 @@
 
 ;;;; 059-trivial-loading.el
 (global-set-key (kbd "C-c s a") 'auto-highlight-symbol-mode)
-(global-set-key (kbd "C-c C-SPC") 'ace-jump-mode)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 
 ;;;; 092-onekey-template.el
 (global-set-key (kbd "C-x RET") 'one-key-menu-C-x-RET)

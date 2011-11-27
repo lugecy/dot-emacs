@@ -143,7 +143,7 @@
             :buffer "*anything escreen*"
             :preselect (format "^%d:" escreen-current-screen-number)))
 (define-key escreen-map (kbd "C-t") 'anything-escreen)
-(define-key escreen-map (kbd "C-:") 'anything-escreen)
+(define-key escreen-map (kbd "C-;") 'anything-escreen)
 (defvar anything-c-source-escreen-for-open
   '((name . "Escreen for open")
     (init . (lambda () (escreen-save-current-screen-configuration)))

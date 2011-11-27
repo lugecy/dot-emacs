@@ -26,4 +26,6 @@
              (second expr) (point))))))
 
   (define-key zencoding-mode-keymap (kbd "<C-return>") 'zencoding-expand-yas-zero)
-  (define-key zencoding-mode-keymap (kbd "<M-return>") 'zencoding-expand-line))
+  (define-key zencoding-mode-keymap (kbd "<M-return>") 'zencoding-expand-line)
+  (unless window-system
+    (define-key zencoding-mode-keymap (kbd "C-^") 'zencoding-expand-yas-zero)))

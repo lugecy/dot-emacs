@@ -527,3 +527,34 @@ the current dir is not under hg."
         (save-excursion
           (goto-char item-end)
           (recenter -1))))))
+
+;;;; life-buy計算用
+(defun ly:count-life-buy-region (beg end)
+  (save-excursion
+    (goto-char beg)
+    (let (pos lst)
+      (while (setq pos (re-search-forward "\\$\\([+-]?[0-9]+\\)" end t))
+        (push (match-string-no-properties 1) lst))
+      (reverse lst))))
+
+(defun ly:sum-life-buy-region (beg end)
+  (loop for buy in (ly:count-life-buy-region beg end)
+        sum (funcall (if (string-match "\\`\\+" buy) #'- #'+ )
+                     (string-to-number buy))))
+
+(defun ly:clmemo-life-buy-sum-day ()
+  (interactive)
+  (let (beg end)
+    (save-excursion
+      (clmemo-forward-entry)
+      (setq end (point))
+      (clmemo-backward-entry)
+      (setq beg (point)))
+    (ly:clmemo-life-buy-sum-region beg end)))
+
+(defun ly:clmemo-life-buy-sum-region (beg end)
+  (interactive "r")
+  (when (interactive-p)
+    (unless (region-active-p)
+      (error "don't active region")))
+  (message "life-buy sum: %d" (ly:sum-life-buy-region beg end)))

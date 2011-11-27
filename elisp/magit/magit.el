@@ -407,14 +407,6 @@ Many Magit faces inherit from this one by default."
   "Face for highlighting marked item."
   :group 'magit-faces)
 
-(defface magit-log-tag-label
-  '((((class color) (background light))
-     :background "LightGoldenRod")
-    (((class color) (background dark))
-     :background "DarkGoldenRod"))
-  "Face for git tag labels shown in log buffer."
-  :group 'magit-faces)
-
 (defface magit-log-head-label-bisect-good
   '((((class color) (background light))
      :box t
@@ -522,14 +514,6 @@ Do not customize this (used in the `magit-key-mode' implementation).")
      :box t
      :background "Grey50"))
   "Face for unknown ref labels shown in log buffer."
-  :group 'magit-faces)
-
-(defface magit-menu-selected-option
-  '((((class color) (background light))
-     :foreground "red")
-    (((class color) (background dark))
-     :foreground "orange"))
-  "Face for selected options on magit's menu"
   :group 'magit-faces)
 
 (defvar magit-mode-map
@@ -656,6 +640,33 @@ Do not customize this (used in the `magit-key-mode' implementation).")
 (defmacro magit-with-refresh (&rest body)
   (declare (indent 0))
   `(magit-refresh-wrapper (lambda () ,@body)))
+
+;;; Git features
+
+(defvar magit-have-graph 'unset)
+(defvar magit-have-decorate 'unset)
+(defvar magit-have-abbrev 'unset)
+(make-variable-buffer-local 'magit-have-graph)
+(put 'magit-have-graph 'permanent-local t)
+(make-variable-buffer-local 'magit-have-decorate)
+(put 'magit-have-decorate 'permanent-local t)
+(make-variable-buffer-local 'magit-have-abbrev)
+(put 'magit-have-abbrev 'permanent-local t)
+
+(defun magit-configure-have-graph ()
+  (if (eq magit-have-graph 'unset)
+      (let ((res (magit-git-exit-code "log" "--graph" "--max-count=0")))
+        (setq magit-have-graph (eq res 0)))))
+
+(defun magit-configure-have-decorate ()
+  (if (eq magit-have-decorate 'unset)
+      (let ((res (magit-git-exit-code "log" "--decorate=full" "--max-count=0")))
+        (setq magit-have-decorate (eq res 0)))))
+
+(defun magit-configure-have-abbrev ()
+  (if (eq magit-have-abbrev 'unset)
+      (let ((res (magit-git-exit-code "log" "--no-abbrev-commit" "--max-count=0")))
+        (setq magit-have-abbrev (eq res 0)))))
 
 ;;; Compatibilities
 
@@ -1823,7 +1834,7 @@ order until one return non nil. If they all return nil then body will be called.
 It used to define hookable magit command: command defined by this
 function can be enriched by magit extension like magit-topgit and magit-svn"
   (declare (indent defun)
-           (debug (&define name lambda-list 
+           (debug (&define name lambda-list
                            [&optional stringp]        ; Match the doc string, if present.
                            [&optional ("interactive" interactive)]
                            def-body)))
@@ -2865,9 +2876,17 @@ must return a string which will represent the log line.")
              (match-string 1 suffix))
         'magit-log-head-label-patches))
 
+(defvar magit-log-remotes-color-hook nil)
+
+(defun magit-log-get-remotes-color (suffix)
+  (or
+   (run-hook-with-args-until-success
+    'magit-log-remotes-color-hook suffix)
+   (list suffix 'magit-log-head-label-remote)))
+
 (defvar magit-refs-namespaces
   '(("tags" . magit-log-head-label-tags)
-    ("remotes" . magit-log-head-label-remote)
+    ("remotes" magit-log-get-remotes-color)
     ("heads" . magit-log-head-label-local)
     ("patches" magit-log-get-patches-color)
     ("bisect" magit-log-get-bisect-state-color)))
@@ -2894,14 +2913,17 @@ must return a string which will represent the log line.")
   "The default log line generator."
   (let ((string-refs
          (when refs
-           (concat (mapconcat
-                    (lambda (r)
-                      (destructuring-bind (label face)
-                          (magit-ref-get-label-color r)
-                        (propertize label 'face face)))
-                    refs
-                    " ")
-                   " "))))
+           (let ((colored-labels
+                  (delete nil
+                          (mapcar (lambda (r)
+                                    (destructuring-bind (label face)
+                                        (magit-ref-get-label-color r)
+                                      (and label
+                                           (propertize label 'face face))))
+                                  refs))))
+             (concat
+              (mapconcat 'identity colored-labels " ")
+              " ")))))
 
     (concat
      (if sha1
@@ -3030,8 +3052,6 @@ insert a line to tell how to insert more of them"
                     'follow-link t
                     'mouse-face 'magit-item-highlight
                     'face 'magit-log-sha1))
-
-(defvar magit-have-abbrev) ;below
 
 (defun magit-refresh-commit-buffer (commit)
   (magit-configure-have-abbrev)
@@ -3320,7 +3340,8 @@ to consider it or not when called with that buffer current."
   "Only prompt to save buffers which are within the current git project (as
   determined by the dir passed to `magit-status'."
   (and buffer-file-name
-       (magit-get-top-dir (file-name-directory buffer-file-name))))
+       (eq (magit-get-top-dir dir)
+           (magit-get-top-dir (file-name-directory buffer-file-name)))))
 
 ;;;###autoload
 (defun magit-status (dir)
@@ -3862,15 +3883,18 @@ If there is no default remote, ask for one."
 	(magit-set merge-branch "branch" branch "merge"))
     (apply 'magit-run-git-async "pull" "-v" magit-custom-options)))
 
-(eval-when-compile (require 'pcomplete))
+(eval-when-compile (require 'eshell))
+
+(defun magit-parse-arguments (command)
+  (require 'eshell)
+  (with-temp-buffer
+    (insert command)
+    (mapcar 'eval (eshell-parse-arguments (point-min) (point-max)))))
 
 (defun magit-shell-command (command)
   "Perform arbitrary shell COMMAND."
   (interactive "sCommand: ")
-  (require 'pcomplete)
-  (let ((args (car (with-temp-buffer
-		     (insert command)
-		     (pcomplete-parse-buffer-arguments))))
+  (let ((args (magit-parse-arguments command))
 	(magit-process-popup-time 0))
     (magit-run* args nil nil nil t)))
 
@@ -3881,9 +3905,7 @@ Similar to `magit-shell-command', but involves slightly less
 typing and automatically refreshes the status buffer."
   (interactive "sRun git like this: ")
   (require 'pcomplete)
-  (let ((args (car (with-temp-buffer
-		     (insert command)
-		     (pcomplete-parse-buffer-arguments))))
+  (let ((args (magit-parse-arguments command))
 	(magit-process-popup-time 0))
     (magit-with-refresh
       (magit-run* (append (cons magit-git-executable
@@ -4447,31 +4469,6 @@ With prefix argument, changes in staging area are kept.
     ((diff)
      (magit-with-revert-confirmation
       (magit-apply-diff-item item "--reverse")))))
-
-(defvar magit-have-graph 'unset)
-(defvar magit-have-decorate 'unset)
-(defvar magit-have-abbrev 'unset)
-(make-variable-buffer-local 'magit-have-graph)
-(put 'magit-have-graph 'permanent-local t)
-(make-variable-buffer-local 'magit-have-decorate)
-(put 'magit-have-decorate 'permanent-local t)
-(make-variable-buffer-local 'magit-have-abbrev)
-(put 'magit-have-abbrev 'permanent-local t)
-
-(defun magit-configure-have-graph ()
-  (if (eq magit-have-graph 'unset)
-      (let ((res (magit-git-exit-code "log" "--graph" "--max-count=0")))
-	(setq magit-have-graph (eq res 0)))))
-
-(defun magit-configure-have-decorate ()
-  (if (eq magit-have-decorate 'unset)
-      (let ((res (magit-git-exit-code "log" "--decorate=full" "--max-count=0")))
-	(setq magit-have-decorate (eq res 0)))))
-
-(defun magit-configure-have-abbrev ()
-  (if (eq magit-have-abbrev 'unset)
-      (let ((res (magit-git-exit-code "log" "--no-abbrev-commit" "--max-count=0")))
-	(setq magit-have-abbrev (eq res 0)))))
 
 (defun magit-log-show-more-entries (&optional arg)
   "Grow the number of log entries shown.
