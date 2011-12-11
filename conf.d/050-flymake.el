@@ -1,24 +1,30 @@
 ;;;; flymake でリアルタイム文法チェック - とりあえず暇だったし何となく始めたブログ
 ;;;; http://d.hatena.ne.jp/khiker/20070630/emacs_ruby_flymake
 (require 'flymake)
+
+(defun ly:flymake-keybind-conf-func (map)
+  "Confiture keybind for flymake-mode."
+  (let ((func (if (featurep 'popup)
+                  'flymake-display-err-menu-for-current-line
+                'credmp/flymake-display-err-minibuf)))
+    (define-key map (kbd "C-c d") func)
+    (when (fboundp 'anything-flymake)
+      (define-key map (kbd "C-c D") 'anything-flymake))))
 (defun ly:flymake-conf-ruby-mode ()
   "Confiture flymake-mode for ruby-mode."
-  (let ((func (if (featurep 'popup)
-                  'flymake-display-err-menu-for-current-line
-                'credmp/flymake-display-err-minibuf)))
-    (define-key ruby-mode-map (kbd "C-c d") func)
-    (when (fboundp 'anything-flymake)
-      (define-key ruby-mode-map (kbd "C-c D") 'anything-flymake))))
+  (ly:flymake-keybind-conf-func ruby-mode-map))
 (defun ly:flymake-conf-c-mode ()
   "Configure flymake-mode for c-mode-common-mode."
-  (let ((func (if (featurep 'popup)
-                  'flymake-display-err-menu-for-current-line
-                'credmp/flymake-display-err-minibuf)))
-    (define-key c-mode-map (kbd "C-c d") func)
-    (when (fboundp 'anything-flymake)
-      (define-key c-mode-map (kbd "C-c D") 'anything-flymake))))
+  (ly:flymake-keybind-conf-func c-mode-map))
+(defun ly:flymake-conf-perl-mode ()
+  (ly:flymake-keybind-conf-func perl-mode-map))
+(defun ly:flymake-conf-cperl-mode ()
+  (ly:flymake-keybind-conf-func cperl-mode-map))
+
 (add-hook 'ruby-mode-hook 'ly:flymake-conf-ruby-mode)
 (add-hook 'c-mode-common-hook 'ly:flymake-conf-c-mode)
+(add-hook 'perl-mode-hook 'ly:flymake-conf-perl-mode)
+(add-hook 'cperl-mode-hook 'ly:flymake-conf-cperl-mode)
 
 ;; Invoke ruby with '-c' to get syntax checking
 (defun flymake-ruby-init ()

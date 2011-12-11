@@ -21,3 +21,13 @@
 (ly:eval-after-load 'paredit
   (define-key paredit-mode-map (kbd "(") (smartchr '(ly:smartchr-paren-first "((`!!'))" ly:smartchr-paren-second))))
 
+(defun ly:smartchr-perl-config (keymap)
+  (define-key keymap (kbd "=") (smartchr '("=" " = " " == ")))
+  (define-key keymap (kbd ">") (smartchr '(">" " => " " => \"`!!'\"")))
+  (define-key keymap (kbd "-") (smartchr '("-" "->")))
+  (define-key keymap (kbd "M") (smartchr '("M" "MM" "my $`!!' = " "my $self = shift;" "my ($self, $`!!') = @_;" "my @`!!' = ")))
+  (define-key keymap (kbd "S") (smartchr '("S" "SS" "$self" "$self->"))))
+(ly:eval-after-load 'perl-mode
+  (ly:smartchr-perl-config perl-mode-map))
+(ly:eval-after-load 'cperl-mode
+  (ly:smartchr-perl-config cperl-mode-map))

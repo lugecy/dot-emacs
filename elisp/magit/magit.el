@@ -1961,22 +1961,32 @@ function can be enriched by magit extension like magit-topgit and magit-svn"
       (or successp
 	  noerror
 	  (error
-	   (or (with-current-buffer (get-buffer magit-process-buffer-name)
-		 (when (re-search-backward
-			(concat "^error: \\(.*\\)" paragraph-separate) nil t)
-		   (match-string 1)))
-	       "Git failed")))
+           "%s ... [Hit %s or see buffer %s for details]"
+           (or (with-current-buffer (get-buffer magit-process-buffer-name)
+                 (when (re-search-backward
+                        (concat "^error: \\(.*\\)" paragraph-separate) nil t)
+                   (match-string 1)))
+               "Git failed")
+           (with-current-buffer magit-process-client-buffer
+             (key-description (car (where-is-internal
+                                    'magit-display-process))))
+           magit-process-buffer-name))
       successp)))
 
 (autoload 'dired-uncache "dired")
 (defun magit-process-sentinel (process event)
   (let ((msg (format "%s %s." (process-name process) (substring event 0 -1)))
-	(successp (string-match "^finished" event)))
+	(successp (string-match "^finished" event))
+        (key (with-current-buffer magit-process-client-buffer
+               (key-description (car (where-is-internal
+                                      'magit-display-process))))))
     (with-current-buffer (process-buffer process)
       (let ((inhibit-read-only t))
 	(goto-char (point-max))
 	(insert msg "\n")
-	(message msg))
+	(message (if successp msg
+                   (format "%s Hit %s or see buffer %s for details."
+                           msg key (current-buffer)))))
       (unless (memq (process-status process) '(run open))
         (dired-uncache default-directory)))
     (setq magit-process nil)
@@ -2259,16 +2269,18 @@ Please see the manual for a complete description of Magit.
 (defun magit-revert-buffers (dir &optional ignore-modtime)
   (dolist (buffer (buffer-list))
     (when (and buffer
-	       (buffer-file-name buffer)
-	       (magit-string-has-prefix-p (buffer-file-name buffer) dir)
-	       (file-readable-p (buffer-file-name buffer))
-	       (or ignore-modtime (not (verify-visited-file-modtime buffer)))
-	       (not (buffer-modified-p buffer)))
+               (buffer-file-name buffer)
+               ;; don't revert indirect buffers, as the parent will be reverted
+               (not (buffer-base-buffer buffer))
+               (magit-string-has-prefix-p (buffer-file-name buffer) dir)
+               (file-readable-p (buffer-file-name buffer))
+               (or ignore-modtime (not (verify-visited-file-modtime buffer)))
+               (not (buffer-modified-p buffer)))
       (with-current-buffer buffer
-	(condition-case var
-	  (revert-buffer t t nil)
-	  (error (let ((signal-data (cadr var)))
-		   (cond (t (magit-bug-report signal-data))))))))))
+        (condition-case var
+            (revert-buffer t t nil)
+          (error (let ((signal-data (cadr var)))
+                   (cond (t (magit-bug-report signal-data))))))))))
 
 (defun magit-update-vc-modeline (dir)
   "Update the modeline for buffers representable by magit."
@@ -3307,6 +3319,8 @@ PREPEND-REMOTE-NAME is non-nil."
 \\{magit-status-mode-map}"
   :group 'magit)
 
+(defvar magit-default-directory nil)
+
 (defun magit-save-some-buffers (&optional msg pred)
   "Save some buffers if variable `magit-save-some-buffers' is non-nil.
 If variable `magit-save-some-buffers' is set to 'dontask then
@@ -3322,8 +3336,8 @@ If PRED is t, then certain non-file buffers will also be considered.
 If PRED is a zero-argument function, it indicates for each buffer whether
 to consider it or not when called with that buffer current."
   (interactive)
-  (let ((predicate-function (or pred magit-save-some-buffers-predicate)))
-
+  (let ((predicate-function (or pred magit-save-some-buffers-predicate))
+        (magit-default-directory default-directory))
     (if magit-save-some-buffers
         (save-some-buffers
          (eq magit-save-some-buffers 'dontask)
@@ -3340,8 +3354,8 @@ to consider it or not when called with that buffer current."
   "Only prompt to save buffers which are within the current git project (as
   determined by the dir passed to `magit-status'."
   (and buffer-file-name
-       (eq (magit-get-top-dir dir)
-           (magit-get-top-dir (file-name-directory buffer-file-name)))))
+       (string= (magit-get-top-dir magit-default-directory)
+                (magit-get-top-dir (file-name-directory buffer-file-name)))))
 
 ;;;###autoload
 (defun magit-status (dir)
@@ -4994,10 +5008,12 @@ Return values:
   t		   the server seems to be running.
   something else   we cannot determine whether it's running without using
 		   commands which may have to wait for a long time."
+  (require 'server)
   (if (functionp 'server-running-p)
       (server-running-p)
     (condition-case nil
-	(if server-use-tcp
+	(if (and (boundp 'server-use-tcp)
+                 server-use-tcp)
 	    (with-temp-buffer
 	      (insert-file-contents-literally (expand-file-name server-name server-auth-dir))
 	      (or (and (looking-at "127\\.0\\.0\\.1:[0-9]+ \\([0-9]+\\)")
@@ -5065,8 +5081,8 @@ With prefix force the removal even it it hasn't been merged."
                     (magit-remove-remote (magit--branch-name-from-section branch-section)))))
     (if (and (magit--is-branch-section-remote branch-section)
              (yes-or-no-p "Remove branch in remote repository as well? "))
-        (magit-remove-branch-in-remote-repo (magit--branch-name-from-section branch-section)))
-    (apply 'magit-run-git (remq nil args))))
+        (magit-remove-branch-in-remote-repo (magit--branch-name-from-section branch-section))
+    (apply 'magit-run-git (remq nil args)))))
 
 (defun magit--remotes ()
   "Return a list of names for known remotes."
@@ -5120,15 +5136,15 @@ name of the remote and branch name. The remote must be known to git."
 (defun magit--branch-view-details (branch-line)
   "Extract details from branch -va output."
   (string-match (concat
-                 "^\\(\\*? \\{1,2\\}\\)"       ; 1: current branch marker (maybe)
-                 "\\(.+?\\) +"                 ; 2: branch name
+                 "^\\([ *] \\)"         ; 1: current branch marker (maybe)
+                 "\\(.+?\\) +"          ; 2: branch name
 
                  "\\(?:"
-                 "\\([0-9a-fA-F]\\{7,8\\}\\) " ; 3: sha1
-                 "\\|\\(-> \\)"                ; 4: or the pointer to a ref
-                 "\\)"
+                 "\\([0-9a-fA-F]+\\)"   ; 3: sha1
+                 "\\|\\(->\\)"          ; 4: or the pointer to a ref
+                 "\\) "
 
-                 "\\(.+\\)"                    ; 5: message or ref
+                 "\\(.*\\)$"            ; 5: message or ref
                  )
                 branch-line)
   (let ((res (list (cons 'current (match-string 1 branch-line))
@@ -5146,6 +5162,9 @@ name of the remote and branch name. The remote must be known to git."
         (cons 'sha1 (match-string 3 branch-line))
         (cons 'msg (match-string 5 branch-line)))
        res))))
+
+
+
 
 (defun magit-show-branches ()
   "Show all of the current branches."

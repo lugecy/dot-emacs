@@ -228,6 +228,9 @@ last command when it miss match in key alist."
                                (one-key-highlight-prompt title)
                                (setq one-key-menu-call-first-time nil))
                            "")))
+                 (event (if (eq event meta-prefix-char)
+                            (+ (expt 2 27) (read-event)) ;for meta modify char
+                          event))
                  (key (if (if (<= emacs-major-version 22)
                               (with-no-warnings
                                 (char-valid-p event)) ;for compatibility Emacs 22

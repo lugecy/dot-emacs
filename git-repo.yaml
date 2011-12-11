@@ -8,7 +8,7 @@ ace-jump-mode:
 anything: 
 - elisp/anything-core
 - git://repo.or.cz/anything-config.git
-- 0f102c346c5688dc9cd81e28440772b1e1958800
+- 888461d3deb6b28bb0388ccae51d457e8b12f001
 popwin: 
 - elisp/popwin-el
 - http://github.com/m2ym/popwin-el.git
@@ -28,4 +28,4 @@ historyf:
 magit: 
 - elisp/magit
 - http://github.com/magit/magit.git
-- a1bdd4750c0de8014a61f0bd214dc42242f449e9
+- e72f015b2abffd79b1c2329bdcbabafe4fd4850d

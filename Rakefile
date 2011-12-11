@@ -60,6 +60,9 @@ GIT_REPO.transaction(true) do |db|
       cd current_dir
       puts
     end
+    if keys.length == checked_list.length
+      puts "---ALL PACKAGE IS UPDATED---"
+    end
     GIT_REPO.transaction do |db|
       db["checked"] = (keys.length == checked_list.length ? [] : checked_list)
     end

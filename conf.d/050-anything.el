@@ -34,6 +34,9 @@
     anything-c-source-files-in-current-dir+
     anything-c-source-bookmarks))
 (add-to-list 'anything-c-source-buffers-list '(candidate-number-limit . 30) t)
+(setq anything-c-source-recentf         ; enable shortcuts
+      (delete-if (lambda (pair) (eq (car pair) 'disable-shortcuts))
+                 anything-c-source-recentf))
 (defun anything-for-open ()
   (interactive)
   (anything-at-point-raw anything-for-open-source-list nil nil nil nil
@@ -111,7 +114,7 @@
         (anything-for-current-buffer-sources (append anything-for-current-buffer-sources
                                                      (cond ((memq major-mode '(emacs-lisp-mode lisp-interaction-mode))
                                                             '(anything-c-source-emacs-variable-at-point anything-c-source-emacs-function-at-point))
-                                                           ((eq major-mode 'c-mode)
+                                                           ((memq major-mode '(c-mode ruby-mode cperl-mode))
                                                             (when (anything-c-etags-get-tag-file)
                                                               '(anything-c-source-etags-select)))
                                                            (t nil)))))
@@ -231,6 +234,7 @@
 
 ;;;; fix anything-etag(for pop-tag-mark)
 (defadvice anything-c-etags-default-action (before for-pop-tag-mark-fix activate)
+  (require 'etags)
   (with-current-buffer anything-current-buffer
     (ring-insert find-tag-marker-ring (point-marker))))
 
