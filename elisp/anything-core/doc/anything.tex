@@ -36,6 +36,18 @@
 \usepackage{natbib}
 \usepackage{setspace}
 
+\newsavebox{\boiteencadre}
+\newenvironment{encadre}{%
+  % clause begin
+  \begin{lrbox}{\boiteencadre}% début mise en boîte
+  \begin{minipage}{.8\textwidth}}{%
+  % clause end
+  \end{minipage}
+  \end{lrbox}% fin mise en boîte
+  % production de la boîte encadrée
+  \begin{center}
+    \fbox{\usebox{\boiteencadre}}
+  \end{center}}
 
 \begin{document}
 \begin{titlepage}
@@ -328,6 +340,9 @@ You have to ways to serial rename:\\
 \item By symlinking: All the files that are not files of the directory where you want to rename will be symlinked,
 others will be renamed.\\
 \end{itemize}
+\begin{itemize}
+\item By copying: All the file of others directories are copied in directory where renaming happen.\\ 
+\end{itemize}
 
 Example of Use:\\
 I want to create a directory with many symlinked images coming from various directories.\\
@@ -358,7 +373,7 @@ It have full tramp integration.
 \begin{itemize}
 \item NOTE: 
 You will find a file named anything-grep.el in extensions.
-It is NOT needed to use with what is described here.
+It is DEPRECATED and NOT needed to use with what is described here.
 It is another implementation of grep but not incremental.
 \end{itemize}
 
@@ -486,7 +501,7 @@ Accessing the mark-ring in Emacs is really inconvenient, fortunately, you will f
 \subsection{Save grep session}
 \label{sec:save-grep-session}
 If you want to save the results of your grep session, doing ``C-x C-s'' will save your grep results
-in a *grep* buffer. 
+in a grep-mode buffer. 
 
 \subsection{Open Files Externally}
 \label{sec:open-files-extern}
@@ -556,7 +571,8 @@ M-x anything-dired-bindings
 \end{verbatim}
 This will replace in dired C, R, S, and H commands.
 That is copy, rename, symlink, hardlink.
-When creating a symlink, you will find relsymlink in actions menu.(TAB).
+When creating a symlink, you will find relsymlink in actions menu.(TAB).\\
+NOTE: This is deprecated for Emacs24 users, use instead 'ac-mode'.
 
 \subsection{Copy Files}
 \label{sec:copy-files}
@@ -716,6 +732,21 @@ When search is done, you can search in a specific file or directory with grep th
 \item NOTE:You can now launch grep with (C-u) M-g s without switching to the action pannel.
 \end{itemize}
 
+\subsection{Use a local locate DB}
+\label{sec:use-local-locate}
+
+You can specify a specific database with prefix argument ARG (C-u).
+Many databases can be used: navigate and mark them.
+See also `anything-locate-with-db'.
+
+To create a user specific db, use:
+\begin{verbatim}
+updatedb -l 0 -o dbpath -U directory
+\end{verbatim}
+
+Where ``dbpath'' is a filename matched by
+``anything-locate-db-file-regexp''
+
 \subsection{Windows specificity}
 \label{sec:windows-specificity}
 
@@ -823,7 +854,7 @@ documentation.
 \label{sec:anything-buffers}
 
 \begin{verbatim}
-M-x anything-buffer+
+M-x anything-buffers-list
 \end{verbatim}
 
 \subsection{Borring buffers}
@@ -902,6 +933,89 @@ See C-h v `anything-completing-read-handlers-alist' for more infos.
 
 Not complete.
 
+\section{Anything Eshell completion}
+\label{sec:anyth-eshell-compl}
+
+\subsection{Enable anything pcomplete}
+\label{sec:enable-anyth-pcompl}
+
+
+Of course pcomplete is already enabled in Eshell, but what we want here 
+is to enable it with anything support. \\
+To enable it's easy, just add to ``.emacs.el'':
+
+\begin{encadre}
+\begin{verbatim}
+(add-hook 'eshell-mode-hook
+          #'(lambda ()
+              (define-key eshell-mode-map 
+                [remap pcomplete]
+                'anything-esh-pcomplete)))
+
+\end{verbatim}
+\end{encadre}
+
+Now when hitting ``TAB'', you should have anything pcompletion.\\
+\\
+
+\subsubsection{Write your own pcomplete functions}
+\label{sec:write-your-own}
+
+You can enhance Emacs pcomplete by writing your own pcomplete functions.\\
+\\
+Here an example with ``find'' command:
+
+\begin{verbatim}
+  
+(defun pcomplete/find ()
+  (let ((prec (pcomplete-arg 'last -1)))
+    (cond ((and (pcomplete-match "^-" 'last)
+                (string= "find" prec))
+           (pcomplete-opt "HLPDO"))
+          ((pcomplete-match "^-" 'last)
+           (while (pcomplete-here
+                   '("-amin" "-anewer" "-atime" "-cmin" "-cnewer" "-context"
+                     "-ctime" "-daystart" "-delete" "-depth" "-empty" "-exec"
+                     "-execdir" "-executable" "-false" "-fls" "-follow" "-fprint"
+                     "-fprint0" "-fprintf" "-fstype" "-gid" "-group"
+                     "-help" "-ignore_readdir_race" "-ilname" "-iname"
+                     "-inum" "-ipath" "-iregex" "-iwholename"
+                     "-links" "-lname" "-ls" "-maxdepth"
+                     "-mindepth" "-mmin" "-mount" "-mtime"
+                     "-name" "-newer" "-nogroup" "-noignore_readdir_race"
+                     "-noleaf" "-nouser" "-nowarn" "-ok"
+                     "-okdir" "-path" "-perm" "-print"
+                     "-print0" "-printf" "-prune" "-quit"
+                     "-readable" "-regex" "-regextype" "-samefile"
+                     "-size" "-true" "-type" "-uid"
+                     "-used" "-user" "-version" "-warn"
+                     "-wholename" "-writable" "-xdev" "-xtype"))))
+          ((string= "-type" prec)
+           (while (pcomplete-here (list "b" "c" "d" "p" "f" "l" "s" "D"))))
+          ((string= "-xtype" prec)
+           (while (pcomplete-here (list "b" "c" "d" "p" "f" "l" "s"))))
+          ((or (string= prec "-exec")
+               (string= prec "-execdir"))
+           (while (pcomplete-here* (funcall pcomplete-command-completion-function)
+                                   (pcomplete-arg 'last) t))))
+    (while (pcomplete-here (pcomplete-entries) nil 'identity))))
+
+\end{verbatim}
+\newpage
+\subsection{Enable anything Eshell history}
+\label{sec:enable-anyth-eshell}
+
+Add this to ``.emacs.el''
+\begin{encadre}
+\begin{verbatim}
+(add-hook 'eshell-mode-hook
+          #'(lambda ()
+              (define-key eshell-mode-map 
+                (kbd "M-p")
+                'anything-eshell-history)))
+\end{verbatim}
+\end{encadre}
+
 \section{Usefuls extensions}
 \label{sec:usefuls-extensions}
 Not complete.
@@ -909,7 +1023,7 @@ Not complete.
 \section{Usefuls links}
 \label{sec:usefuls-links}
 
-You can have info about anything on Emacswiki (Sometime deprecated).\\
+You can have infos about anything on Emacswiki (Mostly deprecated).\\
 \url{http://www.emacswiki.org/emacs/Anything}\\
 
 You can ask on the anything mailing-list by subscribing at:\\

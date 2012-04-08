@@ -1,6 +1,6 @@
-;;; popwin-yatex.el --- Popwin Configuration for YaTeX
+;;; popwin-term.el --- Popwin Term
 
-;; Copyright (C) 2011  Tomohiro Matsuyama
+;; Copyright (C) 2012  Tomohiro Matsuyama
 
 ;; Author: Tomohiro Matsuyama <tomo@cx4a.org>
 ;; Keywords: 
@@ -20,21 +20,19 @@
 
 ;;; Commentary:
 
-;; This is a workaround for working with YaTeX. Write the following
-;; configuration into .emacs:
 ;; 
-;; (require 'popwin-yatex)
-;; (push '("*YaTeX-typesetting*") popwin:special-display-config)
 
 ;;; Code:
 
 (require 'popwin)
-(require 'yatex)
 
-(defadvice YaTeX-showup-buffer (around popwin-yatex:YaTeX-showup-buffer (buffer &optional func select) activate)
-  (popwin:display-buffer-1 buffer
-                           :default-config-keywords `(:noselect ,(not select))
-                           :if-config-not-found (lambda (buffer) ad-do-it)))
+(defun popwin-term:term ()
+  (interactive)
+  (popwin:display-buffer-1
+   (or (get-buffer "*terminal*")
+       (save-window-excursion
+         (call-interactively 'term)))
+   :default-config-keywords '(:position :top)))
 
-(provide 'popwin-yatex)
-;;; popwin-yatex.el ends here
+(provide 'popwin-term)
+;;; popwin-term.el ends here

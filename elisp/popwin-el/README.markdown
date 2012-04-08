@@ -36,22 +36,14 @@ Install `popwin.el` into your `load-path` directory. If you have
 `popwin.el` like:
 
     ;; install-elisp
-    (install-elisp "https://github.com/m2ym/popwin-el/raw/master/popwin.el")
+    (install-elisp "https://raw.github.com/m2ym/popwin-el/master/popwin.el")
     ;; auto-install
-    (auto-install-from-url "https://github.com/m2ym/popwin-el/raw/master/popwin.el")
+    (auto-install-from-url "https://raw.github.com/m2ym/popwin-el/master/popwin.el")
 
 And then add the following code into your `.emacs`:
 
     (require 'popwin)
     (setq display-buffer-function 'popwin:display-buffer)
-
-There is an alternative way using `special-display-function` like:
-
-    (require 'popwin)
-    (setq special-display-function 'popwin:special-display-popup-window)
-
-In this case, you need to change `special-display-buffer-names` or
-`special-display-regexps` so that popwin sould handle such buffers.
 
 popwin is tested under GNU Emacs 22 or later.
 

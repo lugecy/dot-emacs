@@ -1,6 +1,6 @@
-;;; popwin-yatex.el --- Popwin Configuration for YaTeX
+;;; popwin-pp.el --- Popwin Pp
 
-;; Copyright (C) 2011  Tomohiro Matsuyama
+;; Copyright (C) 2012  Tomohiro Matsuyama
 
 ;; Author: Tomohiro Matsuyama <tomo@cx4a.org>
 ;; Keywords: 
@@ -20,21 +20,23 @@
 
 ;;; Commentary:
 
-;; This is a workaround for working with YaTeX. Write the following
-;; configuration into .emacs:
 ;; 
-;; (require 'popwin-yatex)
-;; (push '("*YaTeX-typesetting*") popwin:special-display-config)
 
 ;;; Code:
 
 (require 'popwin)
-(require 'yatex)
+(require 'pp)
 
-(defadvice YaTeX-showup-buffer (around popwin-yatex:YaTeX-showup-buffer (buffer &optional func select) activate)
-  (popwin:display-buffer-1 buffer
-                           :default-config-keywords `(:noselect ,(not select))
-                           :if-config-not-found (lambda (buffer) ad-do-it)))
+(defadvice pp-display-expression (around popwin-pp:pp-display-expression (expression out-buffer-name) activate)
+  (let (not-found)
+    (popwin:display-buffer-1 out-buffer-name
+                             :if-config-not-found (lambda (buffer) (setq not-found t) ad-do-it))
+    (unless not-found
+      (let ((buffer (get-buffer out-buffer-name)))
+        (with-current-buffer buffer
+          (delete-region (point-min) (point-max))
+          (pp expression buffer)
+          (emacs-lisp-mode))))))
 
-(provide 'popwin-yatex)
-;;; popwin-yatex.el ends here
+(provide 'popwin-pp)
+;;; popwin-pp.el ends here

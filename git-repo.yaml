@@ -4,23 +4,27 @@ checked: []
 ace-jump-mode: 
 - elisp/ace-jump-mode
 - http://github.com/winterTTr/ace-jump-mode.git
-- 770419b7f67424c6559e5090d860c5328b81a599
+- 436918b0f61b52c4f05ecef9016471ecf9d3be81
 anything: 
 - elisp/anything-core
 - git://repo.or.cz/anything-config.git
-- 888461d3deb6b28bb0388ccae51d457e8b12f001
+- 9462877620bcf605af0e08c651ea5c72fc0a5d11
 popwin: 
 - elisp/popwin-el
 - http://github.com/m2ym/popwin-el.git
-- 5605b5ff019b1a8c3396521aedceeffbf8c87050
+- 9cc195dff283bcc72d8cd92db824c73a92f4afe1
+fuzzy-el: 
+- elisp/fuzzy-el
+- http://github.com/m2ym/fuzzy-el.git
+- b47d801d4e1ff67323eda4d602e78c31fbc5a08a
 zencoding: 
 - elisp/zencoding
 - http://github.com/rooney/zencoding.git
-- 5cd8042040883da8fc54784a9dbf7f68bb9568b7
+- fc15836a9da44ad5bd7954de28c5549b4feedbaf
 auto-complete: 
 - elisp/auto-complete
 - http://github.com/m2ym/auto-complete.git
-- 09a5fbd52ffdcce046d4552b70cfa5acb7f58d67
+- c394441714d721b60d31227849829553370f0f77
 historyf: 
 - elisp/historyf
 - http://github.com/k1LoW/emacs-historyf.git
@@ -28,4 +32,8 @@ historyf:
 magit: 
 - elisp/magit
 - http://github.com/magit/magit.git
-- e72f015b2abffd79b1c2329bdcbabafe4fd4850d
+- 4faa13721f10d665c7dcaf6f929eedddd9ec46f3
+popup-el: 
+- elisp/popup-el
+- http://github.com/m2ym/popup-el.git
+- 3eeceea8bc7526d6ca740d6c2e1de0d7f60bda6d

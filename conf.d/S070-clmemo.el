@@ -48,9 +48,14 @@ See also `add-change-log-entry' and `clmemo-get-title'."
 ;;;; エントリの末尾に日時間を挿入する
 (add-hook 'clmemo-new-title-hook 'clmemo-insert-item-footer)
 (defun clmemo-insert-item-footer ()
-  (save-excursion
-    (newline)
-    (insert (clmemo-item-footer))))
+  (declare (special not-today))
+  (let ((not-today (if (boundp 'not-today) ; bind in clmemo-new-title
+                       not-today
+                     nil)))
+    (unless not-today
+      (save-excursion
+        (newline)
+        (insert (clmemo-item-footer))))))
 
 (defun clmemo-item-footer ()
   (format-time-string "[%Y-%m-%d %R]"))

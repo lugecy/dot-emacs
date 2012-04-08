@@ -1,6 +1,6 @@
-;;; popwin-yatex.el --- Popwin Configuration for YaTeX
+;;; popwin-browse-kill-ring.el --- Popwin Configuration for Browse Kill Ring
 
-;; Copyright (C) 2011  Tomohiro Matsuyama
+;; Copyright (C) 2012  Tomohiro Matsuyama
 
 ;; Author: Tomohiro Matsuyama <tomo@cx4a.org>
 ;; Keywords: 
@@ -20,21 +20,16 @@
 
 ;;; Commentary:
 
-;; This is a workaround for working with YaTeX. Write the following
-;; configuration into .emacs:
 ;; 
-;; (require 'popwin-yatex)
-;; (push '("*YaTeX-typesetting*") popwin:special-display-config)
 
 ;;; Code:
 
 (require 'popwin)
-(require 'yatex)
 
-(defadvice YaTeX-showup-buffer (around popwin-yatex:YaTeX-showup-buffer (buffer &optional func select) activate)
-  (popwin:display-buffer-1 buffer
-                           :default-config-keywords `(:noselect ,(not select))
-                           :if-config-not-found (lambda (buffer) ad-do-it)))
+(defun popwin-bkr:update-window-reference ()
+  (popwin:update-window-reference 'browse-kill-ring-original-window :safe t))
 
-(provide 'popwin-yatex)
-;;; popwin-yatex.el ends here
+(add-hook 'popwin:after-popup-hook 'popwin-bkr:update-window-reference)
+
+(provide 'popwin-browse-kill-ring)
+;;; popwin-browse-kill-ring.el ends here

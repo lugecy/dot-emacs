@@ -10,6 +10,7 @@
 
 ;;;; undo-tree.el
 (require 'undo-tree)
+(setq undo-tree-mode-lighter " UT")
 (define-key undo-tree-map (kbd "C-.") 'undo-tree-redo)
 ;; for enable C-x r map (register jump, etc...)
 (define-key undo-tree-map (kbd "C-x r") nil)
